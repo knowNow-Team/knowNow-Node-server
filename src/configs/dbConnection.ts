@@ -2,11 +2,13 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 dotenv.config();
 
+// 개발 환경일 때만 콘솔을 통해 몽구스가 생성하는 쿼리 내용을 확인할 수 있게 하는 코드
 const connect = () => {
   if (process.env.NODE_ENV !== 'production') {
     mongoose.set('debug', true);
   }
 };
+
 mongoose.connect(
   `mongodb://${process.env.MONGO_ID}:${process.env.MONGO_PWD}@${process.env.MONGO_IP}:27017/${process.env.MONGO_DB}`,
   {
