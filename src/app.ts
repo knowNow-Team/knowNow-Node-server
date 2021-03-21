@@ -4,8 +4,13 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors';
 import { normalize } from 'path';
+import 'dotenv';
+import connect from './configs/dbConnection';
 
 const app: Application = express();
+
+// db connect
+connect();
 
 // Middlewares
 app.use(cors());
@@ -15,6 +20,7 @@ app.use(
   process.env.NODE_ENV === 'production' ? logger('combined') : logger('dev'),
 );
 app.use(cookieParser());
+
 // Express variables
 app.set('port', normalize(process.env.PORT || '3000'));
 
