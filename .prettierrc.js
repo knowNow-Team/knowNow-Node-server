@@ -8,6 +8,6 @@ module.exports = {
   quoteProps: 'consistent',
   bracketSpacing: true,
   arrowParens: 'always',
-  endOfLine: 'lf',
+  endOfLine: 'auto',
   parser: 'typescript',
 };
