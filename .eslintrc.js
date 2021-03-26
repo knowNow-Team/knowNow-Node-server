@@ -28,5 +28,12 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   ignorePatterns: ['build/', 'dist/', 'node_modules/', '.eslintrc.js'],
-  rules: { 'import/no-unresolved': 'off' },
+  rules: {
+    'import/no-unresolved': 'off',
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      { js: 'never', jsx: 'never', ts: 'never', tsx: 'never', json: 'never' },
+    ],
+  },
 };
