@@ -1,11 +1,10 @@
 import express from 'express';
-import router from './routes';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors';
 import { normalize } from 'path';
+import router from './routes';
 import 'dotenv';
-import morgan from 'morgan';
 import connect from './configs/dbConnection';
 
 class Application {
@@ -18,12 +17,11 @@ class Application {
     this.routes();
   }
 
-  settings() {
+  settings(): void {
     this.app.set('port', normalize(process.env.PORT || '3000'));
   }
 
-  middlewares() {
-    this.app.use(morgan('dev'));
+  middlewares(): void {
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(express.json());
     this.app.use(cookieParser());
@@ -31,7 +29,7 @@ class Application {
     this.app.use(process.env.NODE_ENV === 'production' ? logger('combined') : logger('dev'));
   }
 
-  routes() {
+  routes(): void {
     this.app.use(router);
   }
 
