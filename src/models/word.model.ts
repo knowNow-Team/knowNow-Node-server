@@ -12,8 +12,8 @@ export enum WordClass {
   interjections = 'interjections', // 감탄사
 }
 
-export interface Id extends Document {
-  id: string;
+export interface Word extends Document {
+  word: string;
 }
 
 export interface Meaning extends Document {
@@ -25,14 +25,14 @@ export interface PronounceVoicePath extends Document {
 }
 
 export interface IWord extends Document {
-  id: Id;
+  word: Word;
   wordClass: WordClass;
   meaning: Meaning;
   pronounceVoicePath: PronounceVoicePath;
 }
 
 const WordSchema: Schema = new Schema({
-  id: {
+  word: {
     type: String,
     required: true,
     unique: true,
@@ -53,4 +53,4 @@ const WordSchema: Schema = new Schema({
   },
 });
 
-export default mongoose.model<IWord>('Word', WordSchema);
+export default mongoose.model<IWord>('Words', WordSchema);
