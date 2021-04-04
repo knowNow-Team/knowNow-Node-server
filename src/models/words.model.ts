@@ -23,7 +23,7 @@ export interface Word extends Document {
 }
 
 export interface Meaning extends Document {
-  meaning: [String];
+  meaning: [string];
 }
 
 export interface PronounceVoicePath extends Document {
@@ -52,10 +52,12 @@ const WordSchema: Schema = new Schema({
     required: true,
     enum: Object.values(WordClass),
   },
+
   filter: {
     type: [String],
     enum: Object.values(Filter),
   },
+
   pronounceVoicePath: {
     type: String,
     required: true,
