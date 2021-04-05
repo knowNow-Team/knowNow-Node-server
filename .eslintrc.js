@@ -30,6 +30,8 @@ module.exports = {
   ignorePatterns: ['build/', 'dist/', 'node_modules/', '.eslintrc.js'],
   rules: {
     'import/no-unresolved': 'off',
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': ['error'],
     'no-floating-promises': 0,
     'import/extensions': [
       'error',
