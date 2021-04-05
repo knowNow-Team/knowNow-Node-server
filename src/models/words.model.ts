@@ -57,7 +57,6 @@ const WordSchema: Schema = new Schema({
     type: [String],
     enum: Object.values(Filter),
   },
-
   pronounceVoicePath: {
     type: String,
     required: true,
