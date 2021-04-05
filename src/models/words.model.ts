@@ -33,6 +33,7 @@ export interface PronounceVoicePath extends Document {
 export interface IWord extends Document {
   word: Word;
   wordClass: WordClass;
+  filter: Filter;
   meaning: Meaning;
   pronounceVoicePath: PronounceVoicePath;
 }
