@@ -8,7 +8,7 @@ import 'dotenv';
 import connect from './configs/dbConnection';
 
 class Application {
-  app: express.Application;
+  public app: express.Application;
 
   constructor() {
     this.app = express();
@@ -17,11 +17,11 @@ class Application {
     this.routes();
   }
 
-  settings(): void {
+  private settings(): void {
     this.app.set('port', normalize(process.env.PORT || '3000'));
   }
 
-  middlewares(): void {
+  private middlewares(): void {
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(express.json());
     this.app.use(cookieParser());
@@ -29,13 +29,15 @@ class Application {
     this.app.use(process.env.NODE_ENV === 'production' ? logger('combined') : logger('dev'));
   }
 
-  routes(): void {
+  private routes(): void {
     this.app.use(router);
   }
 
-  start(): void {
+  public start(): void {
     this.app.listen(this.app.get('port'), () => {
-      console.log(`!!!App is running at http://localhost:${this.app.get('port')} in ${this.app.get('env')} mode!!!`);
+      console.log(
+        `!!!App is running at http://localhost:${process.env.PORT || '3000'} in ${process.env.NODE_ENV} mode!!!`,
+      );
     });
   }
 }
