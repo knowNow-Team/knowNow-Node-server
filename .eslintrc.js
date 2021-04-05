@@ -30,7 +30,7 @@ module.exports = {
   ignorePatterns: ['build/', 'dist/', 'node_modules/', '.eslintrc.js'],
   rules: {
     'import/no-unresolved': 'off',
-    'no-floating-promises': true,
+    'no-floating-promises': 0,
     'import/extensions': [
       'error',
       'ignorePackages',
