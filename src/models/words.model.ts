@@ -23,7 +23,7 @@ export interface Word extends Document {
 }
 
 export interface Meaning extends Document {
-  meaning: [String];
+  meaning: [string];
 }
 
 export interface PronounceVoicePath extends Document {
