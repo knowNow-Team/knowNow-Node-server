@@ -12,6 +12,12 @@ export enum WordClass {
   interjections = 'interjections', // 감탄사
 }
 
+export enum Filter {
+  memorized = 'memorized', // 외웠어요
+  confused = 'confused', // 헷갈려요
+  doNotKnow = 'doNotKnow', // 몰라요
+}
+
 export interface Word extends Document {
   word: string;
 }
@@ -45,6 +51,10 @@ const WordSchema: Schema = new Schema({
     type: String,
     required: true,
     enum: Object.values(WordClass),
+  },
+  filter: {
+    type: [String],
+    enum: Object.values(Filter),
   },
   pronounceVoicePath: {
     type: String,
