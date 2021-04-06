@@ -3,9 +3,9 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import cors from 'cors';
 import { normalize } from 'path';
-import router from './routes';
+import Routes from './routes';
 import 'dotenv';
-import connect from './configs/dbConnection';
+import DBConnection from './configs/dbConnection';
 
 class Application {
   public app: express.Application;
@@ -31,7 +31,7 @@ class Application {
   }
 
   private routes(): void {
-    this.app.use(router);
+    this.app.use(new Routes().router);
   }
 
   public start(): void {
