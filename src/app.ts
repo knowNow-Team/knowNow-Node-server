@@ -5,7 +5,6 @@ import cors from 'cors';
 import { normalize } from 'path';
 import router from './routes';
 import 'dotenv';
-import connect from './configs/dbConnection';
 
 class Application {
   app: express.Application;
