@@ -1,6 +1,9 @@
-// /api/v1 라우팅
+// /v1 라우팅
 import express, { Router } from 'express';
+import wordRouter from './words.route';
 
-const router: Router = express.Router();
+const apiV1Router: Router = express.Router();
 
-export default router;
+apiV1Router.use('/words', wordRouter);
+
+export default apiV1Router;
