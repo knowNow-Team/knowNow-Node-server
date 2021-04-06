@@ -15,6 +15,7 @@ class Application {
     this.settings();
     this.middlewares();
     this.routes();
+    (() => new DBConnection())();
   }
 
   private settings(): void {
