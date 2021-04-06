@@ -1,11 +1,15 @@
-import express, { Request, Response, Router } from 'express';
-import apiV1Router from './v1';
+import { Request, Response, Router } from 'express';
+import V1Router from './v1';
 
-const router: Router = express.Router();
+class Routes {
+  public router: Router = Router();
 
-router.use('/v1', apiV1Router);
-router.get('/', (req: Request, res: Response) => {
-  res.status(200).json({ message: 'Health Check' });
-});
+  constructor() {
+    this.router.use('/v1', new V1Router().router);
+    this.router.get('/', (req: Request, res: Response) => {
+      res.status(200).json({ message: 'Health Check' });
+    });
+  }
+}
 
-export default router;
+export default Routes;
