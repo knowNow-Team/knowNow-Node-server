@@ -67,5 +67,6 @@ const WordSchema: Schema = new Schema(
   {
     timestamps: true,
   },
-  
+);
+
 export default mongoose.model<IWord>('Words', WordSchema);
