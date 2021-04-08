@@ -45,7 +45,7 @@ export async function getFilterWord(order: string, filter: any) {
     await filterWords.sort({ word: 1 });
   } else if (order === 'DESC') {
     await filterWords.sort({ word: -1 });
-  } else if (order === 'NEWEEST') {
+  } else if (order === 'NEWEST') {
     await filterWords.sort({ createdAt: -1 });
   }
   return filterWords;
