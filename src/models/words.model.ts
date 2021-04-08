@@ -38,31 +38,34 @@ export interface IWord extends Document {
   pronounceVoicePath: PronounceVoicePath;
 }
 
-const WordSchema: Schema = new Schema({
-  word: {
-    type: String,
-    required: true,
-    unique: true,
+const WordSchema: Schema = new Schema(
+  {
+    word: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    meaning: {
+      type: [String],
+      required: true,
+    },
+    wordClass: {
+      type: String,
+      required: true,
+      enum: Object.values(WordClass),
+    },
+    filter: {
+      type: [String],
+      enum: Object.values(Filter),
+    },
+    pronounceVoicePath: {
+      type: String,
+      required: true,
+      unique: true,
+    },
   },
-  meaning: {
-    type: [String],
-    required: true,
+  {
+    timestamps: true,
   },
-  wordClass: {
-    type: String,
-    required: true,
-    enum: Object.values(WordClass),
-  },
-
-  filter: {
-    type: [String],
-    enum: Object.values(Filter),
-  },
-  pronounceVoicePath: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-});
-
+  
 export default mongoose.model<IWord>('Words', WordSchema);
