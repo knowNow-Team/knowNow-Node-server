@@ -38,3 +38,15 @@ export async function deleteWord(wordId: string) {
   });
   return deleteWord;
 }
+
+export async function getFilterWord(order: string, filter: any) {
+  const filterWords = Words.find({ filter: filter });
+  if (order === 'ASC') {
+    await filterWords.sort({ word: 1 });
+  } else if (order === 'DESC') {
+    await filterWords.sort({ word: -1 });
+  } else if (order === 'NEWEEST') {
+    await filterWords.sort({ createdAt: -1 });
+  }
+  return filterWords;
+}
