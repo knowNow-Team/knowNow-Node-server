@@ -28,3 +28,13 @@ export async function getIndividualWord(wordId: string) {
     throw Error('no word');
   }
 }
+
+export async function deleteWord(wordId: string) {
+  const deleteWord = await Words.findOne({
+    _id: wordId,
+  });
+  await Words.deleteOne({
+    _id: wordId,
+  });
+  return deleteWord;
+}
