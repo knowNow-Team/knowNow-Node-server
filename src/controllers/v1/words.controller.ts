@@ -30,3 +30,17 @@ export async function getIndividualWord(req: Request, res: Response) {
     res.status(500).json(`Error while get word (${err.message})`);
   }
 }
+
+export async function deleteWord(req: Request, res: Response) {
+  try {
+    const wordId: string = req.params.wordId;
+    if (wordId) {
+      const deleteWord = await wordService.deleteWord(wordId);
+      res.status(200).json({ data: deleteWord });
+    } else {
+      throw Error('no params');
+    }
+  } catch (err) {
+    res.status(500).json(`Error while delete word (${err.message})`);
+  }
+}
