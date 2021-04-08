@@ -47,6 +47,9 @@ export async function getFilterWord(order: string, filter: any) {
     await filterWords.sort({ word: -1 });
   } else if (order === 'NEWEST') {
     await filterWords.sort({ createdAt: -1 });
+  } else if (order === 'RANDOM') {
+    const randomWords = await Words.aggregate([{ $sample: { size: Words.length } }, { $match: { filter: filter } }]);
+    return randomWords;
   }
   return filterWords;
 }
