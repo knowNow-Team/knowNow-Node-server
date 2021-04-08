@@ -17,3 +17,14 @@ export async function addWord(
   await words.save();
   return words;
 }
+
+export async function getIndividualWord(wordId: string) {
+  const individualWord = await Words.findOne({
+    _id: wordId,
+  });
+  if (individualWord) {
+    return individualWord;
+  } else {
+    throw Error('no word');
+  }
+}
