@@ -1,6 +1,9 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import logger from 'morgan';
+import morgan from 'morgan';
+import helmet from 'helmet';
+import compression from 'compression';
+import hpp from 'hpp';
 import cors from 'cors';
 import { normalize } from 'path';
 import Routes from './routes';
@@ -28,8 +31,10 @@ class Application {
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(express.json());
     this.app.use(cookieParser());
+    this.app.use(compression());
     this.app.use(cors());
-    this.app.use(process.env.NODE_ENV === 'production' ? logger('combined') : logger('dev'));
+    this.app.use(hpp());
+    this.app.use(helmet());
   }
 
   private routes(): void {
