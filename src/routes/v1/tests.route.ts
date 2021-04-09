@@ -5,8 +5,10 @@ export default class TestRoute {
 
   constructor() {
     this.router = express();
-    this.router.get('/', (req: Request, res: Response) => {
-      res.send('Hello world');
-    });
+    this.router.get('/', this.getTest);
   }
+
+  private getTest = (req: Request, res: Response) => {
+    res.send('Hello world');
+  };
 }
