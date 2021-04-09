@@ -33,6 +33,7 @@
     "cross-env": "^7.0.3",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
+    "envalid": "^7.1.0",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
     "express-validator": "^6.9.0",
