@@ -4,7 +4,8 @@ import logger from 'morgan';
 import cors from 'cors';
 import { normalize } from 'path';
 import Routes from './routes';
-import 'dotenv';
+import 'dotenv/config';
+import validateEnv from './utils/validateEnv';
 import DBConnection from './configs/dbConnection';
 
 class Application {
@@ -12,6 +13,7 @@ class Application {
 
   constructor() {
     this.app = express();
+    validateEnv();
     this.settings();
     this.middlewares();
     this.routes();
