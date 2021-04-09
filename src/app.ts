@@ -6,25 +6,25 @@ import compression from 'compression';
 import hpp from 'hpp';
 import cors from 'cors';
 import { normalize } from 'path';
-import Routes from './routes';
-import 'dotenv/config';
-import validateEnv from './utils/validateEnv';
+import Routes from './interfaces/routes.interface';
 import DBConnection from './configs/dbConnection';
 import { logger, stream } from './utils/logger';
 
 class Application {
   public app: express.Application;
+  public env: string;
 
-  constructor() {
+  constructor(route: Routes[]) {
     this.app = express();
-    validateEnv();
-    this.settings();
-    this.middlewares();
-    this.routes();
+    this.env = process.env.NODE_ENV;
+
+    this.initializeSettings();
+    this.initializeMiddlewares();
+    this.initializeRoutes(route);
     (() => new DBConnection())();
   }
 
-  private settings(): void {
+  private initializeSettings(): void {
     this.app.set('port', normalize(process.env.PORT || '3000'));
   }
 
@@ -46,8 +46,14 @@ class Application {
     this.app.use(helmet());
   }
 
-  private routes(): void {
-    this.app.use(new Routes().router);
+  public getServer() {
+    return this.app;
+  }
+
+  private initializeRoutes(routes: Routes[]) {
+    routes.forEach((route) => {
+      this.app.use('/', route.router);
+    });
   }
 
   public start(): void {
