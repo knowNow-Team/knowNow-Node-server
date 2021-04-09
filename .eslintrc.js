@@ -5,12 +5,10 @@ module.exports = {
     node: true,
   },
   extends: [
-    'airbnb-base',
-    'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    'plugin:prettier/recommended',
+    // 'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'prettier/@typescript-eslint',
+    'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -29,14 +27,11 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   ignorePatterns: ['build/', 'dist/', 'node_modules/', '.eslintrc.js'],
   rules: {
-    'import/no-unresolved': 'off',
-    'no-shadow': 'off',
-    '@typescript-eslint/no-shadow': ['error'],
-    'no-floating-promises': 0,
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      { js: 'never', jsx: 'never', ts: 'never', tsx: 'never', json: 'never' },
-    ],
+    '@typescript-eslint/explicit-member-accessibility': 0,
+    '@typescript-eslint/explicit-function-return-type': 0,
+    '@typescript-eslint/no-parameter-properties': 0,
+    '@typescript-eslint/interface-name-prefix': 0,
+    '@typescript-eslint/explicit-module-boundary-types': 0,
+    '@typescript-eslint/no-explicit-any': 'off',
   },
 };
