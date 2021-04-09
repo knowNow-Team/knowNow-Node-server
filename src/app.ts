@@ -10,6 +10,7 @@ import Routes from './routes';
 import 'dotenv/config';
 import validateEnv from './utils/validateEnv';
 import DBConnection from './configs/dbConnection';
+import { logger, stream } from './utils/logger';
 
 class Application {
   public app: express.Application;
@@ -27,7 +28,15 @@ class Application {
     this.app.set('port', normalize(process.env.PORT || '3000'));
   }
 
-  private middlewares(): void {
+  private initializeMiddlewares(): void {
+    if (this.env === 'production') {
+      this.app.use(morgan('combined', { stream }));
+      this.app.use(cors({ origin: 'your.domain.com', credentials: true }));
+    } else if (this.env === 'development') {
+      this.app.use(morgan('dev', { stream }));
+      this.app.use(cors({ origin: true, credentials: true }));
+    }
+
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(express.json());
     this.app.use(cookieParser());
@@ -43,7 +52,7 @@ class Application {
 
   public start(): void {
     this.app.listen(this.app.get('port'), () => {
-      console.log(
+      logger.info(
         `!!!App is running at http://localhost:${process.env.PORT || '3000'} in ${process.env.NODE_ENV} mode!!!`,
       );
     });
