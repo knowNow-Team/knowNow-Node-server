@@ -2,7 +2,7 @@ declare global {
   namespace NodeJS {
     export interface ProcessEnv {
       NODE_ENV: 'development' | 'production' | 'test';
-      TOKEN_SECRET_KEY: string;
+      JWT_SECRET: string;
       // MONGO_DB
       MONGO_ID: string;
       MONGO_PWD: string;
