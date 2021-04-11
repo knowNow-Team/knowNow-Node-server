@@ -2,7 +2,7 @@ import { TestDto } from '../../dtos/tests.dto';
 import HttpException from '../../exceptions/HttpException';
 import { ITest } from '../../interfaces/tests.interface';
 import TestModel from '../../models/tests.model';
-import { isEmpty } from '../../utils/util';
+import { resMessage, statusCode, util } from '../../utils';
 
 class TestService {
   public TestModel = new TestModel().getModel();
