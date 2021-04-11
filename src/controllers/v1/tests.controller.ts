@@ -2,6 +2,9 @@ import { NextFunction, Request, Response } from 'express';
 import { TestDto } from '../../dtos/tests.dto';
 import { ITest } from '../../interfaces/tests.interface';
 import TestService from '../../services/v1/tests.service';
+import { resMessage, statusCode } from '../../utils';
+
+const TEST = '시험';
 
 class TestController {
   public TestService = new TestService();
@@ -9,7 +12,7 @@ class TestController {
   public getTests = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const findAllTestsData: ITest[] = await this.TestService.findAllTest();
-      res.status(200).json({ data: findAllTestsData, message: 'findAll' });
+      res.status(statusCode.OK).json({ message: resMessage.X_READ_ALL_SUCCESS(TEST), data: findAllTestsData });
     } catch (error) {
       next(error);
     }
@@ -20,7 +23,7 @@ class TestController {
 
     try {
       const findOneTestData: ITest = await this.TestService.findTestById(testId);
-      res.status(200).json({ data: findOneTestData, message: 'findOne' });
+      res.status(statusCode.OK).json({ message: resMessage.X_READ_SUCCESS(TEST), data: findOneTestData });
     } catch (error) {
       next(error);
     }
@@ -31,7 +34,7 @@ class TestController {
 
     try {
       const createTestData: ITest = await this.TestService.createTest(testData);
-      res.status(201).json({ data: createTestData, message: 'created' });
+      res.status(statusCode.CREATED).json({ message: resMessage.X_CREATE_SUCCESS(TEST), data: createTestData });
     } catch (error) {
       next(error);
     }
@@ -43,7 +46,7 @@ class TestController {
 
     try {
       const updateTestData: ITest = await this.TestService.updateTest(testId, testData);
-      res.status(200).json({ data: updateTestData, message: 'updated' });
+      res.status(statusCode.OK).json({ message: resMessage.X_UPDATE_SUCCESS(TEST), data: updateTestData });
     } catch (error) {
       next(error);
     }
@@ -54,7 +57,7 @@ class TestController {
 
     try {
       const deleteTestData: ITest = await this.TestService.deleteTestData(testId);
-      res.status(200).json({ data: deleteTestData, message: 'deleted' });
+      res.status(statusCode.OK).json({ message: resMessage.X_DELETE_SUCCESS(TEST), data: deleteTestData });
     } catch (error) {
       next(error);
     }
