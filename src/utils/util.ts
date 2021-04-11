@@ -1,3 +1,5 @@
+import { ValidationError } from 'class-validator';
+
 export const isEmpty = (value: any): boolean => {
   if (value === null) {
     return true;
@@ -10,4 +12,14 @@ export const isEmpty = (value: any): boolean => {
   } else {
     return false;
   }
+};
+
+export const createValidationErrorMessage = (errors: ValidationError[]): string => {
+  return errors
+    .map((error: ValidationError) => {
+      if (error.children) return createValidationErrorMessage(error.children);
+      if (error.constraints) return Object.values(error.constraints);
+      return;
+    })
+    .join(', ');
 };
