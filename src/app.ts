@@ -9,6 +9,7 @@ import { normalize } from 'path';
 import Routes from './interfaces/routes.interface';
 import DBConnection from './configs/dbConnection';
 import { logger, stream } from './utils/logger';
+import errorMiddleware from './middlewares/error.middleware';
 
 class Application {
   public app: express.Application;
@@ -21,11 +22,16 @@ class Application {
     this.initializeSettings();
     this.initializeMiddlewares();
     this.initializeRoutes(route);
+    this.initializeErrorHandling();
     (() => new DBConnection())();
   }
 
   private initializeSettings(): void {
     this.app.set('port', normalize(process.env.PORT || '3000'));
+  }
+
+  private initializeErrorHandling() {
+    this.app.use(errorMiddleware);
   }
 
   private initializeMiddlewares(): void {
