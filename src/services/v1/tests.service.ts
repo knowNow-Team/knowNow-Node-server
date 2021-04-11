@@ -5,15 +5,15 @@ import TestModel from '../../models/tests.model';
 import { isEmpty } from '../../utils/util';
 
 class TestService {
-  public tests = new TestModel().getModel();
+  public TestModel = new TestModel().getModel();
 
   public async findAllTest(): Promise<ITest[]> {
-    const tests: ITest[] = await this.tests.find();
+    const tests: ITest[] = await this.TestModel.find();
     return tests;
   }
 
   public async findTestById(testId: string): Promise<ITest> {
-    const findTest = await this.tests.findOne({ _id: testId });
+    const findTest = await this.TestModel.findOne({ _id: testId });
     if (!findTest) throw new HttpException(409, "You're not Test");
 
     return findTest;
@@ -22,21 +22,21 @@ class TestService {
   public async createTest(testData: TestDto): Promise<ITest> {
     if (isEmpty(testData)) throw new HttpException(400, "You're not TestData");
 
-    const createTestData: ITest = await this.tests.create({ ...testData });
+    const createTestData: ITest = await this.TestModel.create({ ...testData });
     return createTestData;
   }
 
   public async updateTest(testId: string, testData: ITest): Promise<ITest> {
     if (isEmpty(testData)) throw new HttpException(400, "You're not TestData");
 
-    const updateTestById = await this.tests.findByIdAndUpdate(testId, { ...testData });
+    const updateTestById = await this.TestModel.findByIdAndUpdate(testId, { ...testData });
     if (!updateTestById) throw new HttpException(409, "You're not Test");
 
     return updateTestById;
   }
 
   public async deleteTestData(testId: string): Promise<ITest> {
-    const deleteTestById = await this.tests.findByIdAndDelete(testId);
+    const deleteTestById = await this.TestModel.findByIdAndDelete(testId);
     if (!deleteTestById) throw new HttpException(409, "You're not Test");
 
     return deleteTestById;
