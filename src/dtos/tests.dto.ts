@@ -1,10 +1,5 @@
 import { IsArray, IsBoolean, IsEnum, IsNumber, IsString, ValidateNested } from 'class-validator';
-
-export enum ETestStatus {
-  memorized = 'memorized', // 외웠어요
-  confused = 'confused', // 헷갈려요
-  doNotKnow = 'doNotKnow', // 몰라요
-}
+import { ETestStatus } from '../interfaces/tests.interface';
 
 export class TestWordListDto {
   @IsString()
@@ -17,11 +12,6 @@ export class TestWordListDto {
   public answer!: string;
 }
 
-export class TestStatusDto {
-  @IsEnum(Object.keys(ETestStatus))
-  public status!: string;
-}
-
 export class TestDto {
   @IsString()
   public testerId!: string;
@@ -29,8 +19,7 @@ export class TestDto {
   @IsString()
   public difficulty!: string;
 
-  @IsArray()
-  @ValidateNested({ each: true })
+  @IsEnum(ETestStatus, { each: true })
   public status!: ETestStatus[];
 
   @IsArray()

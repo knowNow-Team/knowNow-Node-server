@@ -1,5 +1,5 @@
 import { model, Schema, Document, Model } from 'mongoose';
-import { ITest } from '../interfaces/tests.interface';
+import { ITest, ETestStatus } from '../interfaces/tests.interface';
 
 interface TestDocument extends ITest, Document {}
 
@@ -11,7 +11,7 @@ export default class TestModel {
       {
         testerId: { type: String, required: true },
         difficulty: { type: String, required: true },
-        status: { type: [String], required: true, enum: ['memorized', 'confused', 'doNotKnow'] },
+        status: { type: [String], required: true, enum: Object.values(ETestStatus) },
         words: [
           {
             wordId: {
