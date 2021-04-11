@@ -16,10 +16,10 @@ class TestController {
   };
 
   public getTestById = async (req: Request, res: Response, next: NextFunction) => {
-    const TestId: string = req.params.id;
+    const testId: string = req.params.id;
 
     try {
-      const findOneTestData: ITest = await this.TestService.findTestById(TestId);
+      const findOneTestData: ITest = await this.TestService.findTestById(testId);
       res.status(200).json({ data: findOneTestData, message: 'findOne' });
     } catch (error) {
       next(error);
@@ -27,10 +27,10 @@ class TestController {
   };
 
   public createTest = async (req: Request, res: Response, next: NextFunction) => {
-    const TestData: TestDto = req.body;
+    const testData: TestDto = req.body;
 
     try {
-      const createTestData: ITest = await this.TestService.createTest(TestData);
+      const createTestData: ITest = await this.TestService.createTest(testData);
       res.status(201).json({ data: createTestData, message: 'created' });
     } catch (error) {
       next(error);
@@ -38,11 +38,11 @@ class TestController {
   };
 
   public updateTest = async (req: Request, res: Response, next: NextFunction) => {
-    const TestId: string = req.params.id;
-    const TestData: ITest = req.body;
+    const testId: string = req.params.id;
+    const testData: ITest = req.body;
 
     try {
-      const updateTestData: ITest = await this.TestService.updateTest(TestId, TestData);
+      const updateTestData: ITest = await this.TestService.updateTest(testId, testData);
       res.status(200).json({ data: updateTestData, message: 'updated' });
     } catch (error) {
       next(error);
@@ -50,10 +50,10 @@ class TestController {
   };
 
   public deleteTest = async (req: Request, res: Response, next: NextFunction) => {
-    const TestId: string = req.params.id;
+    const testId: string = req.params.id;
 
     try {
-      const deleteTestData: ITest = await this.TestService.deleteTestData(TestId);
+      const deleteTestData: ITest = await this.TestService.deleteTestData(testId);
       res.status(200).json({ data: deleteTestData, message: 'deleted' });
     } catch (error) {
       next(error);
