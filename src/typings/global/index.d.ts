@@ -1,3 +1,5 @@
+import winston from 'winston';
+
 declare global {
   namespace NodeJS {
     export interface ProcessEnv {
@@ -8,6 +10,9 @@ declare global {
       MONGO_PWD: string;
       MONGO_IP: string;
       MONGO_DB: string;
+    }
+    export interface Global {
+      _logger: winston.logger;
     }
   }
   namespace Express {
