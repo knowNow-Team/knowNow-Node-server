@@ -1,14 +1,25 @@
-import express, { Router, Request, Response } from 'express';
+import { Router } from 'express';
+import TestsController from '../../controllers/v1/tests.controller';
+import { TestDto } from '../../dtos/tests.dto';
+import validationMiddleware from '../../middlewares/validation.middleware';
+import IRoute from '../../interfaces/routes.interface';
 
-export default class TestRoute {
-  public router: Router;
+class TestRoute implements IRoute {
+  public path = '/v1/tests';
+  public router = Router();
+  public testsController = new TestsController();
 
   constructor() {
-    this.router = express();
-    this.router.get('/', this.getTest);
+    this.initializeRoutes();
   }
 
-  private getTest = (req: Request, res: Response) => {
-    res.send('Hello world');
-  };
+  private initializeRoutes() {
+    this.router.get(`${this.path}`, this.testsController.getTests);
+    this.router.get(`${this.path}/:id`, this.testsController.getTestById);
+    this.router.post(`${this.path}`, validationMiddleware(TestDto, 'body'), this.testsController.createTest);
+    this.router.put(`${this.path}/:id`, validationMiddleware(TestDto, 'body', true), this.testsController.updateTest);
+    this.router.delete(`${this.path}/:id`, this.testsController.deleteTest);
+  }
 }
+
+export default TestRoute;
