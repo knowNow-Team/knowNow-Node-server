@@ -13,11 +13,11 @@ export default class DBConnection {
     this.connect();
     // 몽구스 커넥션에 이벤트 리스너, 에러 발생 시 에러 내용 기록, 연결 종료 시 재연결 시도
     mongoose.connection.on('error', (error) => {
-      console.error('몽고디비 연결 에러', error);
+      global._logger.error('몽고디비 연결 에러', error);
     });
 
     mongoose.connection.on('disconnected', () => {
-      console.error('몽고디비 연결이 끊겼습니다. 연결을 재시도합니다.');
+      global._logger.error('몽고디비 연결이 끊겼습니다. 연결을 재시도합니다.');
       this.connect();
     });
   }
@@ -31,7 +31,7 @@ export default class DBConnection {
         useCreateIndex: true,
         useUnifiedTopology: true,
       })
-      .then(() => console.log('몽고디비 연결 성공'))
-      .catch((error: Error) => console.log('몽고디비 연결 에러', error?.message));
+      .then(() => global._logger.info('몽고디비 연결 성공'))
+      .catch((error: Error) => global._logger.error('몽고디비 연결 에러', error?.message));
   };
 }
