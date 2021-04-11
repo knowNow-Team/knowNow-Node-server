@@ -19,6 +19,8 @@ class Application {
     this.app = express();
     this.env = process.env.NODE_ENV;
 
+    global._logger = logger;
+
     this.initializeSettings();
     this.initializeMiddlewares();
     this.initializeRoutes(route);
