@@ -47,7 +47,6 @@ class Application {
     this.app.use(express.json());
     this.app.use(cookieParser());
     this.app.use(compression());
-    this.app.use(cors());
     this.app.use(hpp());
     this.app.use(helmet());
   }
