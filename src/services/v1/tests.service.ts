@@ -4,6 +4,8 @@ import { ITest } from '../../interfaces/tests.interface';
 import TestModel from '../../models/tests.model';
 import { resMessage, statusCode, util } from '../../utils';
 
+const TEST = '시험';
+
 class TestService {
   public TestModel = new TestModel().getModel();
 
@@ -14,30 +16,30 @@ class TestService {
 
   public async findTestById(testId: string): Promise<ITest> {
     const findTest = await this.TestModel.findOne({ _id: testId });
-    if (!findTest) throw new HttpException(409, "You're not Test");
+    if (!findTest) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(TEST));
 
     return findTest;
   }
 
   public async createTest(testData: TestDto): Promise<ITest> {
-    if (isEmpty(testData)) throw new HttpException(400, "You're not TestData");
+    if (util.isEmpty(testData)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
 
     const createTestData: ITest = await this.TestModel.create({ ...testData });
     return createTestData;
   }
 
   public async updateTest(testId: string, testData: ITest): Promise<ITest> {
-    if (isEmpty(testData)) throw new HttpException(400, "You're not TestData");
+    if (util.isEmpty(testData)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
 
     const updateTestById = await this.TestModel.findByIdAndUpdate(testId, { ...testData });
-    if (!updateTestById) throw new HttpException(409, "You're not Test");
+    if (!updateTestById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(TEST));
 
     return updateTestById;
   }
 
   public async deleteTestData(testId: string): Promise<ITest> {
     const deleteTestById = await this.TestModel.findByIdAndDelete(testId);
-    if (!deleteTestById) throw new HttpException(409, "You're not Test");
+    if (!deleteTestById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(TEST));
 
     return deleteTestById;
   }
