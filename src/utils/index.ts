@@ -1,5 +1,5 @@
-import resJson from './res_json';
-import resMessage from './res_message';
-import statusCode from './status_code';
+import resJson from './resJson';
+import resMessage from './resMessage';
+import statusCode from './statusCode';
 
 export { resJson, resMessage, statusCode };
