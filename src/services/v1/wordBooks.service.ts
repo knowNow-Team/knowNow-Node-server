@@ -8,3 +8,8 @@ export async function addWordBook(title: Title, owner: Owner) {
   const wordBooks = await WordBooks.find({}).select('-words -__v');
   return wordBooks;
 }
+
+export async function getWordBooks() {
+  const wordBooks = await WordBooks.find({}).select('-words -__v');
+  return wordBooks;
+}
