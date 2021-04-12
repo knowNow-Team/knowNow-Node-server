@@ -6,5 +6,6 @@ const wordBookRouter: Router = express.Router();
 wordBookRouter.post('/', wordBookController.addWordBook);
 wordBookRouter.get('/', wordBookController.getWordBook);
 wordBookRouter.delete('/:wordbookId', wordBookController.deleteWordBook);
+wordBookRouter.put('/:wordbookId', wordBookController.updateWordBook);
 
 export default wordBookRouter;

@@ -32,3 +32,14 @@ export async function deleteWordBook(req: Request, res: Response) {
     res.status(500).json(`Error while delete wordBook (${err.message})`);
   }
 }
+
+export async function updateWordBook(req: Request, res: Response) {
+  try {
+    const wordBookId: string = req.params.wordbookId;
+    const title: Title = req.body.title;
+    const wordBook = await wordBookService.updateWordBook(wordBookId, title);
+    res.status(200).json({ data: wordBook });
+  } catch (err) {
+    res.status(500).json(`Error while update wordBook (${err.message})`);
+  }
+}
