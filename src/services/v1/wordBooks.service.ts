@@ -25,3 +25,8 @@ export async function updateWordBook(wordBookId: string, title: Title) {
   const wordBook = await WordBooks.findOne({ _id: wordBookId }).select('-words -__v');
   return wordBook;
 }
+
+export async function getIndividualWordBook(wordBookId: string) {
+  const wordBook = await WordBooks.findOne({ _id: wordBookId }).select('-__v');
+  return wordBook;
+}

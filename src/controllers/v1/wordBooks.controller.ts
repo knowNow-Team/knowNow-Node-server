@@ -40,6 +40,16 @@ export async function updateWordBook(req: Request, res: Response) {
     const wordBook = await wordBookService.updateWordBook(wordBookId, title);
     res.status(200).json({ data: wordBook });
   } catch (err) {
-    res.status(500).json(`Error while update wordBook (${err.message})`);
+    res.status(500).json(`Error while update wordBok (${err.message})`);
+  }
+}
+
+export async function getIndividualWordBooks(req: Request, res: Response) {
+  try {
+    const wordBookId: string = req.params.wordbookId;
+    const wordBook = await wordBookService.getIndividualWordBook(wordBookId);
+    res.status(200).json({ data: wordBook });
+  } catch (err) {
+    res.status(500).json(`Error while get Individual wordBook (${err.message})`);
   }
 }
