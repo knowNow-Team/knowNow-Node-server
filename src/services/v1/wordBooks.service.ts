@@ -13,3 +13,9 @@ export async function getWordBooks() {
   const wordBooks = await WordBooks.find({}).select('-words -__v');
   return wordBooks;
 }
+
+export async function deleteWordBook(wordBookId: string) {
+  const wordBook = await WordBooks.findOne({ _id: wordBookId }).select('-words -__v');
+  await WordBooks.deleteOne({ _id: wordBookId });
+  return wordBook;
+}
