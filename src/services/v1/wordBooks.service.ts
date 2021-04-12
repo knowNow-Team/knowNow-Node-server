@@ -22,6 +22,6 @@ export async function deleteWordBook(wordBookId: string) {
 
 export async function updateWordBook(wordBookId: string, title: Title) {
   await WordBooks.updateOne({ _id: wordBookId }, { title: title });
-  const wordBook = await WordBooks.findOne({ _id: wordBookId });
+  const wordBook = await WordBooks.findOne({ _id: wordBookId }).select('-words -__v');
   return wordBook;
 }
