@@ -1,6 +1,9 @@
 // /api/v1 라우팅
 import express, { Router } from 'express';
+import wordBookRouter from './wordBooks.route';
 
-const router: Router = express.Router();
+const apiV1Router: Router = express.Router();
 
-export default router;
+apiV1Router.use('/wordbooks', wordBookRouter);
+
+export default apiV1Router;
