@@ -5,6 +5,6 @@ export async function addWordBook(title: Title, owner: Owner) {
   wordBook.title = title;
   wordBook.owner = owner;
   await wordBook.save();
-  const wordBooks = await WordBooks.find({});
+  const wordBooks = await WordBooks.find({}).select('-words -__v');
   return wordBooks;
 }
