@@ -7,5 +7,6 @@ wordBookRouter.post('/', wordBookController.addWordBook);
 wordBookRouter.get('/', wordBookController.getWordBook);
 wordBookRouter.delete('/:wordbookId', wordBookController.deleteWordBook);
 wordBookRouter.put('/:wordbookId', wordBookController.updateWordBook);
+wordBookRouter.get('/:wordbookId', wordBookController.getIndividualWordBooks);
 
 export default wordBookRouter;
