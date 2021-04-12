@@ -13,3 +13,12 @@ export async function addWordBook(req: Request, res: Response) {
     res.status(500).json(`Error while add wordBook (${err.message})`);
   }
 }
+
+export async function getWordBook(req: Request, res: Response) {
+  try {
+    const wordBooks = await wordBookService.getWordBooks();
+    res.status(200).json({ data: wordBooks });
+  } catch (err) {
+    res.status(500).json(`Error while get wordBook (${err.message})`);
+  }
+}
