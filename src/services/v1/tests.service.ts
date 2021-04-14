@@ -2,7 +2,7 @@ import { TestDto } from '../../dtos/tests.dto';
 import HttpException from '../../exceptions/HttpException';
 import { ITest } from '../../interfaces/tests.interface';
 import TestModel from '../../models/tests.model';
-import { resMessage, statusCode, util } from '../../utils';
+import { resMessage, statusCode } from '../../utils';
 
 const TEST = '시험';
 
@@ -22,15 +22,11 @@ class TestService {
   }
 
   public async createTest(testData: TestDto): Promise<ITest> {
-    if (util.isEmpty(testData)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
-
     const createTestData: ITest = await this.TestModel.create({ ...testData });
     return createTestData;
   }
 
   public async updateTest(testId: string, testData: ITest): Promise<ITest> {
-    if (util.isEmpty(testData)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
-
     const updateTestById = await this.TestModel.findByIdAndUpdate(testId, { ...testData });
     if (!updateTestById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(TEST));
 
