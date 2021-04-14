@@ -18,3 +18,8 @@ export interface ITest {
   wordbooks: string[]; // 영어단어장 리스트
   score: number; // 점수
 }
+
+export enum ETestDifficulty {
+  hard = 'hard', // 쉬움
+  easy = 'easy', // 어려움
+}
