@@ -9,13 +9,13 @@ const TEST = '시험';
 class TestService {
   public TestModel = new TestModel().getModel();
 
-  public async findAllTest(): Promise<ITest[]> {
-    const tests: ITest[] = await this.TestModel.find();
+  public async findAllTest(testerId: number): Promise<ITest[]> {
+    const tests: ITest[] = await this.TestModel.find({ testerId });
     return tests;
   }
 
-  public async findTestById(testId: string): Promise<ITest> {
-    const findTest = await this.TestModel.findOne({ _id: testId });
+  public async findTestById(testId: string, testerId: number): Promise<ITest> {
+    const findTest = await this.TestModel.findOne({ _id: testId, testerId });
     if (!findTest) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(TEST));
 
     return findTest;
