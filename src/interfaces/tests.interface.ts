@@ -11,8 +11,10 @@ export enum ETestStatus {
 }
 
 export interface ITest {
-  testerId: string; // 시험친 유저
+  testerId: number; // 시험친 유저
   difficulty: string; // 난이도
+  wordTotalCount: number; // 단어 전체 수
+  correctAnswerCount: number; // 정답 수
   status: ETestStatus[]; // 몰라요, 헷갈려요, 다외웠어요 타입
   words: IWord[]; // 영어단어 리스트
   wordbooks: string[]; // 영어단어장 리스트
