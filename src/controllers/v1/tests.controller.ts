@@ -33,6 +33,7 @@ class TestController {
     const testData: TestDto = req.body;
 
     try {
+      if (util.isEmpty(testData)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
       const createTestData: ITest = await this.TestService.createTest(testData);
       res.status(statusCode.CREATED).json({ message: resMessage.X_CREATE_SUCCESS(TEST), data: createTestData });
     } catch (error) {
@@ -45,6 +46,7 @@ class TestController {
     const testData: ITest = req.body;
 
     try {
+      if (util.isEmpty(testData)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
       const updateTestData: ITest = await this.TestService.updateTest(testId, testData);
       res.status(statusCode.OK).json({ message: resMessage.X_UPDATE_SUCCESS(TEST), data: updateTestData });
     } catch (error) {
