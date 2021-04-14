@@ -1,17 +1,19 @@
 import { model, Schema, Document, Model } from 'mongoose';
 import { ITest, ETestStatus } from '../interfaces/tests.interface';
 
-interface TestDocument extends ITest, Document {}
-
 export default class TestModel {
-  private model: Model<TestDocument>;
+  private model: Model<ITest & Document>;
 
   constructor() {
     const TestSchema: Schema = new Schema(
       {
-        testerId: { type: String, required: true },
+        testerId: { type: Number, required: true },
         difficulty: { type: String, required: true },
         status: { type: [String], required: true, enum: Object.values(ETestStatus) },
+        score: { type: String, required: true },
+        wordTotalCount: { type: Number, required: true },
+        correctAnswerCount: { type: Number, required: true },
+        wordbooks: { type: [String], required: true },
         words: [
           {
             wordId: {
@@ -29,17 +31,15 @@ export default class TestModel {
             },
           },
         ],
-        wordbooks: { type: [String], required: true },
-        score: { type: String, required: true },
       },
       {
         timestamps: true,
       },
     );
-    this.model = model<TestDocument>('Tests', TestSchema);
+    this.model = model<ITest & Document>('Tests', TestSchema);
   }
 
-  public getModel(): Model<TestDocument> {
+  public getModel(): Model<ITest & Document> {
     return this.model;
   }
 }
