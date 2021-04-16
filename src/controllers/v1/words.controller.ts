@@ -1,48 +1,48 @@
-import { Request, Response } from 'express';
-import * as wordService from '../../services/v1/words.service';
-import { Word, WordClass, PronounceVoicePath, Meaning, Filter } from '../../models/words.model';
+import { NextFunction, Request, Response } from 'express';
+import { resMessage, statusCode, util } from '../../utils';
+import HttpException from '../../exceptions/HttpException';
+import { WordDto } from '../../dtos/words.dto';
+import { IWord } from '../../interfaces/words.interface';
+import WordService from '../../services/v1/words.service';
 
-export async function getIndividualWord(req: Request, res: Response) {
-  try {
+const WORD = '단어';
+
+class WordController {
+  public WordService = new WordService();
+
+  public getWordById = async (req: Request, res: Response, next: NextFunction) => {
     const wordId: string = req.params.wordId;
-    if (wordId) {
-      const individualWord = await wordService.getIndividualWord(wordId);
-      res.status(200).json({ data: individualWord });
-    } else {
-      throw Error('no params');
+    try {
+      const findOneWordData: IWord = await this.WordService.findWordById(wordId);
+      return res.status(statusCode.OK).json({ message: resMessage.X_READ_SUCCESS(WORD), data: findOneWordData });
+    } catch (err) {
+      next(err);
     }
-  } catch (err) {
-    res.status(500).json(`Error while get word (${err.message})`);
-  }
-}
+  };
 
-export async function deleteWord(req: Request, res: Response) {
-  try {
+  public updateWord = async (req: Request, res: Response, next: NextFunction) => {
     const wordId: string = req.params.wordId;
-    if (wordId) {
-      const deleteWord = await wordService.deleteWord(wordId);
-      res.status(200).json({ data: deleteWord });
-    } else {
-      throw Error('no params');
+    const wordData: IWord = req.body; // 추후 토큰으로 받으면 유효성 검사해서 업데이트 할 것
+    try {
+      if (util.isEmpty(wordData)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
+      const updateWordData: IWord = await this.WordService.updateWord(wordId, wordData);
+      return res.status(statusCode.OK).json({ message: resMessage.X_UPDATE_SUCCESS(WORD), data: updateWordData });
+    } catch (err) {
+      next(err);
     }
-  } catch (err) {
-    res.status(500).json(`Error while delete word (${err.message})`);
-  }
+  };
+
+  public deleteWord = async (req: Request, res: Response, next: NextFunction) => {
+    const wordId: string = req.params.wordId;
+    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+
+    try {
+      const updateWordById = await this.WordService.deleteWordData(wordId);
+      return res.status(statusCode.OK).json({ message: resMessage.X_DELETE_SUCCESS(WORD), data: updateWordById });
+    } catch (err) {
+      next(err);
+    }
+  };
 }
 
-export async function getFilterWord(req: Request, res: Response) {
-  try {
-    const query = req.query;
-    // wordBookId는 추후 추가
-    const order: string = String(query.order); // 정렬(ex. 오름차순)
-    const filter: string = String(query.filter);
-    if (order && filter) {
-      const word = await wordService.getFilterWord(order, filter);
-      res.status(200).json({ data: word });
-    } else {
-      throw Error('no query');
-    }
-  } catch (err) {
-    res.status(500).json(`Error while get words (${err.message})`);
-  }
-}
+export default WordController;
