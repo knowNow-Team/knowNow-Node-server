@@ -4,7 +4,7 @@ import validationMiddleware from '../../middlewares/validation.middleware';
 import WordBookController from '../../controllers/v1/wordBooks.controller';
 
 class WordBookRoute implements IRoute {
-  public path = '/v1/words';
+  public path = '/v1/wordbooks';
   public router = Router();
   public wordBookController = new WordBookController();
 
