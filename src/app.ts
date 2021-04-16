@@ -6,12 +6,10 @@ import compression from 'compression';
 import hpp from 'hpp';
 import cors from 'cors';
 import { normalize } from 'path';
-
 import Routes from './interfaces/routes.interface';
 import DBConnection from './configs/dbConnection';
 import { logger, stream } from './utils/logger';
 import errorMiddleware from './middlewares/error.middleware';
-import 'dotenv';
 
 class Application {
   public app: express.Application;
