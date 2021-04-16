@@ -1,10 +1,21 @@
-import express, { Router } from 'express';
-import * as wordController from '../../controllers/v1/words.controller';
+import { Router } from 'express';
+import IRoute from '../../interfaces/routes.interface';
+import validationMiddleware from '../../middlewares/validation.middleware';
+import WordController from '../../controllers/v1/words.controller';
 
-const wordRouter: Router = express.Router();
+class WordRoute implements IRoute {
+  public path = '/v1/words';
+  public router = Router();
+  public wordsController = new WordController();
 
-wordRouter.get('/:wordId', wordController.getIndividualWord);
-wordRouter.get('/', wordController.getFilterWord);
-wordRouter.delete('/:wordId', wordController.deleteWord);
+  constructor() {
+    this.initializeRoutes();
+  }
 
-export default wordRouter;
+  private initializeRoutes() {
+    this.router.get(`${this.path}:wordId`, this.wordsController.getWordById);
+    this.router.put(`${this.path}:wordId`, this.wordsController.updateWord);
+    this.router.delete(`${this.path}:wordId`, this.wordsController.deleteWord);
+  }
+}
+export default WordRoute;
