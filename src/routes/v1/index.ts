@@ -1,4 +1,4 @@
-// /api/v1 라우팅
+// /v1 라우팅
 import express, { Router } from 'express';
 import wordBookRouter from './wordBooks.route';
 import wordRouter from './words.route';
