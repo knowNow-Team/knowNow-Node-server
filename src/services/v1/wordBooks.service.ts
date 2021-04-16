@@ -1,31 +1,40 @@
-import WordBooks, { Title, Owner, IWordBook } from '../../models/wordBooks.model';
+import HttpException from '../../exceptions/HttpException';
+import { resMessage, statusCode } from '../../utils';
+import { WordBookDto } from '../../dtos/wordBooks.dto';
+import { IWordBook } from '../../interfaces/wordBooks.interface';
+import WordBookModel from '../../models/wordBooks.model';
 
-export async function addWordBook(title: Title, owner: Owner) {
-  const wordBook: IWordBook = new WordBooks();
-  wordBook.title = title;
-  wordBook.owner = owner;
-  await wordBook.save();
-  const wordBooks = await WordBooks.find({}).select('-words -__v');
-  return wordBooks;
+const WORDBOOK = '단어장';
+
+class WordBookService {
+  public WordBookModel = new WordBookModel().getModel();
+
+  public async findAllWordBook(userId: number): Promise<IWordBook[]> {
+    const wordBooks: IWordBook[] = await this.WordBookModel.find({ userId });
+    return wordBooks;
+  }
+
+  public async findWordBookById(wordBookId: string, userId: number): Promise<IWordBook> {
+    const findWordBook = await this.WordBookModel.findOne({ _id: wordBookId, userId });
+    if (!findWordBook) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
+    return findWordBook;
+  }
+
+  public async deleteWordBookData(wordBookId: string, userId: number): Promise<IWordBook> {
+    const deleteWordBookById = await this.WordBookModel.findOneAndDelete({ _id: wordBookId, userId });
+    if (!deleteWordBookById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
+
+    return deleteWordBookById;
+  }
+
+  public async updateWordBook(wordBookId: string, userId: number, wordBookData: IWordBook): Promise<IWordBook> {
+    const updateWordBookById = await this.WordBookModel.findOneAndUpdate(
+      { _id: wordBookId, userId },
+      { ...wordBookData },
+    );
+    if (!updateWordBookById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
+    return updateWordBookById;
+  }
 }
 
-export async function getWordBooks() {
-  const wordBooks = await WordBooks.find({}).select('-words -__v');
-  return wordBooks;
-}
-
-export async function deleteWordBook(wordBookId: string) {
-  const wordBook = await WordBooks.findOne({ _id: wordBookId }).select('-words -__v');
-  await WordBooks.deleteOne({ _id: wordBookId });
-  return wordBook;
-}
-
-export async function updateWordBook(wordBookId: string, title: Title) {
-  const wordBook = await WordBooks.findOneAndUpdate({ _id: wordBookId }, { title: title }).select('-words -__v');
-  return wordBook;
-}
-
-export async function getIndividualWordBook(wordBookId: string) {
-  const wordBook = await WordBooks.findOne({ _id: wordBookId }).select('-__v');
-  return wordBook;
-}
+export default WordBookService;
