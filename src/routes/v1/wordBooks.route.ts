@@ -1,12 +1,22 @@
-import express, { Router } from 'express';
-import * as wordBookController from '../../controllers/v1/wordBooks.controller';
+import { Router } from 'express';
+import IRoute from '../../interfaces/routes.interface';
+import validationMiddleware from '../../middlewares/validation.middleware';
+import WordBookController from '../../controllers/v1/wordBooks.controller';
 
-const wordBookRouter: Router = express.Router();
+class WordBookRoute implements IRoute {
+  public path = '/v1/words';
+  public router = Router();
+  public wordBookController = new WordBookController();
 
-wordBookRouter.post('/', wordBookController.addWordBook);
-wordBookRouter.get('/', wordBookController.getWordBook);
-wordBookRouter.delete('/:wordbookId', wordBookController.deleteWordBook);
-wordBookRouter.put('/:wordbookId', wordBookController.updateWordBook);
-wordBookRouter.get('/:wordbookId', wordBookController.getIndividualWordBooks);
+  constructor() {
+    this.initializeRoutes();
+  }
+  private initializeRoutes() {
+    this.router.get(`${this.path}`, this.wordBookController.getWordBooks);
+    this.router.get(`${this.path}:wordBookId`, this.wordBookController.getWordBookById);
+    this.router.put(`${this.path}:wordBookId`, this.wordBookController.updateWordBook);
+    this.router.delete(`${this.path}:wordBookId`, this.wordBookController.deleteWordBook);
+  }
+}
 
-export default wordBookRouter;
+export default WordBookRoute;
