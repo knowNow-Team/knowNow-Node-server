@@ -1,33 +1,32 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import { model, Schema, Document, Model } from 'mongoose';
+import { IWordBook } from '../interfaces/wordBooks.interface';
 
-export interface Title extends Document {
-  title: string;
+export default class WordBookModel {
+  private model: Model<IWordBook & Document>;
+
+  constructor() {
+    const WordBookSchema: Schema = new Schema(
+      {
+        title: { type: String, required: true },
+        owner: { type: Number, required: true },
+        words: [
+          {
+            wordId: {
+              // type: Schema.Types.ObjectId,
+              type: String,
+              // ref: 'Words',
+            },
+          },
+        ],
+      },
+      {
+        timestamps: true,
+      },
+    );
+    this.model = model<IWordBook & Document>('WordBooks', WordBookSchema);
+  }
+
+  public getModel(): Model<IWordBook & Document> {
+    return this.model;
+  }
 }
-
-export interface Owner extends Document {
-  owner: number;
-}
-
-export interface IWordBook extends Document {
-  title: Title;
-  owner: Owner;
-}
-
-const WordBookSchema: Schema = new Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  words: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Words',
-    },
-  ],
-  owner: {
-    type: String,
-    required: true,
-  },
-});
-
-export default mongoose.model<IWordBook>('WordBooks', WordBookSchema);
