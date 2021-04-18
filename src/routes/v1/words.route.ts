@@ -13,9 +13,9 @@ class WordRoute implements IRoute {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}:wordId`, this.wordsController.getWordById);
-    this.router.put(`${this.path}:wordId`, this.wordsController.updateWord);
-    this.router.delete(`${this.path}:wordId`, this.wordsController.deleteWord);
+    this.router.get(`${this.path}/:wordId`, this.wordsController.getWordById);
+    this.router.put(`${this.path}/:wordId`, this.wordsController.updateWord);
+    this.router.delete(`${this.path}/:wordId`, this.wordsController.deleteWord);
   }
 }
 export default WordRoute;
