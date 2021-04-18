@@ -2,67 +2,67 @@ import { NextFunction, Request, Response } from 'express';
 import HttpException from '../../exceptions/HttpException';
 import { WordBookDto } from '../../dtos/wordBooks.dto';
 import { IWordBook } from '../../interfaces/wordBooks.interface';
-import WordBookService from '../../services/v1/wordBooks.service';
+import WordbookService from '../../services/v1/wordBooks.service';
 import { resMessage, statusCode, util } from '../../utils';
 
 const WORDBOOK = '단어장';
 
-class WordBookController {
-  public WordBookService = new WordBookService();
+class WordbookController {
+  public WordbookService = new WordbookService();
 
-  public getWordBooks = async (req: Request, res: Response, next: NextFunction) => {
+  public getWordbooks = async (req: Request, res: Response, next: NextFunction) => {
     const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
     try {
-      const findAllWordBooksData: IWordBook[] = await this.WordBookService.findAllWordBook(userId);
+      const findAllWordbooksData: IWordBook[] = await this.WordbookService.findAllWordbook(userId);
       return res
         .status(statusCode.OK)
-        .json({ message: resMessage.X_READ_ALL_SUCCESS(WORDBOOK), data: findAllWordBooksData });
+        .json({ message: resMessage.X_READ_ALL_SUCCESS(WORDBOOK), data: findAllWordbooksData });
     } catch (err) {
       next(err);
     }
   };
 
-  public getWordBookById = async (req: Request, res: Response, next: NextFunction) => {
-    const wordBookId: string = req.params.wordBookId;
+  public getWordbookById = async (req: Request, res: Response, next: NextFunction) => {
+    const wordbookId: string = req.params.wordbookId;
     const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
     try {
-      const findOneWordBookData: IWordBook = await this.WordBookService.findWordBookById(wordBookId, userId);
+      const findOneWordbookData: IWordBook = await this.WordbookService.findWordbookById(wordbookId, userId);
       return res
         .status(statusCode.OK)
-        .json({ message: resMessage.X_READ_SUCCESS(WORDBOOK), data: findOneWordBookData });
+        .json({ message: resMessage.X_READ_SUCCESS(WORDBOOK), data: findOneWordbookData });
     } catch (err) {
       next(err);
     }
   };
 
-  public deleteWordBook = async (req: Request, res: Response, next: NextFunction) => {
-    const wordBookId: string = req.params.wordBookId;
+  public deleteWordbook = async (req: Request, res: Response, next: NextFunction) => {
+    const wordbookId: string = req.params.wordbookId;
     const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
     try {
-      const deleteWordBookData = await this.WordBookService.deleteWordBookData(wordBookId, userId);
+      const deleteWordbookData = await this.WordbookService.deleteWordbookData(wordbookId, userId);
       return res
         .status(statusCode.OK)
-        .json({ message: resMessage.X_DELETE_SUCCESS(WORDBOOK), data: deleteWordBookData });
+        .json({ message: resMessage.X_DELETE_SUCCESS(WORDBOOK), data: deleteWordbookData });
     } catch (err) {
       next(err);
     }
   };
 
-  public updateWordBook = async (req: Request, res: Response, next: NextFunction) => {
-    const wordBookId: string = req.params.wordBookId;
+  public updateWordbook = async (req: Request, res: Response, next: NextFunction) => {
+    const wordbookId: string = req.params.wordbookId;
     const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
-    const wordBookData: IWordBook = req.body;
+    const wordbookData: IWordBook = req.body;
     try {
-      if (util.isEmpty(wordBookData)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
+      if (util.isEmpty(wordbookData)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
 
-      const updateWordBookData: IWordBook = await this.WordBookService.updateWordBook(wordBookId, userId, wordBookData);
+      const updateWordbookData: IWordBook = await this.WordbookService.updateWordbook(wordbookId, userId, wordbookData);
       return res
         .status(statusCode.OK)
-        .json({ message: resMessage.X_UPDATE_SUCCESS(WORDBOOK), data: updateWordBookData });
+        .json({ message: resMessage.X_UPDATE_SUCCESS(WORDBOOK), data: updateWordbookData });
     } catch (err) {
       next(err);
     }
   };
 }
 
-export default WordBookController;
+export default WordbookController;
