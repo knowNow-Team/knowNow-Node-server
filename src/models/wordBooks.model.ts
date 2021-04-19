@@ -1,5 +1,6 @@
 import { model, Schema, Document, Model } from 'mongoose';
 import { IWordBook } from '../interfaces/wordBooks.interface';
+import { EFilter } from '../interfaces/words.interface';
 
 export default class WordBookModel {
   private model: Model<IWordBook & Document>;
@@ -15,6 +16,10 @@ export default class WordBookModel {
               // type: Schema.Types.ObjectId,
               type: String,
               // ref: 'Words',
+            },
+            filter: {
+              type: String,
+              enum: Object.values(EFilter),
             },
           },
         ],
