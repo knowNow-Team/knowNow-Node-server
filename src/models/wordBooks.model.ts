@@ -20,6 +20,7 @@ export default class WordBookModel {
             filter: {
               type: String,
               enum: Object.values(EFilter),
+              default: 'doNotKnow',
             },
           },
         ],
