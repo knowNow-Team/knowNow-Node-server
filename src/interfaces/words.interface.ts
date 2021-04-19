@@ -2,7 +2,7 @@ export interface IWord {
   word: string;
   meaning: string[];
   wordClass: EWordClass;
-  filter: EFilter[];
+  filter: EFilter;
   pronounceVoicePath: string;
 }
 
