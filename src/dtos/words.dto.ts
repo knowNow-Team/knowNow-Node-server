@@ -5,11 +5,11 @@ export class WordDto {
   @IsNumber()
   public userId!: number;
 
-  @IsEnum(EWordClass, { each: true })
+  @IsEnum(EWordClass)
   public wordClass!: EWordClass;
 
-  @IsEnum(EFilter, { each: true })
-  public filter!: EFilter[];
+  @IsEnum(EFilter)
+  public filter!: EFilter;
 
   @IsString()
   public word!: string;
