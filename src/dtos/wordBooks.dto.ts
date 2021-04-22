@@ -1,7 +1,7 @@
 import { IsNumber, IsString } from 'class-validator';
-import { EFilter } from '../interfaces/wordBooks.interface';
+import { EFilter } from '../interfaces/wordbooks.interface';
 
-export class WordBookDto {
+export class WordbookDto {
   @IsString()
   public title!: string;
 
@@ -9,7 +9,7 @@ export class WordBookDto {
   public owner!: number;
 }
 
-export class WordBookListDto {
+export class WordbookListDto {
   @IsString()
   public wordId!: string;
 

@@ -1,11 +1,11 @@
 import { model, Schema, Document, Model } from 'mongoose';
-import { EFilter, IWordBook } from '../interfaces/wordBooks.interface';
+import { EFilter, IWordbook } from '../interfaces/wordbooks.interface';
 
-export default class WordBookModel {
-  private model: Model<IWordBook & Document>;
+export default class WordbookModel {
+  private model: Model<IWordbook & Document>;
 
   constructor() {
-    const WordBookSchema: Schema = new Schema(
+    const WordbookSchema: Schema = new Schema(
       {
         title: { type: String, required: true },
         owner: { type: Number, required: true },
@@ -28,10 +28,10 @@ export default class WordBookModel {
         timestamps: true,
       },
     );
-    this.model = model<IWordBook & Document>('WordBooks', WordBookSchema);
+    this.model = model<IWordbook & Document>('Wordbooks', WordbookSchema);
   }
 
-  public getModel(): Model<IWordBook & Document> {
+  public getModel(): Model<IWordbook & Document> {
     return this.model;
   }
 }
