@@ -16,6 +16,7 @@ class WordBookRoute implements IRoute {
     this.router.get(`${this.path}/:wordbookId`, this.wordBookController.getWordbookById);
     this.router.put(`${this.path}/:wordbookId`, this.wordBookController.updateWordbook);
     this.router.delete(`${this.path}/:wordbookId`, this.wordBookController.deleteWordbook);
+    this.router.post(`${this.path}`, this.wordBookController.addWordBook);
   }
 }
 
