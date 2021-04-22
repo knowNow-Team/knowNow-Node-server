@@ -10,6 +10,7 @@ export default class WordModel {
         word: { type: String, required: true },
         meaning: { type: [String], required: true },
         wordClass: { type: String, required: true, enum: Object.values(EWordClass) },
+        phonics: { type: String, required: true },
         // pronounceVoicePath: { type: String, required: true },
       },
       {
