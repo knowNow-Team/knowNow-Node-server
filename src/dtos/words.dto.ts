@@ -5,9 +5,6 @@ export class WordDto {
   @IsEnum(EWordClass)
   public wordClass!: EWordClass;
 
-  @IsEnum(EFilter)
-  public filter!: EFilter;
-
   @IsString()
   public word!: string;
 
