@@ -4,6 +4,7 @@ export interface IWord {
   wordClass: EWordClass;
   filter: EFilter;
   pronounceVoicePath: string;
+  phonics: string;
 }
 
 export enum EWordClass {
