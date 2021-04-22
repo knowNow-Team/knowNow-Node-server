@@ -10,18 +10,18 @@ class WordBookService {
   public WordBookModel = new WordBookModel().getModel();
 
   public async findAllWordbook(userId: number): Promise<IWordBook[]> {
-    const wordBooks: IWordBook[] = await this.WordBookModel.find({ userId });
+    const wordBooks: IWordBook[] = await this.WordBookModel.find({ owner: userId });
     return wordBooks;
   }
 
   public async findWordbookById(wordbookId: string, userId: number): Promise<IWordBook> {
-    const findWordBook = await this.WordBookModel.findOne({ _id: wordbookId, userId });
+    const findWordBook = await this.WordBookModel.findOne({ _id: wordbookId, owner: userId });
     if (!findWordBook) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
     return findWordBook;
   }
 
   public async deleteWordbookData(wordbookId: string, userId: number): Promise<IWordBook> {
-    const deleteWordBookById = await this.WordBookModel.findOneAndDelete({ _id: wordbookId, userId });
+    const deleteWordBookById = await this.WordBookModel.findOneAndDelete({ _id: wordbookId, owner: userId });
     if (!deleteWordBookById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
 
     return deleteWordBookById;
