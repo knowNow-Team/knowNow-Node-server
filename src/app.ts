@@ -7,7 +7,7 @@ import hpp from 'hpp';
 import cors from 'cors';
 import { normalize } from 'path';
 import Routes from './interfaces/routes.interface';
-import DBConnection from './configs/dbConnection';
+import DBConnection from './configs/mongo.config';
 import { logger, stream } from './utils/logger';
 import errorMiddleware from './middlewares/error.middleware';
 
