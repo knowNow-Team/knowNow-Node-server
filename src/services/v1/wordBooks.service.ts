@@ -31,7 +31,13 @@ class WordBookService {
     await this.WordBookModel.findOneAndUpdate({ _id: wordbookId, owner: userId }, { ...wordBookData });
     const updateWordBookById = await this.WordBookModel.findOne({ _id: wordbookId, owner: userId });
     if (!updateWordBookById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
+
     return updateWordBookById;
+  }
+
+  public async addWordbook(userId: number, wordbookData: WordBookDto): Promise<IWordBook> {
+    const wordbooks: IWordBook = await this.WordBookModel.create({ ...wordbookData });
+    return wordbooks;
   }
 }
 
