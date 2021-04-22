@@ -14,6 +14,6 @@ export class WordDto {
   @IsArray()
   public meaning!: string[];
 
-  @IsString()
-  public pronounceVoicePath!: string;
+  // @IsString()
+  // public pronounceVoicePath!: string;
 }
