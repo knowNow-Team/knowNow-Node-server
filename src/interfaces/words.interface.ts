@@ -17,9 +17,3 @@ export enum EWordClass {
   conjunctions = 'conjunctions', // 접촉사
   interjections = 'interjections', // 감탄사
 }
-
-export enum EFilter {
-  memorized = 'memorized', // 외웠어요
-  confused = 'confused', // 헷갈려요
-  doNotKnow = 'doNotKnow', // 몰라요
-}
