@@ -1,6 +1,5 @@
 import { model, Schema, Document, Model } from 'mongoose';
-import { IWordBook } from '../interfaces/wordBooks.interface';
-import { EFilter } from '../interfaces/words.interface';
+import { EFilter, IWordBook } from '../interfaces/wordBooks.interface';
 
 export default class WordBookModel {
   private model: Model<IWordBook & Document>;

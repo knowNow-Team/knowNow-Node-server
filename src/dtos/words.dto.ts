@@ -1,5 +1,5 @@
 import { IsArray, IsEnum, IsNumber, IsString, ValidateNested } from 'class-validator';
-import { EWordClass, EFilter } from '../interfaces/words.interface';
+import { EWordClass } from '../interfaces/words.interface';
 
 export class WordDto {
   @IsEnum(EWordClass)
