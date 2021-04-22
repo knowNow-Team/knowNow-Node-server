@@ -1,32 +1,45 @@
 {
   "compilerOptions": {
-    /* Basic Options */
-    "lib": ["ES5", "ES6"],
-    "target": "es6" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */,
-    "module": "commonjs" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */,
-    "sourceMap": true /* Generates corresponding '.map' file. */,
-    "outDir": "./dist" /* Redirect output structure to the directory. */,
-    "rootDir": "./src" /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */,
-
-    /* Strict Type-Checking Options */
-    "strict": true /* Enable all strict type-checking options. */,
-
-    /* Module Resolution Options */
-    "moduleResolution": "node" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
+    "lib": ["es2017", "esnext.asynciterable"],
+    "target": "es2017",
+    "module": "commonjs" ,
+    "sourceMap": true ,
+    "outDir": "./dist" ,
+    "rootDir": "./src" ,
+    "strict": true ,
+    "moduleResolution": "node" ,
     "typeRoots": [
       "./node_modules/@types",
       "src/typings"
-    ] /* List of folders to include type definitions from. */,
-    "esModuleInterop": true /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
-
-    /* Experimental Options */
-    "experimentalDecorators": true /* Enables experimental support for ES7 decorators. */,
-    "emitDecoratorMetadata": true /* Enables experimental support for emitting type metadata for decorators. */,
-
-    /* Advanced Options */
-    "skipLibCheck": true /* Skip type checking of declaration files. */,
-    "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
+    ] ,
+    "declaration": true,
+    "noEmit": false,
+    "pretty": true,
+    "esModuleInterop": true ,
+    // "strictPropertyInitialization": false,
+    "resolveJsonModule": true,
+    "importHelpers": true,
+    "experimentalDecorators": true ,
+    "emitDecoratorMetadata": true ,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true ,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "src",
+    "paths": {
+      "@app": ["app"],
+      "@controllers/*": ["controllers/*"],
+      "@configs/*": ["configs/*"],
+      "@dtos/*": ["dtos/*"],
+      "@entity/*": ["entity/*"],
+      "@exceptions/*": ["exceptions/*"],
+      "@interfaces/*": ["interfaces/*"],
+      "@middlewares/*": ["middlewares/*"],
+      "@models/*": ["models/*"],
+      "@routes/*": ["routes/*"],
+      "@services/*": ["services/*"],
+      "@utils/*": ["utils/*"]
+    }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*.ts", "src/**/*.json", ".env"],
   "exclude": ["node_modules", "**/*.test.ts"]
 }
