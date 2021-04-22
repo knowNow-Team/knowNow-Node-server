@@ -1,44 +1,45 @@
 import HttpException from '../../exceptions/HttpException';
 import { resMessage, statusCode } from '../../utils';
-import { WordBookDto } from '../../dtos/wordBooks.dto';
-import { IWordBook } from '../../interfaces/wordBooks.interface';
-import WordBookModel from '../../models/wordBooks.model';
+import { WordbookDto } from '../../dtos/wordbooks.dto';
+import { IWordbook } from '../../interfaces/wordbooks.interface';
+import WordbookModel from '../../models/wordbooks.model';
+import { IWord } from '../../interfaces/tests.interface';
 
 const WORDBOOK = '단어장';
 
-class WordBookService {
-  public WordBookModel = new WordBookModel().getModel();
+class WordbookService {
+  public WordbookModel = new WordbookModel().getModel();
 
-  public async findAllWordbook(userId: number): Promise<IWordBook[]> {
-    const wordBooks: IWordBook[] = await this.WordBookModel.find({ owner: userId });
-    return wordBooks;
+  public async findAllWordbook(userId: number): Promise<IWordbook[]> {
+    const wordbooks: IWordbook[] = await this.WordbookModel.find({ owner: userId });
+    return wordbooks;
   }
 
-  public async findWordbookById(wordbookId: string, userId: number): Promise<IWordBook> {
-    const findWordBook = await this.WordBookModel.findOne({ _id: wordbookId, owner: userId });
-    if (!findWordBook) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
-    return findWordBook;
+  public async findWordbookById(wordbookId: string, userId: number): Promise<IWordbook> {
+    const findWordbook = await this.WordbookModel.findOne({ _id: wordbookId, owner: userId }).populate('words');
+    if (!findWordbook) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
+    return findWordbook;
   }
 
-  public async deleteWordbookData(wordbookId: string, userId: number): Promise<IWordBook> {
-    const deleteWordBookById = await this.WordBookModel.findOneAndDelete({ _id: wordbookId, owner: userId });
-    if (!deleteWordBookById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
+  public async deleteWordbookData(wordbookId: string, userId: number): Promise<IWordbook> {
+    const deleteWordbookById = await this.WordbookModel.findOneAndDelete({ _id: wordbookId, owner: userId });
+    if (!deleteWordbookById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
 
-    return deleteWordBookById;
+    return deleteWordbookById;
   }
 
-  public async updateWordbook(wordbookId: string, userId: number, wordBookData: IWordBook): Promise<IWordBook> {
-    await this.WordBookModel.findOneAndUpdate({ _id: wordbookId, owner: userId }, { ...wordBookData });
-    const updateWordBookById = await this.WordBookModel.findOne({ _id: wordbookId, owner: userId });
-    if (!updateWordBookById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
+  public async updateWordbook(wordbookId: string, userId: number, wordbookData: IWordbook): Promise<IWordbook> {
+    await this.WordbookModel.findOneAndUpdate({ _id: wordbookId, owner: userId }, { ...wordbookData });
+    const updateWordbookById = await this.WordbookModel.findOne({ _id: wordbookId, owner: userId });
+    if (!updateWordbookById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
 
-    return updateWordBookById;
+    return updateWordbookById;
   }
 
-  public async addWordbook(userId: number, wordbookData: WordBookDto): Promise<IWordBook> {
-    const wordbooks: IWordBook = await this.WordBookModel.create({ ...wordbookData });
+  public async addWordbook(userId: number, wordbookData: WordbookDto): Promise<IWordbook> {
+    const wordbooks: IWordbook = await this.WordbookModel.create({ ...wordbookData });
     return wordbooks;
   }
 }
 
-export default WordBookService;
+export default WordbookService;
