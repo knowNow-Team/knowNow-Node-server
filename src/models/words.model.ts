@@ -1,5 +1,5 @@
 import { model, Schema, Document, Model } from 'mongoose';
-import { IWord, EWordClass, EFilter } from '../interfaces/words.interface';
+import { IWord, EWordClass } from '../interfaces/words.interface';
 
 export default class WordModel {
   private model: Model<IWord & Document>;
