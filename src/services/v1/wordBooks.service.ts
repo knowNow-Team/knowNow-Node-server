@@ -28,10 +28,8 @@ class WordBookService {
   }
 
   public async updateWordbook(wordbookId: string, userId: number, wordBookData: IWordBook): Promise<IWordBook> {
-    const updateWordBookById = await this.WordBookModel.findOneAndUpdate(
-      { _id: wordbookId, userId },
-      { ...wordBookData },
-    );
+    await this.WordBookModel.findOneAndUpdate({ _id: wordbookId, owner: userId }, { ...wordBookData });
+    const updateWordBookById = await this.WordBookModel.findOne({ _id: wordbookId, owner: userId });
     if (!updateWordBookById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
     return updateWordBookById;
   }
