@@ -7,7 +7,9 @@ import hpp from 'hpp';
 import cors from 'cors';
 import { normalize } from 'path';
 import Routes from './interfaces/routes.interface';
-import DBConnection from './configs/mongo.config';
+import MongoDBConnection from './configs/mongo.config';
+import MysqlDBConnection from './configs/mysql.config';
+import { createConnection } from 'typeorm';
 import { logger, stream } from './utils/logger';
 import errorMiddleware from './middlewares/error.middleware';
 
@@ -21,11 +23,16 @@ class Application {
 
     global._logger = logger;
 
+    this.connectToDatabases();
     this.initializeSettings();
     this.initializeMiddlewares();
     this.initializeRoutes(route);
     this.initializeErrorHandling();
-    (() => new DBConnection())();
+  }
+
+  private async connectToDatabases(): Promise<void> {
+    // new MongoDBConnection();
+    createConnection(MysqlDBConnection).catch((error) => console.log(error));
   }
 
   private initializeSettings(): void {
