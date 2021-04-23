@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-export default class DBConnection {
+export default class MongoDBConnection {
   private url: string =
     process.env.NODE_ENV === 'production'
       ? `mongodb+srv://${process.env.MONGO_ID}:${process.env.MONGO_PWD}@${process.env.MONGO_IP}/${process.env.MONGO_DB}?retryWrites=true&w=majority`
