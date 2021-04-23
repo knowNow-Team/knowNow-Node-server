@@ -4,12 +4,20 @@ import { ConnectionOptions } from 'typeorm';
 import { dbConfig } from '@interfaces/db.interface';
 
 // const { host, user, password, database }: dbConfig = config.get('dbConfig');
-const { host, user, password, database }: dbConfig = {
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'knownow',
-};
+const { host, user, password, database }: dbConfig =
+  process.env.NODE_ENV === 'production'
+    ? {
+        host: process.env.MYSQL_HOST,
+        user: process.env.MYSQL_USER,
+        password: process.env.MYSQL_PWD,
+        database: process.env.MYSQL_DB,
+      }
+    : {
+        host: 'localhost',
+        user: 'root',
+        password: 'root',
+        database: 'knownow',
+      };
 
 const MysqlDBConnection: ConnectionOptions = {
   type: 'mysql',
