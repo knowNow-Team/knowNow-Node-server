@@ -9,7 +9,6 @@ import { normalize } from 'path';
 import Routes from './interfaces/routes.interface';
 import MongoDBConnection from './configs/mongo.config';
 import MysqlDBConnection from './configs/mysql.config';
-import { createConnection } from 'typeorm';
 import { logger, stream } from './utils/logger';
 import errorMiddleware from './middlewares/error.middleware';
 
@@ -31,8 +30,8 @@ class Application {
   }
 
   private async connectToDatabases(): Promise<void> {
-    // new MongoDBConnection();
-    createConnection(MysqlDBConnection).catch((error) => console.log(error));
+    new MongoDBConnection();
+    new MysqlDBConnection();
   }
 
   private initializeSettings(): void {
