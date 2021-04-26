@@ -4,34 +4,56 @@ from bs4 import BeautifulSoup
 
 
 def search_naver_dic(query_keyword):
-    dic_url = """http://endic.naver.com/search.nhn?sLn=kr&dicQuery={0}&x=12&y=12&query={0}&target=endic&ie=utf8&query_utf=&isOnlyViewEE=NMethod=GET"""
-    r = requests.get(dic_url.format(query_keyword))
+    dicUrl = """http://endic.naver.com/search.nhn?sLn=kr&dicQuery={0}&x=12&y=12&query={0}&target=endic&ie=utf8&query_utf=&isOnlyViewEE=NMethod=GET"""
+    r = requests.get(dicUrl.format(query_keyword))
     soup = BeautifulSoup(r.text, "html.parser")
-    result_means = soup.find_all(attrs={"class": "fnt_k05"})
-    result_classes = soup.find_all(attrs={"class": "fnt_k09"})
-    print_result("naver", result_means, result_classes)
+    resultMeans = soup.find_all(attrs={"class": "fnt_k05"})
+    resultPartOfSpeeches = soup.find_all(attrs={"class": "fnt_k09"})
+    resultPhonics = soup.find_all(attrs={"class": "fnt_e25"})
+    resultVoicePath = soup.find_all(attrs={"class": "btn_side_play"})[0]["playlist"]
+
+    printResult("naver", resultMeans, resultPartOfSpeeches, resultPhonics, resultVoicePath)
 
 
-def print_result(site, result_means, result_classes):
-    print("*" * 25)
-    print("*** %s dic ***" % site)
-    print("*" * 25)
-    meansList = []
-    classesList = []
+# btn_side_play _soundPlay: 발음듣기
+# fnt_e25: 발음기호
+# fnt_e07: 예문 뜻
+# fnt_k10: 예문
+
+
+def printResult(site, resultMeans, resultPartOfSpeeches, resultPhonics, resultVoicePath):
+    meanList = []
+    partOfSpeechList = []
+    result = {"means": [], "partOfSpeeches": []}
     notIgnoreList = ["[명사]", "[대명사]", "[동사]", "[형용사]", "[부사]", "[전치사]", "[접속사]", "[감탄사]"]
 
-    for elem in result_means:
+    # 뜻 추출
+    for elem in resultMeans:
         text = elem.get_text().strip()
         if text:
-            meansList.append(text.replace("\n", ", "))
-    for elem in result_classes:
+            meanList.append(text.replace("\n", ", "))
+    # 품사 추출
+    for elem in resultPartOfSpeeches:
         text = elem.get_text().strip()
         if text:
-            classesList.append(text.replace("\n", ", "))
-    for i in range(len(meansList)):
-        print(classesList[i], meansList[i])
-        if classesList[i] not in notIgnoreList:
-            continue
+            partOfSpeechList.append(text.replace("\n", ", "))
+    # 음성 추출(미국식)
+    if resultVoicePath:
+        result["voicePath"] = resultVoicePath
+    # 발음기호 추출(미국식)
+    phonics = resultPhonics[0].get_text().strip()
+    if phonics:
+        result["phonics"] = phonics.replace("\n", ", ")
+    # 뜻(한글) 저장
+    for word in meanList:
+        if word.upper() == word.lower():
+            result["means"].append(word)
+    # 품사(중복 제외) 저장
+    for partOfSpeech in partOfSpeechList:
+        if partOfSpeech in notIgnoreList and partOfSpeech[1:-1] not in result["partOfSpeeches"]:
+            result["partOfSpeeches"].append(partOfSpeech[1:-1])
+
+    print(result)
 
 
 def main(args=None):
@@ -43,7 +65,7 @@ def main(args=None):
     query = sys.argv[1]
     try:
         search_naver_dic(query)
-    except DictError as err:
+    except Exception as err:
         print("Please check your internet connection.", err)
 
 
