@@ -12,9 +12,8 @@ export default class WordbookModel {
         words: [
           {
             wordId: {
-              // type: Schema.Types.ObjectId,
-              type: String,
-              // ref: 'Words',
+              type: Schema.Types.ObjectId,
+              ref: 'Words',
             },
             filter: {
               type: String,
@@ -23,6 +22,7 @@ export default class WordbookModel {
             },
           },
         ],
+        quantity: { type: Number, default: 0 },
       },
       {
         timestamps: true,
