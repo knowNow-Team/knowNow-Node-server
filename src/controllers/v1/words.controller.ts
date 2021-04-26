@@ -20,6 +20,17 @@ class WordController {
     }
   };
 
+  public createWord = async (req: Request, res: Response, next: NextFunction) => {
+    const wordName: string = req.body.wordName;
+    try {
+      // 먼저 단어를 크롤링 해옴
+      // 결과가 있으면 크롤링 한 결과를 JSON.parse()로 변경
+      // MongoDB에 저장
+    } catch (err) {
+      next(err);
+    }
+  };
+
   public updateWord = async (req: Request, res: Response, next: NextFunction) => {
     const wordId: string = req.params.wordId;
     const wordData: IWord = req.body; // 추후 토큰으로 받으면 유효성 검사해서 업데이트 할 것
