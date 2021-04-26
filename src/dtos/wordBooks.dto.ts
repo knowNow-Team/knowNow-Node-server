@@ -7,6 +7,9 @@ export class WordbookDto {
 
   @IsNumber()
   public owner!: number;
+
+  @IsNumber()
+  quantity!: number;
 }
 
 export class WordbookListDto {
