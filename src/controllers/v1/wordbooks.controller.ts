@@ -4,8 +4,10 @@ import { WordbookDto } from '../../dtos/wordbooks.dto';
 import { IWordbook } from '../../interfaces/wordbooks.interface';
 import WordbookService from '../../services/v1/wordbooks.service';
 import { resMessage, statusCode, util } from '../../utils';
+import { WordDto } from '../../dtos/words.dto';
 
 const WORDBOOK = '단어장';
+const WORD = '단어';
 
 class WordbookController {
   public WordbookService = new WordbookService();
@@ -70,6 +72,22 @@ class WordbookController {
       if (util.isEmpty(wordbookData)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
       const data: IWordbook = await this.WordbookService.addWordbook(wordbookData);
       return res.status(statusCode.CREATED).json({ message: resMessage.X_CREATE_SUCCESS(WORDBOOK), data: data });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  //단어장 삭제할 때 우선 휴지통 단어장으로 옮겨야 함(휴지통에서만 바로 삭제가 가능함)
+  public deleteWordFromWordbook = async (req: Request, res: Response, next: NextFunction) => {
+    const wordId: string = req.params.wordId;
+    const wordbookId: string = req.params.wordbookId;
+    const wordData: WordDto = req.body;
+
+    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+
+    try {
+      const updateWordById = await this.WordbookService.deleteWordData(wordbookId, wordId, wordData, userId);
+      return res.status(statusCode.OK).json({ message: resMessage.X_DELETE_SUCCESS(WORD), data: updateWordById });
     } catch (err) {
       next(err);
     }
