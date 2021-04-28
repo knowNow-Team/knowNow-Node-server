@@ -65,11 +65,10 @@ class WordbookController {
   };
 
   public addWordbook = async (req: Request, res: Response, next: NextFunction) => {
-    const { userId }: { userId: number } = req.body;
     const wordbookData: WordbookDto = req.body;
     try {
       if (util.isEmpty(wordbookData)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
-      const data: IWordbook = await this.WordbookService.addWordbook(userId, wordbookData);
+      const data: IWordbook = await this.WordbookService.addWordbook(wordbookData);
       return res.status(statusCode.CREATED).json({ message: resMessage.X_CREATE_SUCCESS(WORDBOOK), data: data });
     } catch (err) {
       next(err);
