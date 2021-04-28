@@ -3,7 +3,6 @@ import { resMessage, statusCode } from '../../utils';
 import { WordbookDto } from '../../dtos/wordbooks.dto';
 import { IWordbook } from '../../interfaces/wordbooks.interface';
 import WordbookModel from '../../models/wordbooks.model';
-import { IWord } from '../../interfaces/tests.interface';
 
 const WORDBOOK = '단어장';
 
@@ -36,7 +35,7 @@ class WordbookService {
     return updateWordbookById;
   }
 
-  public async addWordbook(userId: number, wordbookData: WordbookDto): Promise<IWordbook> {
+  public async addWordbook(wordbookData: WordbookDto): Promise<IWordbook> {
     const wordbooks: IWordbook = await this.WordbookModel.create({ ...wordbookData });
     return wordbooks;
   }
