@@ -2,6 +2,7 @@ import HttpException from '../../exceptions/HttpException';
 import { resMessage, statusCode } from '../../utils';
 import WordModel from '../../models/words.model';
 import { IWord } from '../../interfaces/words.interface';
+import { WordDto } from '../../dtos/words.dto';
 
 const WORD = '단어';
 
