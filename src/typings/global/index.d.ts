@@ -18,14 +18,14 @@ declare global {
       MYSQL_DB: string;
     }
     export interface Global {
-      _logger: winston.logger;
+      _logger: winston.Logger;
     }
   }
-  namespace Express {
-    export interface Request {
-      decoded?: DecodedInfo;
-    }
-  }
+  // namespace Express {
+  //   export interface Request {
+  //     decoded?: DecodedInfo;
+  //   }
+  // }
 }
 
 export {};

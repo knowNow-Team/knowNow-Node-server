@@ -22,7 +22,11 @@ class WordbookRoute implements IRoute {
     this.router.put(`${this.path}/:wordbookId/:wordId`, this.wordbookController.updateFilter);
     this.router.delete(`${this.path}/:wordbookId`, this.wordbookController.deleteWordbook);
     this.router.delete(`${this.path}/:wordbookId/words/:wordId`, this.wordbookController.deleteWordFromWordbook);
+<<<<<<< HEAD
     this.router.delete(`${this.path}/trashwordbooks/:wordId`, this.wordbookController.removeWordFromTrash);
+=======
+    this.router.get(`${this.path}/:wordbookId/words`, this.wordbookController.getOptionWords);
+>>>>>>> Etc: 필터링된 단어 추출 라우트
   }
 }
 
