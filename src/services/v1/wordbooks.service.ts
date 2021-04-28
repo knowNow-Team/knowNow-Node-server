@@ -1,7 +1,7 @@
 import HttpException from '../../exceptions/HttpException';
 import { resMessage, statusCode } from '../../utils';
 import { WordbookDto } from '../../dtos/wordbooks.dto';
-import { IWordbook } from '../../interfaces/wordbooks.interface';
+import { EFilter, IWordbook } from '../../interfaces/wordbooks.interface';
 import WordbookModel from '../../models/wordbooks.model';
 import { WordDto } from '../../dtos/words.dto';
 
