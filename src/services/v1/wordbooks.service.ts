@@ -3,7 +3,6 @@ import { resMessage, statusCode } from '../../utils';
 import { WordbookDto } from '../../dtos/wordbooks.dto';
 import { EFilter, IWordbook } from '../../interfaces/wordbooks.interface';
 import WordbookModel from '../../models/wordbooks.model';
-import { WordDto } from '../../dtos/words.dto';
 
 const WORDBOOK = '단어장';
 const WORD = '단어';
