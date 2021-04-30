@@ -1,19 +1,19 @@
-import { IsArray, IsEnum, IsNumber, IsString, ValidateNested } from 'class-validator';
+import { IsArray, IsEnum, IsString } from 'class-validator';
 import { EWordClass } from '../interfaces/words.interface';
 
 export class WordDto {
-  @IsEnum(EWordClass)
-  public wordClass!: EWordClass;
-
   @IsString()
   public word!: string;
 
   @IsArray()
-  public meaning!: string[];
+  public meanings!: string[];
+
+  @IsEnum(EWordClass, { each: true })
+  public wordClasses!: EWordClass[];
 
   @IsString()
   public phonics!: string;
 
-  // @IsString()
-  // public pronounceVoicePath!: string;
+  @IsString()
+  public pronounceVoicePath!: string;
 }
