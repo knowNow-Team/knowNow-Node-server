@@ -7,7 +7,6 @@ export default class WordModel {
   constructor() {
     const WordSchema: Schema = new Schema(
       {
-        _id: { type: Schema.Types.ObjectId },
         word: { type: String, required: true },
         meanings: { type: [String], required: true },
         wordClasses: { type: [String], required: true, enum: Object.values(EWordClass) },
