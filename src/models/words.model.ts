@@ -9,10 +9,10 @@ export default class WordModel {
       {
         _id: { type: Schema.Types.ObjectId },
         word: { type: String, required: true },
-        meaning: { type: [String], required: true },
-        wordClass: { type: String, required: true, enum: Object.values(EWordClass) },
+        meanings: { type: [String], required: true },
+        wordClasses: { type: [String], required: true, enum: Object.values(EWordClass) },
         phonics: { type: String, required: true },
-        // pronounceVoicePath: { type: String, required: true },
+        pronounceVoicePath: { type: String, required: true },
       },
       {
         timestamps: true,
