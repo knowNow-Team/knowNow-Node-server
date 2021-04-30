@@ -1,7 +1,7 @@
 export interface IWord {
   word: string;
-  meaning: string[];
-  wordClass: EWordClass;
+  meanings: string[];
+  wordClasses: EWordClass[];
   pronounceVoicePath: string;
   phonics: string;
 }

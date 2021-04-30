@@ -24,7 +24,7 @@ def search_naver_dic(query_keyword):
 def printResult(site, resultMeans, resultPartOfSpeeches, resultPhonics, resultVoicePath):
     meanList = []
     partOfSpeechList = []
-    result = {"means": [], "partOfSpeeches": []}
+    result = {"meanings": [], "partOfSpeeches": []}
     notIgnoreList = ["[명사]", "[대명사]", "[동사]", "[형용사]", "[부사]", "[전치사]", "[접속사]", "[감탄사]"]
 
     # 뜻 추출
@@ -39,7 +39,7 @@ def printResult(site, resultMeans, resultPartOfSpeeches, resultPhonics, resultVo
             partOfSpeechList.append(text.replace("\n", ", "))
     # 음성 추출(미국식)
     if resultVoicePath:
-        result["voicePath"] = resultVoicePath
+        result["pronounceVoicePath"] = resultVoicePath
     # 발음기호 추출(미국식)
     phonics = resultPhonics[0].get_text().strip()
     if phonics:
@@ -47,11 +47,11 @@ def printResult(site, resultMeans, resultPartOfSpeeches, resultPhonics, resultVo
     # 뜻(한글) 저장
     for word in meanList:
         if word.upper() == word.lower():
-            result["means"].append(word)
+            result["meanings"].append(word)
     # 품사(중복 제외) 저장
     for partOfSpeech in partOfSpeechList:
         if partOfSpeech in notIgnoreList and partOfSpeech[1:-1] not in result["partOfSpeeches"]:
-            result["partOfSpeeches"].append(partOfSpeech[1:-1])
+            result["wordClasses"].append(partOfSpeech[1:-1])
 
     print(result)
 
