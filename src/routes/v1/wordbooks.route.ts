@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import IRoute from '../../interfaces/routes.interface';
-import validationMiddleware from '../../middlewares/validation.middleware';
 import WordbookController from '../../controllers/v1/wordbooks.controller';
 
 class WordbookRoute implements IRoute {
@@ -18,7 +17,6 @@ class WordbookRoute implements IRoute {
     this.router.delete(`${this.path}/:wordbookId`, this.wordbookController.deleteWordbook);
     this.router.post(`${this.path}`, this.wordbookController.addWordbook);
     this.router.delete(`${this.path}/:wordbookId/words/:wordId`, this.wordbookController.deleteWordFromWordbook);
-    // this.router.get(`${this.path}/:wordbookId/words`, this.wordbookController.getOptionWords);
   }
 }
 
