@@ -54,7 +54,7 @@ class WordbookService {
         owner: userId,
       },
       { $pull: { words: { wordId: wordId } } },
-      { new: true },
+      { new: true, upsert: false, multi: false },
     );
     if (!deleteWordById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORD));
 
