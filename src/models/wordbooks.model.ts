@@ -7,6 +7,7 @@ export default class WordbookModel {
   constructor() {
     const WordbookSchema: Schema = new Schema(
       {
+        _id: { type: Schema.Types.ObjectId },
         title: { type: String, required: true },
         owner: { type: Number, required: true },
         words: [
