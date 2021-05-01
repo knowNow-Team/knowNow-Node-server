@@ -52,9 +52,9 @@ class WordbookService {
       {
         _id: wordbookId,
         owner: userId,
+        words: { $elemMatch: { wordId: wordId, isRemoved: false } },
       },
-      { $pull: { words: { wordId: wordId } } },
-      { new: true, upsert: false, multi: false },
+      { $set: { 'words.$.isRemoved': true } },
     );
     if (!deleteWordById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORD));
 
