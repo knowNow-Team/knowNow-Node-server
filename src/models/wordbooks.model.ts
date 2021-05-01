@@ -21,6 +21,10 @@ export default class WordbookModel {
               enum: Object.values(EFilter),
               default: 'doNotKnow',
             },
+            isRemoved: {
+              type: Boolean,
+              default: false,
+            },
           },
         ],
         quantity: { type: Number, default: 0 },

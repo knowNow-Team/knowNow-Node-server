@@ -5,6 +5,7 @@ export interface IWordbook extends IWord {
   owner: number; // 단어장 소유자
   quantity: number; // 단어장 단어 개수
   words: Array<string>; // 단어 정보
+  isRemoved: boolean; // 단어 삭제 여부
 }
 
 export enum EFilter {
