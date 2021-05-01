@@ -61,7 +61,7 @@ class WordbookService {
     const getTrashWordbooks: IWordbook[] = await this.WordbookModel.find({
       owner: userId,
       words: { $elemMatch: { isRemoved: true } },
-    });
+    }).select('words');
     if (!getTrashWordbooks) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORD));
 
     return getTrashWordbooks;
