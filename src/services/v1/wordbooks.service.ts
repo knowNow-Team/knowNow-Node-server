@@ -55,6 +55,7 @@ class WordbookService {
         words: { $elemMatch: { wordId: wordId, isRemoved: false } },
       },
       { $set: { 'words.$.isRemoved': true } },
+      { new: true },
     );
     if (!deleteWordById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORD));
 
