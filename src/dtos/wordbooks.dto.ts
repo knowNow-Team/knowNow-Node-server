@@ -1,4 +1,4 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsNumber, IsString, IsBoolean } from 'class-validator';
 import { EFilter } from '../interfaces/wordbooks.interface';
 
 export class WordbookDto {
@@ -18,4 +18,7 @@ export class WordbookListDto {
 
   @IsString()
   public filter!: EFilter;
+
+  @IsBoolean()
+  public isRemoved!: boolean;
 }
