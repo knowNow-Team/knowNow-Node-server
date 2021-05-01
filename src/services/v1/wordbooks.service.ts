@@ -56,6 +56,16 @@ class WordbookService {
 
     return deleteWordById;
   }
+
+  public async getTrashWordbooksData(userId: number): Promise<IWordbook[]> {
+    const getTrashWordbooks: IWordbook[] = await this.WordbookModel.find({
+      owner: userId,
+      words: { $elemMatch: { isRemoved: true } },
+    });
+    if (!getTrashWordbooks) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORD));
+
+    return getTrashWordbooks;
+  }
 }
 
 export default WordbookService;

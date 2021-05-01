@@ -90,6 +90,16 @@ class WordbookController {
       next(err);
     }
   };
+
+  public getTrashWordbooks = async (req: Request, res: Response, next: NextFunction) => {
+    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    try {
+      const getTrashWordbooks: IWordbook[] = await this.WordbookService.getTrashWordbooksData(userId);
+      return res.status(statusCode.OK).json({ message: resMessage.X_READ_SUCCESS(WORDBOOK), data: getTrashWordbooks });
+    } catch (err) {
+      next(err);
+    }
+  };
 }
 
 export default WordbookController;
