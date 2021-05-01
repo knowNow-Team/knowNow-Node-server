@@ -53,7 +53,7 @@ class WordbookService {
         _id: wordbookId,
         owner: userId,
       },
-      { words: { $pull: { wordId: wordId } } },
+      { $pull: { words: { wordId: wordId } } },
       { new: true },
     );
     if (!deleteWordById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORD));
