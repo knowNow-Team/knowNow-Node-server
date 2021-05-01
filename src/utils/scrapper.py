@@ -13,7 +13,9 @@ def search_naver_dic(query_keyword):
     resultPhonics = soup.find_all(attrs={"class": "fnt_e25"})
     resultVoicePath = soup.find_all(attrs={"class": "btn_side_play"})[0]["playlist"]
 
-    printResult("naver", resultMeans, resultPartOfSpeeches, resultPhonics, resultVoicePath)
+    printResult(
+        "naver", resultMeans, resultPartOfSpeeches, resultPhonics, resultVoicePath, query_keyword
+    )
 
 
 # btn_side_play _soundPlay: 발음듣기
@@ -22,10 +24,12 @@ def search_naver_dic(query_keyword):
 # fnt_k10: 예문
 
 
-def printResult(site, resultMeans, resultPartOfSpeeches, resultPhonics, resultVoicePath):
+def printResult(
+    site, resultMeans, resultPartOfSpeeches, resultPhonics, resultVoicePath, query_keyword
+):
     meanList = []
     partOfSpeechList = []
-    result = {"meanings": [], "partOfSpeeches": []}
+    result = {"word": query_keyword, "meanings": [], "wordClasses": []}
     notIgnoreList = ["[명사]", "[대명사]", "[동사]", "[형용사]", "[부사]", "[전치사]", "[접속사]", "[감탄사]"]
 
     # 뜻 추출
