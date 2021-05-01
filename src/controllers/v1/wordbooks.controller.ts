@@ -81,12 +81,10 @@ class WordbookController {
   public deleteWordFromWordbook = async (req: Request, res: Response, next: NextFunction) => {
     const wordId: string = req.params.wordId;
     const wordbookId: string = req.params.wordbookId;
-    const wordData: WordDto = req.body;
-
     const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
 
     try {
-      const updateWordById = await this.WordbookService.deleteWordData(wordbookId, wordId, wordData, userId);
+      const updateWordById = await this.WordbookService.deleteWordData(wordbookId, wordId, userId);
       return res.status(statusCode.OK).json({ message: resMessage.X_DELETE_SUCCESS(WORD), data: updateWordById });
     } catch (err) {
       next(err);
