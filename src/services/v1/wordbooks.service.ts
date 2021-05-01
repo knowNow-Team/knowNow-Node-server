@@ -42,12 +42,7 @@ class WordbookService {
     return wordbooks;
   }
 
-  public async deleteWordData(
-    wordbookId: string,
-    wordId: string,
-    wordData: WordDto,
-    userId: number,
-  ): Promise<IWordbook> {
+  public async deleteWordData(wordbookId: string, wordId: string, userId: number): Promise<IWordbook> {
     const deleteWordById = await this.WordbookModel.findOneAndUpdate(
       {
         _id: wordbookId,
