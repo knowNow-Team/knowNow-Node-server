@@ -11,6 +11,7 @@ class WordController {
 
   public getWordById = async (req: Request, res: Response, next: NextFunction) => {
     const wordId: string = req.params.wordId;
+
     try {
       const findOneWordData: IWord = await this.WordService.findWordById(wordId);
       return res.status(statusCode.OK).json({ message: resMessage.X_READ_SUCCESS(WORD), data: findOneWordData });
@@ -20,11 +21,14 @@ class WordController {
   };
 
   public createWord = async (req: Request, res: Response, next: NextFunction) => {
-    const wordName: string = req.body.wordName;
+    const wordInfo: WordDto = req.body;
+
     try {
-      // 먼저 단어를 크롤링 해옴
-      // 결과가 있으면 크롤링 한 결과를 JSON.parse()로 변경
-      // MongoDB에 저장
+      if (util.isEmpty(wordInfo)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
+
+      const createdWordData: IWord = await this.WordService.createWord(wordInfo);
+
+      return res.status(statusCode.CREATED).json({ message: resMessage.X_CREATE_SUCCESS, data: createdWordData });
     } catch (err) {
       next(err);
     }
