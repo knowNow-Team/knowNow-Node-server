@@ -1,5 +1,6 @@
 import sys
 import requests
+import json
 from bs4 import BeautifulSoup
 
 
@@ -50,10 +51,10 @@ def printResult(site, resultMeans, resultPartOfSpeeches, resultPhonics, resultVo
             result["meanings"].append(word)
     # 품사(중복 제외) 저장
     for partOfSpeech in partOfSpeechList:
-        if partOfSpeech in notIgnoreList and partOfSpeech[1:-1] not in result["partOfSpeeches"]:
+        if partOfSpeech in notIgnoreList and partOfSpeech[1:-1] not in result["wordClasses"]:
             result["wordClasses"].append(partOfSpeech[1:-1])
 
-    print(result)
+    print(json.dumps(result), end="")
 
 
 def main(args=None):
