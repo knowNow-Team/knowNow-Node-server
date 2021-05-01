@@ -26,6 +26,7 @@ export default class MongoDBConnection {
   private connect = (): void => {
     mongoose
       .connect(this.url, {
+        useFindAndModify: false,
         dbName: process.env.MONGO_DB,
         useNewUrlParser: true,
         useCreateIndex: true,
