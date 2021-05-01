@@ -5,6 +5,8 @@ import helmet from 'helmet';
 import compression from 'compression';
 import hpp from 'hpp';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import swaggerJSDoc from 'swagger-jsdoc';
 import { normalize } from 'path';
 import Routes from './interfaces/routes.interface';
 import MongoDBConnection from './configs/mongo.config';
@@ -26,6 +28,7 @@ class Application {
     this.initializeSettings();
     this.initializeMiddlewares();
     this.initializeRoutes(route);
+    this.initializeSwagger();
     this.initializeErrorHandling();
   }
 
@@ -67,6 +70,22 @@ class Application {
     routes.forEach((route) => {
       this.app.use('/', route.router);
     });
+  }
+
+  private initializeSwagger() {
+    const options = {
+      swaggerDefinition: {
+        info: {
+          title: 'REST API',
+          version: '1.0.0',
+          description: 'Knownow docs',
+        },
+      },
+      apis: ['docs/swagger.yaml'],
+    };
+
+    const specs = swaggerJSDoc(options);
+    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
   }
 
   public start(): void {
