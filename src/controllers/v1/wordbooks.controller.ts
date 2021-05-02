@@ -27,7 +27,6 @@ class WordbookController {
     const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
     const wordbookIds: string = req.query.wordbookIds as string;
     const wordbooksIdArr: string[] = wordbookIds.split(',') as string[];
-    console.log(wordbooksIdArr[0]);
 
     try {
       const wordbooksData = await this.WordbookService.findWordbooksData(userId, wordbooksIdArr);
