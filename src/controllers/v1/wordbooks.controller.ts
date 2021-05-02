@@ -23,6 +23,20 @@ class WordbookController {
     }
   };
 
+  public getWordbooksData = async (req: Request, res: Response, next: NextFunction) => {
+    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    const wordbookIds: string = req.query.wordbookIds as string;
+    const wordbooksIdArr: string[] = wordbookIds.split(',') as string[];
+    console.log(wordbooksIdArr[0]);
+
+    try {
+      const wordbooksData = await this.WordbookService.findWordbooksData(userId, wordbooksIdArr);
+      return res.status(statusCode.OK).json({ message: resMessage.X_READ_ALL_SUCCESS(WORDBOOK), data: wordbooksData });
+    } catch (err) {
+      next(err);
+    }
+  };
+
   public getWordbookById = async (req: Request, res: Response, next: NextFunction) => {
     const wordbookId: string = req.params.wordbookId;
     const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
