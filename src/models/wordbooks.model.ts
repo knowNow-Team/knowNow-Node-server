@@ -34,7 +34,6 @@ export default class WordbookModel {
             _id: false,
           },
         ],
-        quantity: { type: Number, default: 0 },
       },
       {
         timestamps: true,
