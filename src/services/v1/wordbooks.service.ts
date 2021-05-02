@@ -19,7 +19,7 @@ class WordbookService {
     const wordbooksData = await this.WordbookModel.find({
       owner: userId,
       _id: { $in: wordbooksIdArr },
-    });
+    }).select('words');
 
     return wordbooksData;
   }
