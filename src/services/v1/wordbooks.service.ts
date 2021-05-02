@@ -19,6 +19,7 @@ class WordbookService {
     const wordbooksData = await this.WordbookModel.find({
       owner: userId,
       _id: { $in: wordbooksIdArr },
+      words: { $elemMatch: { isRemoved: false } },
     }).select('words');
 
     return wordbooksData;
