@@ -12,7 +12,7 @@ class WordbookRoute implements IRoute {
   }
   private initializeRoutes() {
     this.router.get(`${this.path}`, this.wordbookController.getWordbooks);
-    this.router.get(`${this.path}/words`, this.wordbookController.getWordbooksData);
+    this.router.get(`${this.path}/words`, this.wordbookController.getWordbookWords);
     this.router.get(`${this.path}/trashWordbooks`, this.wordbookController.getTrashWordbooks);
     this.router.get(`${this.path}/:wordbookId`, this.wordbookController.getWordbookById);
     this.router.post(`${this.path}`, this.wordbookController.addWordbook);

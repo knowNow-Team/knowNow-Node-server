@@ -15,7 +15,7 @@ class WordbookService {
     return wordbooks;
   }
 
-  public async findWordbooksData(userId: number, wordbooksIdArr: string[]): Promise<IWordbook[]> {
+  public async findWordbookWordData(userId: number, wordbooksIdArr: string[]): Promise<IWordbook[]> {
     const wordbooksData = await this.WordbookModel.find({
       owner: userId,
       _id: { $in: wordbooksIdArr },
