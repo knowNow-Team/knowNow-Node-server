@@ -99,6 +99,23 @@ class WordbookService {
 
     return removeWordById;
   }
+
+  public async updateFilter(wordId: string, userId: number, filter: EFilter, wordbookId: string): Promise<IWordbook> {
+    const updateFilterById = await this.WordbookModel.findOneAndUpdate(
+      {
+        owner: userId,
+        _id: wordbookId,
+        words: { $elemMatch: { wordId: wordId } },
+      },
+      {
+        $set: { 'words.$.filter': filter },
+      },
+      { new: true },
+    );
+    if (!updateFilterById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORD));
+
+    return updateFilterById;
+  }
 }
 
 export default WordbookService;
