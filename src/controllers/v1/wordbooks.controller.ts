@@ -122,6 +122,17 @@ class WordbookController {
       next(err);
     }
   };
+
+  public removeWordFromTrash = async (req: Request, res: Response, next: NextFunction) => {
+    const wordId: string = req.params.wordId;
+    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    try {
+      const removeWordData = await this.WordbookService.removeWordData(wordId, userId);
+      return res.status(statusCode.OK).json({ message: resMessage.X_DELETE_SUCCESS(WORDBOOK), data: removeWordData });
+    } catch (err) {
+      next(err);
+    }
+  };
 }
 
 export default WordbookController;
