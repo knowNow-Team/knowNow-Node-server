@@ -100,7 +100,6 @@ class WordbookController {
     }
   };
 
-  //단어장 삭제할 때 우선 휴지통 단어장으로 옮겨야 함(휴지통에서만 바로 삭제가 가능함)
   public deleteWordFromWordbook = async (req: Request, res: Response, next: NextFunction) => {
     const wordId: string = req.params.wordId;
     const wordbookId: string = req.params.wordbookId;
