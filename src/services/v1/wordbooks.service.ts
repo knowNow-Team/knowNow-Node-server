@@ -11,7 +11,10 @@ class WordbookService {
   public WordbookModel = new WordbookModel().getModel();
 
   public async findAllWordbook(userId: number): Promise<IWordbook[]> {
-    const wordbooks: IWordbook[] = await this.WordbookModel.find({ owner: userId });
+    const wordbooks: IWordbook[] = await this.WordbookModel.find({
+      owner: userId,
+      words: { $elemMatch: { isRemoved: false } },
+    });
     return wordbooks;
   }
 
