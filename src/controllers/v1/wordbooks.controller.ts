@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import HttpException from '../../exceptions/HttpException';
 import { WordbookDto } from '../../dtos/wordbooks.dto';
-import { IWordbook } from '../../interfaces/wordbooks.interface';
+import { IWordbook, EFilter } from '../../interfaces/wordbooks.interface';
 import WordbookService from '../../services/v1/wordbooks.service';
 import { resMessage, statusCode, util } from '../../utils';
 
@@ -129,6 +129,18 @@ class WordbookController {
     try {
       const removeWordData = await this.WordbookService.removeWordData(wordId, userId);
       return res.status(statusCode.OK).json({ message: resMessage.X_DELETE_SUCCESS(WORDBOOK), data: removeWordData });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  public updateFilter = async (req: Request, res: Response, next: NextFunction) => {
+    const wordId: string = req.params.wordId;
+    const wordbookId: string = req.params.wordbookId;
+    const { userId, filter }: { userId: number; filter: EFilter } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    try {
+      const updateFilterData = await this.WordbookService.updateFilter(wordId, userId, filter, wordbookId);
+      return res.status(statusCode.OK).json({ message: resMessage.X_UPDATE_SUCCESS(WORDBOOK), data: updateFilterData });
     } catch (err) {
       next(err);
     }
