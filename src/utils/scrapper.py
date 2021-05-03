@@ -58,7 +58,7 @@ def printResult(
         if partOfSpeech in notIgnoreList and partOfSpeech[1:-1] not in result["wordClasses"]:
             result["wordClasses"].append(partOfSpeech[1:-1])
 
-    print(json.dumps(result), end="")
+    print(json.dumps(result, ensure_ascii=False), end="")
 
 
 def main(args=None):
