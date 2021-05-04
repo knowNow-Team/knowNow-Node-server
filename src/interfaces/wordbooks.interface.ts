@@ -1,11 +1,15 @@
-import { IWord } from './tests.interface';
+export interface IWordList {
+  _id: string;
+  filter?: EFilter;
+  isRemoved?: boolean;
+  addedAt?: Date;
+}
 
-export interface IWordbook extends IWord {
+export interface IWordbook {
   title: string; // 단어장 제목
   owner: number; // 단어장 소유자
   quantity: number; // 단어장 단어 개수
-  words: Array<string>; // 단어 정보
-  isRemoved: boolean; // 단어 삭제 여부
+  words: IWordList[]; // 단어 정보
 }
 
 export enum EFilter {
