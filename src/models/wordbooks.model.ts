@@ -24,6 +24,10 @@ export default class WordbookModel {
               type: Boolean,
               default: false,
             },
+            addedAt: {
+              type: Date,
+              default: Date.now,
+            },
           },
         ],
         quantity: { type: Number, default: 0 },
