@@ -22,14 +22,15 @@ class WordbookService {
   }
 
   public async createWordsInWordbook(wordbookId: string, userId: number, wordIds: string[]) {
-    const wordbookData = await this.WordbookModel.findOne({ _id: wordbookId, owner: userId });
+    let wordbookData = await this.WordbookModel.findOne({ _id: wordbookId, owner: userId });
     if (!wordbookData) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
 
     wordIds.forEach((wordId) => {
-      wordbookData.words.push({ _id: wordId });
+      wordbookData?.words.push({ wordId });
     });
 
     await wordbookData.save();
+    wordbookData = await this.WordbookModel.populate(wordbookData, 'words.wordId');
 
     return wordbookData;
   }
