@@ -1,7 +1,7 @@
 import HttpException from '../../exceptions/HttpException';
 import { resMessage, statusCode } from '../../utils';
 import { WordbookDto } from '../../dtos/wordbooks.dto';
-import { IWordbook } from '../../interfaces/wordbooks.interface';
+import { EFilter, IWordbook } from '../../interfaces/wordbooks.interface';
 import WordbookModel from '../../models/wordbooks.model';
 
 const WORDBOOK = '단어장';
@@ -13,8 +13,7 @@ class WordbookService {
   public async findAllWordbook(userId: number): Promise<IWordbook[]> {
     const wordbooks: IWordbook[] = await this.WordbookModel.find({
       owner: userId,
-      words: { $elemMatch: { isRemoved: false } },
-    });
+    }).select('-words');
     return wordbooks;
   }
 
