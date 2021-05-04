@@ -1,5 +1,5 @@
 export interface IWordList {
-  _id: string;
+  wordId: string;
   filter?: EFilter;
   isRemoved?: boolean;
   addedAt?: Date;
