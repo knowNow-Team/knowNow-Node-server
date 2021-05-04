@@ -1,9 +1,8 @@
 import HttpException from '../../exceptions/HttpException';
 import { resMessage, statusCode } from '../../utils';
 import { WordbookDto } from '../../dtos/wordbooks.dto';
-import { EFilter, IWordbook } from '../../interfaces/wordbooks.interface';
+import { IWordbook } from '../../interfaces/wordbooks.interface';
 import WordbookModel from '../../models/wordbooks.model';
-import { WordDto } from '../../dtos/words.dto';
 
 const WORDBOOK = '단어장';
 const WORD = '단어';
@@ -20,6 +19,19 @@ class WordbookService {
     const findWordbook = await this.WordbookModel.findOne({ _id: wordbookId, owner: userId }).populate('words');
     if (!findWordbook) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
     return findWordbook;
+  }
+
+  public async createWordsInWordbook(wordbookId: string, userId: number, wordIds: string[]) {
+    const wordbookData = await this.WordbookModel.findOne({ _id: wordbookId, owner: userId });
+    if (!wordbookData) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
+
+    wordIds.forEach((wordId) => {
+      wordbookData.words.push({ _id: wordId });
+    });
+
+    await wordbookData.save();
+
+    return wordbookData;
   }
 
   public async deleteWordbookData(wordbookId: string, userId: number): Promise<IWordbook> {
