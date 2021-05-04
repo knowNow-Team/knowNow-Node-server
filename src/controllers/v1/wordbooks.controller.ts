@@ -144,6 +144,17 @@ class WordbookController {
       next(err);
     }
   };
+
+  public restoreWord = async (req: Request, res: Response, next: NextFunction) => {
+    const wordId: string = req.params.wordId;
+    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    try {
+      const restoreWordData = await this.WordbookService.restoreWord(wordId, userId);
+      return res.status(statusCode.OK).json({ message: resMessage.X_UPDATE_SUCCESS(WORDBOOK), data: restoreWordData });
+    } catch (err) {
+      next(err);
+    }
+  };
 }
 
 export default WordbookController;

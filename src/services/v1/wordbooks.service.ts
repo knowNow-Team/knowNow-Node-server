@@ -161,6 +161,20 @@ class WordbookService {
 
     return updateFilterById;
   }
+
+  public async restoreWord(wordId: string, userId: number): Promise<IWordbook> {
+    const restoreWordById = await this.WordbookModel.findOneAndUpdate(
+      {
+        owner: userId,
+        words: { $elemMatch: { wordId: wordId, isRemoved: true } },
+      },
+      { $set: { 'words.$.isRemoved': false } },
+      { new: true },
+    );
+    if (!restoreWordById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORD));
+
+    return restoreWordById;
+  }
 }
 
 export default WordbookService;
