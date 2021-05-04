@@ -11,7 +11,7 @@ export default class WordbookModel {
         owner: { type: Number, required: true },
         words: [
           {
-            wordId: {
+            _id: {
               type: Schema.Types.ObjectId,
               ref: 'Words',
             },
