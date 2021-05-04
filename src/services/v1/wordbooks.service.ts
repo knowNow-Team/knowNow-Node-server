@@ -131,10 +131,15 @@ class WordbookService {
   }
 
   public async removeWordData(wordId: string, userId: number): Promise<IWordbook> {
-    const removeWordById = await this.WordbookModel.findOneAndDelete({
-      owner: userId,
-      words: { $elemMatch: { wordId: wordId } },
-    });
+    const removeWordById = await this.WordbookModel.findOneAndUpdate(
+      {
+        owner: userId,
+        words: { $elemMatch: { wordId: wordId, isRemoved: true } },
+      },
+      {
+        $pull: { words: { wordId: wordId, isRemoved: true } },
+      },
+    );
     if (!removeWordById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORD));
 
     return removeWordById;
