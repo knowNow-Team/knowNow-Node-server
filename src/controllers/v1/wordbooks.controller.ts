@@ -4,7 +4,6 @@ import { WordbookDto } from '../../dtos/wordbooks.dto';
 import { IWordbook } from '../../interfaces/wordbooks.interface';
 import WordbookService from '../../services/v1/wordbooks.service';
 import { resMessage, statusCode, util } from '../../utils';
-import { WordDto } from '../../dtos/words.dto';
 
 const WORDBOOK = '단어장';
 const WORD = '단어';
