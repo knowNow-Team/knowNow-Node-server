@@ -1,7 +1,7 @@
 import HttpException from '../../exceptions/HttpException';
 import { resMessage, statusCode } from '../../utils';
 import { WordbookDto } from '../../dtos/wordbooks.dto';
-import { EFilter, IWordbook } from '../../interfaces/wordbooks.interface';
+import { EFilter, IWordbook, IWordbookWithCount } from '../../interfaces/wordbooks.interface';
 import WordbookModel from '../../models/wordbooks.model';
 
 const WORDBOOK = '단어장';
@@ -10,11 +10,42 @@ const WORD = '단어';
 class WordbookService {
   public WordbookModel = new WordbookModel().getModel();
 
-  public async findAllWordbook(userId: number): Promise<IWordbook[]> {
-    const wordbooks: IWordbook[] = await this.WordbookModel.find({
-      owner: userId,
-    }).select('-words');
-    return wordbooks;
+  public async findAllWordbookWithWordCount(userId: number): Promise<IWordbookWithCount[]> {
+    const wordbookInfoWithWordCounts = await this.WordbookModel.aggregate()
+      .match({
+        owner: userId,
+      })
+      .project({
+        words: { $filter: { input: '$words', as: 'word', cond: { $eq: ['$$word.isRemoved', false] } } },
+        title: 1,
+        owner: 1,
+        createdAt: 1,
+        updatedAt: 1,
+      })
+      .unwind({ path: '$words', preserveNullAndEmptyArrays: true })
+      .group({
+        _id: { id: '$_id', wordFilter: '$words.filter' },
+        title: { $first: '$title' },
+        owner: { $first: '$owner' },
+        createdAt: { $first: '$createdAt' },
+        updatedAt: { $first: '$updatedAt' },
+        count: {
+          $sum: {
+            $cond: [{ $gt: ['$words.filter', null] }, 1, 0],
+          },
+        },
+      })
+      .group({
+        _id: '$_id.id',
+        title: { $first: '$title' },
+        owner: { $first: '$owner' },
+        createdAt: { $first: '$createdAt' },
+        updatedAt: { $first: '$updatedAt' },
+        filters: { $push: { filter: '$_id.wordFilter', count: '$count' } },
+        allCount: { $sum: '$count' },
+      });
+
+    return wordbookInfoWithWordCounts;
   }
 
   public async findWordbookWordData(userId: number, wordbooksIdArr: string[]): Promise<IWordbook[]> {

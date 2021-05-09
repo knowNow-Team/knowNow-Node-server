@@ -12,6 +12,20 @@ export interface IWordbook {
   words: IWordList[]; // 단어 정보
 }
 
+export interface IFilterCount {
+  filter: EFilter;
+  count: number;
+}
+
+export interface IWordbookWithCount {
+  title: string;
+  owner: number;
+  createdAt: Date;
+  updatedAt: Date;
+  allCount: number;
+  filters: IFilterCount[];
+}
+
 export enum EFilter {
   memorized = 'memorized', // 외웠어요
   confused = 'confused', // 헷갈려요
