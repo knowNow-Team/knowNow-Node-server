@@ -30,9 +30,6 @@ export default class WordbookModel {
               default: Date.now,
             },
           },
-          {
-            _id: false,
-          },
         ],
       },
       {
