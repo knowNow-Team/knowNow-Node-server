@@ -54,12 +54,12 @@ class Application {
       this.app.use(cors({ origin: true, credentials: true }));
     }
 
-    this.app.use(express.urlencoded({ extended: false }));
-    this.app.use(express.json());
-    this.app.use(cookieParser());
-    this.app.use(compression());
-    this.app.use(hpp());
+    this.app.use(hpp({ checkQuery: false }));
     this.app.use(helmet());
+    this.app.use(compression());
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: false }));
+    this.app.use(cookieParser());
   }
 
   public getServer() {
