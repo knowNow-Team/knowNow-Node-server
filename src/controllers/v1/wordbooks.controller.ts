@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import HttpException from '../../exceptions/HttpException';
 import { WordbookDto } from '../../dtos/wordbooks.dto';
-import { IWordbook, EFilter, IGetWordbooks } from '../../interfaces/wordbooks.interface';
+import { IWordbook, EFilter } from '../../interfaces/wordbooks.interface';
 import WordbookService from '../../services/v1/wordbooks.service';
 import { resMessage, statusCode, util } from '../../utils';
 
@@ -12,7 +12,9 @@ class WordbookController {
   public WordbookService = new WordbookService();
 
   public getWordbooks = async (req: Request, res: Response, next: NextFunction) => {
-    const { userId, wordbookIds }: IGetWordbooks = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    const userId: number = req.body.userId; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    const wordbookIds = req.query.wordbookIds as string[];
+
     try {
       const wordbooksData = await this.WordbookService.findAllWordbookWithWordCount(userId, wordbookIds);
       return res.status(statusCode.OK).json({ message: resMessage.X_READ_ALL_SUCCESS(WORDBOOK), data: wordbooksData });
