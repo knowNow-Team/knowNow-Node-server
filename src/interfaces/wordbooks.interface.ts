@@ -34,11 +34,6 @@ export enum EFilter {
   doNotKnow = 'doNotKnow', // 몰라요
 }
 
-export interface IGetWordbooks {
-  userId: number;
-  wordbookIds?: string[];
-}
-
 export interface IMatchOption {
   owner: number;
   _id?: {
