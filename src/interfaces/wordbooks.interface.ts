@@ -1,3 +1,5 @@
+import { Types } from 'mongoose';
+
 export interface IWordList {
   wordId: string;
   filter?: EFilter;
@@ -30,4 +32,16 @@ export enum EFilter {
   memorized = 'memorized', // 외웠어요
   confused = 'confused', // 헷갈려요
   doNotKnow = 'doNotKnow', // 몰라요
+}
+
+export interface IGetWordbooks {
+  userId: number;
+  wordbookIds?: string[];
+}
+
+export interface IMatchOption {
+  owner: number;
+  _id?: {
+    $in: Types.ObjectId[];
+  };
 }
