@@ -1,8 +1,9 @@
 import HttpException from '../../exceptions/HttpException';
 import { resMessage, statusCode } from '../../utils';
 import { WordbookDto } from '../../dtos/wordbooks.dto';
-import { EFilter, IWordbook, IWordbookWithCount } from '../../interfaces/wordbooks.interface';
+import { EFilter, IWordbook, IWordbookWithCount, IMatchOption } from '../../interfaces/wordbooks.interface';
 import WordbookModel from '../../models/wordbooks.model';
+import { Types } from 'mongoose';
 
 const WORDBOOK = '단어장';
 const WORD = '단어';
@@ -10,11 +11,17 @@ const WORD = '단어';
 class WordbookService {
   public WordbookModel = new WordbookModel().getModel();
 
-  public async findAllWordbookWithWordCount(userId: number): Promise<IWordbookWithCount[]> {
+  public async findAllWordbookWithWordCount(
+    userId: number,
+    wordbookIds: string[] = [''],
+  ): Promise<IWordbookWithCount[]> {
+    const matchOption: IMatchOption = { owner: userId };
+    if (wordbookIds[0]) {
+      matchOption._id = { $in: wordbookIds.map((item) => Types.ObjectId(item)) };
+    }
+
     const wordbookInfoWithWordCounts = await this.WordbookModel.aggregate()
-      .match({
-        owner: userId,
-      })
+      .match(matchOption)
       .project({
         words: { $filter: { input: '$words', as: 'word', cond: { $eq: ['$$word.isRemoved', false] } } },
         title: 1,
