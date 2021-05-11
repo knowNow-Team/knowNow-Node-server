@@ -121,6 +121,69 @@ definitions:
         type: string
         description: user Password
 
+  wordbook:
+    type: object
+    required:
+      - title
+      - owner
+      - words
+    properties:
+      _id: 
+        type: ObjectId
+        description: wordbook Id
+      title: 
+        type: string
+        description: wordbook title
+      owner: 
+        type: integer
+        description: wordbook owner
+      createdAt:
+        type: date
+        description: wordbook created date
+      updatedAt: 
+        type: date
+        description: wordbook updated date
+      words: 
+        type: object
+        properties:
+          wordId: 
+            type: ObjectId
+            description: wordId in wordbook
+          filter: 
+            type: string
+            enum: [doNotKnow, memorized, confused]
+            description: word filtering
+          isRemoved: 
+            type: boolean
+            description: Whether to delete words 
+          addedAt:
+            type: date
+            description: Word added date
+
+  word: 
+    type: object
+    required:
+      - word
+      - meanings
+      - wordClasses
+      - phonics
+      - pronounceVoicePath
+    properties:
+      _id: 
+        type: ObjectId
+        description: word Id
+      word: 
+        type: string
+        description: word
+      wordClasses:
+        type: string
+        enum: [nouns, pronouns, verbs, adverbs, adjective, articles, prepositions, conjunctions, interjections]
+      phonics:
+        type: string
+        description: word phonics
+      pronounceVoicePath: 
+        type: string
+        description: word pronounceVoicePath
 schemes:
- - https
- - http
+  - https
+  - http
