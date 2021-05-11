@@ -13,16 +13,16 @@ class WordbookRoute implements IRoute {
   private initializeRoutes() {
     this.router.get(`${this.path}`, this.wordbookController.getWordbooks);
     this.router.get(`${this.path}/words`, this.wordbookController.getWordbookWords);
-    this.router.get(`${this.path}/trashWordbooks`, this.wordbookController.getTrashWordbooks);
+    this.router.get(`${this.path}/trashwordbooks`, this.wordbookController.getTrashWordbooks);
     this.router.get(`${this.path}/:wordbookId`, this.wordbookController.getWordbookById);
     this.router.post(`${this.path}`, this.wordbookController.addWordbook);
-    this.router.put(`${this.path}/trashWordbooks/:wordId`, this.wordbookController.restoreWord);
+    this.router.put(`${this.path}/trashwordbooks/:wordId`, this.wordbookController.restoreWord);
     this.router.put(`${this.path}/:wordbookId`, this.wordbookController.updateWordbook);
     this.router.put(`${this.path}/:wordbookId/words`, this.wordbookController.createWordsInWordbook);
     this.router.put(`${this.path}/:wordbookId/:wordId`, this.wordbookController.updateFilter);
     this.router.delete(`${this.path}/:wordbookId`, this.wordbookController.deleteWordbook);
     this.router.delete(`${this.path}/:wordbookId/words/:wordId`, this.wordbookController.deleteWordFromWordbook);
-    this.router.delete(`${this.path}/trashWordbooks/:wordId`, this.wordbookController.removeWordFromTrash);
+    this.router.delete(`${this.path}/trashwordbooks/:wordId`, this.wordbookController.removeWordFromTrash);
   }
 }
 
