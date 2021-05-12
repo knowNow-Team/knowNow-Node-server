@@ -35,28 +35,6 @@ class WordbookController {
     }
   };
 
-  public getOptionWords = async (req: Request, res: Response, next: NextFunction) => {
-    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
-    const wordbookIds: string = req.query.wordbookIds as string;
-    const wordbooksIdArr: string[] = wordbookIds.split(',') as string[];
-    const order: string = req.query.order as string;
-    const filter: EFilter = req.query.filter as EFilter;
-    const filterArr: EFilter[] = filter.split(',') as EFilter[];
-    try {
-      const optionWordbooksData = await this.WordbookService.findOptionWordbookData(
-        userId,
-        wordbooksIdArr,
-        order,
-        filterArr,
-      );
-      return res
-        .status(statusCode.OK)
-        .json({ message: resMessage.X_READ_ALL_SUCCESS(WORDBOOK), data: optionWordbooksData });
-    } catch (err) {
-      next(err);
-    }
-  };
-
   public getWordbookById = async (req: Request, res: Response, next: NextFunction) => {
     const wordbookId: string = req.params.wordbookId;
     const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
