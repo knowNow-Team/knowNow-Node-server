@@ -51,7 +51,7 @@ class WordbookController {
   public getTrashWordbooks = async (req: Request, res: Response, next: NextFunction) => {
     const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
     try {
-      const getTrashWordbooks: IWordbook[] = await this.WordbookService.getTrashWordbooksData(userId);
+      const getTrashWordbooks: IWordbook[] = await this.WordbookService.findTrashWordbooksData(userId);
       return res.status(statusCode.OK).json({ message: resMessage.X_READ_SUCCESS(WORDBOOK), data: getTrashWordbooks });
     } catch (err) {
       next(err);
@@ -70,11 +70,11 @@ class WordbookController {
     }
   };
 
-  public addWordbook = async (req: Request, res: Response, next: NextFunction) => {
+  public createWordbook = async (req: Request, res: Response, next: NextFunction) => {
     const wordbookData: WordbookDto = req.body;
     try {
       if (util.isEmpty(wordbookData)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
-      const data: IWordbook = await this.WordbookService.addWordbook(wordbookData);
+      const data: IWordbook = await this.WordbookService.createWordbook(wordbookData);
       return res.status(statusCode.CREATED).json({ message: resMessage.X_CREATE_SUCCESS(WORDBOOK), data: data });
     } catch (err) {
       next(err);
