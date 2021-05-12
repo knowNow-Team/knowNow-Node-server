@@ -147,7 +147,22 @@ definitions:
         format: date-time
         description: wordbook updated date
       words: 
-        $ref: '#/definitions/word'
+        type: object
+        properties:
+          wordId:
+            $ref: '#/definitions/word'
+          isRemoved:
+            type: boolean
+            description: Whether to delete
+          filter: 
+            type: string
+            enum: [doNotKnow, memorized, confused]
+            description: word filtering
+          addedAt: 
+            type: string
+            format: date-time
+            description: word added date-time
+      
 
 
   word: 
