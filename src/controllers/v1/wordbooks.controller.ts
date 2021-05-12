@@ -75,12 +75,11 @@ class WordbookController {
 
   public updateWordbook = async (req: Request, res: Response, next: NextFunction) => {
     const wordbookId: string = req.params.wordbookId;
-    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
-    const wordbookData: IWordbook = req.body;
+    const { userId, title }: { userId: number; title: string } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
     try {
-      if (util.isEmpty(wordbookData)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
+      if (util.isEmpty(title)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
 
-      const updateWordbookData: IWordbook = await this.WordbookService.updateWordbook(wordbookId, userId, wordbookData);
+      const updateWordbookData: IWordbook = await this.WordbookService.updateWordbook(wordbookId, userId, title);
       return res
         .status(statusCode.OK)
         .json({ message: resMessage.X_UPDATE_SUCCESS(WORDBOOK), data: updateWordbookData });

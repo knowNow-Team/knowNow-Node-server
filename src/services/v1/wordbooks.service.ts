@@ -92,9 +92,12 @@ class WordbookService {
     return deleteWordbookById;
   }
 
-  public async updateWordbook(wordbookId: string, userId: number, wordbookData: IWordbook): Promise<IWordbook> {
-    await this.WordbookModel.findOneAndUpdate({ _id: wordbookId, owner: userId }, { ...wordbookData });
-    const updateWordbookById = await this.WordbookModel.findOne({ _id: wordbookId, owner: userId });
+  public async updateWordbook(wordbookId: string, userId: number, title: string): Promise<IWordbook> {
+    const updateWordbookById = await this.WordbookModel.findOneAndUpdate(
+      { _id: wordbookId, owner: userId },
+      { title: title },
+      { new: true },
+    );
     if (!updateWordbookById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
 
     return updateWordbookById;
