@@ -48,6 +48,16 @@ class WordbookController {
     }
   };
 
+  public getTrashWordbooks = async (req: Request, res: Response, next: NextFunction) => {
+    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    try {
+      const getTrashWordbooks: IWordbook[] = await this.WordbookService.getTrashWordbooksData(userId);
+      return res.status(statusCode.OK).json({ message: resMessage.X_READ_SUCCESS(WORDBOOK), data: getTrashWordbooks });
+    } catch (err) {
+      next(err);
+    }
+  };
+
   public createWordsInWordbook = async (req: Request, res: Response, next: NextFunction) => {
     const wordbookId: string = req.params.wordbookId;
     const { userId, wordIds }: { userId: number; wordIds: string[] } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
@@ -55,34 +65,6 @@ class WordbookController {
       const wordbookData = await this.WordbookService.createWordsInWordbook(wordbookId, userId, wordIds);
 
       return res.status(statusCode.OK).json({ message: resMessage.X_UPDATE_SUCCESS(WORDBOOK), data: wordbookData });
-    } catch (err) {
-      next(err);
-    }
-  };
-
-  public deleteWordbook = async (req: Request, res: Response, next: NextFunction) => {
-    const wordbookId: string = req.params.wordbookId;
-    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
-    try {
-      const deleteWordbookData = await this.WordbookService.deleteWordbookData(wordbookId, userId);
-      return res
-        .status(statusCode.OK)
-        .json({ message: resMessage.X_DELETE_SUCCESS(WORDBOOK), data: deleteWordbookData });
-    } catch (err) {
-      next(err);
-    }
-  };
-
-  public updateWordbook = async (req: Request, res: Response, next: NextFunction) => {
-    const wordbookId: string = req.params.wordbookId;
-    const { userId, title }: { userId: number; title: string } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
-    try {
-      if (util.isEmpty(title)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
-
-      const updateWordbookData: IWordbook = await this.WordbookService.updateWordbook(wordbookId, userId, title);
-      return res
-        .status(statusCode.OK)
-        .json({ message: resMessage.X_UPDATE_SUCCESS(WORDBOOK), data: updateWordbookData });
     } catch (err) {
       next(err);
     }
@@ -99,34 +81,16 @@ class WordbookController {
     }
   };
 
-  public deleteWordFromWordbook = async (req: Request, res: Response, next: NextFunction) => {
-    const wordId: string = req.params.wordId;
+  public updateWordbook = async (req: Request, res: Response, next: NextFunction) => {
     const wordbookId: string = req.params.wordbookId;
-    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    const { userId, title }: { userId: number; title: string } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
     try {
-      const updateWordById = await this.WordbookService.deleteWordData(wordbookId, wordId, userId);
-      return res.status(statusCode.OK).json({ message: resMessage.X_DELETE_SUCCESS(WORD), data: updateWordById });
-    } catch (err) {
-      next(err);
-    }
-  };
+      if (util.isEmpty(title)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
 
-  public getTrashWordbooks = async (req: Request, res: Response, next: NextFunction) => {
-    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
-    try {
-      const getTrashWordbooks: IWordbook[] = await this.WordbookService.getTrashWordbooksData(userId);
-      return res.status(statusCode.OK).json({ message: resMessage.X_READ_SUCCESS(WORDBOOK), data: getTrashWordbooks });
-    } catch (err) {
-      next(err);
-    }
-  };
-
-  public removeWordFromTrash = async (req: Request, res: Response, next: NextFunction) => {
-    const wordId: string = req.params.wordId;
-    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
-    try {
-      const removeWordData = await this.WordbookService.removeWordData(wordId, userId);
-      return res.status(statusCode.OK).json({ message: resMessage.X_DELETE_SUCCESS(WORD), data: removeWordData });
+      const updateWordbookData: IWordbook = await this.WordbookService.updateWordbook(wordbookId, userId, title);
+      return res
+        .status(statusCode.OK)
+        .json({ message: resMessage.X_UPDATE_SUCCESS(WORDBOOK), data: updateWordbookData });
     } catch (err) {
       next(err);
     }
@@ -150,6 +114,42 @@ class WordbookController {
     try {
       const restoreWordData = await this.WordbookService.restoreWord(wordId, userId);
       return res.status(statusCode.OK).json({ message: resMessage.X_UPDATE_SUCCESS(WORDBOOK), data: restoreWordData });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  public removeWordFromTrash = async (req: Request, res: Response, next: NextFunction) => {
+    const wordId: string = req.params.wordId;
+    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    try {
+      const removeWordData = await this.WordbookService.removeWordData(wordId, userId);
+      return res.status(statusCode.OK).json({ message: resMessage.X_DELETE_SUCCESS(WORD), data: removeWordData });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  public deleteWordbook = async (req: Request, res: Response, next: NextFunction) => {
+    const wordbookId: string = req.params.wordbookId;
+    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    try {
+      const deleteWordbookData = await this.WordbookService.deleteWordbookData(wordbookId, userId);
+      return res
+        .status(statusCode.OK)
+        .json({ message: resMessage.X_DELETE_SUCCESS(WORDBOOK), data: deleteWordbookData });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  public deleteWordFromWordbook = async (req: Request, res: Response, next: NextFunction) => {
+    const wordId: string = req.params.wordId;
+    const wordbookId: string = req.params.wordbookId;
+    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    try {
+      const updateWordById = await this.WordbookService.deleteWordData(wordbookId, wordId, userId);
+      return res.status(statusCode.OK).json({ message: resMessage.X_DELETE_SUCCESS(WORD), data: updateWordById });
     } catch (err) {
       next(err);
     }
