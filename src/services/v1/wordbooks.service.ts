@@ -71,7 +71,7 @@ class WordbookService {
     return findWordbook;
   }
 
-  public async getTrashWordbooksData(userId: number): Promise<IWordbook[]> {
+  public async findTrashWordbooksData(userId: number): Promise<IWordbook[]> {
     const getTrashWordbooks: IWordbook[] = await this.WordbookModel.find({
       owner: userId,
       words: { $elemMatch: { isRemoved: true } },
@@ -95,7 +95,7 @@ class WordbookService {
     return wordbookData;
   }
 
-  public async addWordbook(wordbookData: WordbookDto): Promise<IWordbook> {
+  public async createWordbook(wordbookData: WordbookDto): Promise<IWordbook> {
     const wordbooks: IWordbook = await this.WordbookModel.create({ ...wordbookData });
     return wordbooks;
   }
