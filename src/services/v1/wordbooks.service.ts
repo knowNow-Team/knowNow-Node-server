@@ -71,6 +71,16 @@ class WordbookService {
     return findWordbook;
   }
 
+  public async getTrashWordbooksData(userId: number): Promise<IWordbook[]> {
+    const getTrashWordbooks: IWordbook[] = await this.WordbookModel.find({
+      owner: userId,
+      words: { $elemMatch: { isRemoved: true } },
+    }).select('words');
+    if (!getTrashWordbooks) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORD));
+
+    return getTrashWordbooks;
+  }
+
   public async createWordsInWordbook(wordbookId: string, userId: number, wordIds: string[]) {
     let wordbookData = await this.WordbookModel.findOne({ _id: wordbookId, owner: userId });
     if (!wordbookData) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
@@ -85,11 +95,9 @@ class WordbookService {
     return wordbookData;
   }
 
-  public async deleteWordbookData(wordbookId: string, userId: number): Promise<IWordbook> {
-    const deleteWordbookById = await this.WordbookModel.findOneAndDelete({ _id: wordbookId, owner: userId });
-    if (!deleteWordbookById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
-
-    return deleteWordbookById;
+  public async addWordbook(wordbookData: WordbookDto): Promise<IWordbook> {
+    const wordbooks: IWordbook = await this.WordbookModel.create({ ...wordbookData });
+    return wordbooks;
   }
 
   public async updateWordbook(wordbookId: string, userId: number, title: string): Promise<IWordbook> {
@@ -101,51 +109,6 @@ class WordbookService {
     if (!updateWordbookById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
 
     return updateWordbookById;
-  }
-
-  public async addWordbook(wordbookData: WordbookDto): Promise<IWordbook> {
-    const wordbooks: IWordbook = await this.WordbookModel.create({ ...wordbookData });
-    return wordbooks;
-  }
-
-  public async deleteWordData(wordbookId: string, wordId: string, userId: number): Promise<IWordbook> {
-    const deleteWordById = await this.WordbookModel.findOneAndUpdate(
-      {
-        _id: wordbookId,
-        owner: userId,
-        words: { $elemMatch: { wordId: wordId, isRemoved: false } },
-      },
-      { $set: { 'words.$.isRemoved': true } },
-      { new: true },
-    );
-    if (!deleteWordById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORD));
-
-    return deleteWordById;
-  }
-
-  public async getTrashWordbooksData(userId: number): Promise<IWordbook[]> {
-    const getTrashWordbooks: IWordbook[] = await this.WordbookModel.find({
-      owner: userId,
-      words: { $elemMatch: { isRemoved: true } },
-    }).select('words');
-    if (!getTrashWordbooks) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORD));
-
-    return getTrashWordbooks;
-  }
-
-  public async removeWordData(wordId: string, userId: number): Promise<IWordbook> {
-    const removeWordById = await this.WordbookModel.findOneAndUpdate(
-      {
-        owner: userId,
-        words: { $elemMatch: { wordId: wordId, isRemoved: true } },
-      },
-      {
-        $pull: { words: { wordId: wordId, isRemoved: true } },
-      },
-    );
-    if (!removeWordById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORD));
-
-    return removeWordById;
   }
 
   public async updateFilter(wordId: string, userId: number, filter: EFilter, wordbookId: string): Promise<IWordbook> {
@@ -177,6 +140,43 @@ class WordbookService {
     if (!restoreWordById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORD));
 
     return restoreWordById;
+  }
+
+  public async removeWordData(wordId: string, userId: number): Promise<IWordbook> {
+    const removeWordById = await this.WordbookModel.findOneAndUpdate(
+      {
+        owner: userId,
+        words: { $elemMatch: { wordId: wordId, isRemoved: true } },
+      },
+      {
+        $pull: { words: { wordId: wordId, isRemoved: true } },
+      },
+    );
+    if (!removeWordById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORD));
+
+    return removeWordById;
+  }
+
+  public async deleteWordData(wordbookId: string, wordId: string, userId: number): Promise<IWordbook> {
+    const deleteWordById = await this.WordbookModel.findOneAndUpdate(
+      {
+        _id: wordbookId,
+        owner: userId,
+        words: { $elemMatch: { wordId: wordId, isRemoved: false } },
+      },
+      { $set: { 'words.$.isRemoved': true } },
+      { new: true },
+    );
+    if (!deleteWordById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORD));
+
+    return deleteWordById;
+  }
+
+  public async deleteWordbookData(wordbookId: string, userId: number): Promise<IWordbook> {
+    const deleteWordbookById = await this.WordbookModel.findOneAndDelete({ _id: wordbookId, owner: userId });
+    if (!deleteWordbookById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
+
+    return deleteWordbookById;
   }
 }
 
