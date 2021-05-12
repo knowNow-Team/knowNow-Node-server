@@ -103,6 +103,7 @@ paths:
         500:
           description: 'Server Error'
 
+
 # definitions
 definitions:
   users:
@@ -144,21 +145,7 @@ definitions:
         type: date
         description: wordbook updated date
       words: 
-        type: object
-        properties:
-          wordId: 
-            type: ObjectId
-            description: wordId in wordbook
-          filter: 
-            type: string
-            enum: [doNotKnow, memorized, confused]
-            description: word filtering
-          isRemoved: 
-            type: boolean
-            description: Whether to delete words 
-          addedAt:
-            type: date
-            description: Word added date
+        $ref: '#/definitions/word'
 
   word: 
     type: object
