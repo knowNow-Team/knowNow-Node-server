@@ -14,7 +14,6 @@ paths:
           description: 'OK'
         500:
           description: 'Server Error'
-
 # [POST] users
     post:
       tags:
@@ -130,7 +129,8 @@ definitions:
       - words
     properties:
       _id: 
-        type: ObjectId
+        type: string
+        format: ObjectId
         description: wordbook Id
       title: 
         type: string
@@ -139,13 +139,16 @@ definitions:
         type: integer
         description: wordbook owner
       createdAt:
-        type: date
+        type: string
+        format: date-time
         description: wordbook created date
       updatedAt: 
-        type: date
+        type: string
+        format: date-time
         description: wordbook updated date
       words: 
         $ref: '#/definitions/word'
+
 
   word: 
     type: object
@@ -157,7 +160,8 @@ definitions:
       - pronounceVoicePath
     properties:
       _id: 
-        type: ObjectId
+        type: string
+        format: ObjectId
         description: word Id
       word: 
         type: string
