@@ -1,3 +1,224 @@
+tags:
+- name: wordbooks
+  description: wordbooks API
+
+paths:
+# [GET] v1/wordbooks
+  /v1/wordbooks:
+    get:
+      tags:
+      - wordbooks
+      summary: Find All Wordbooks
+      parameters:
+      - name: userId
+        in: body
+        description: user Id
+        required: true
+        type: integer
+      responses: 
+        200:
+          description: 'OK'
+          schema:
+            $ref: '#/definitions/wordbook'
+        500:
+          description: 'Server Error'
+    post:
+      tags:
+      - wordbooks
+      summary: Add Wordbook
+      parameters:
+      - name: title
+        in: body
+        description: Wordbook title that needs to be added to the wordbook
+        required: true
+      - name: owner
+        in: body
+        description: Wordbook owner that needs to be added to the wordbook
+        required: true
+      responses:
+        201:
+          description: 'Created'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+# [GET] v1/wordbooks/trashwordbooks
+  /v1/wordbooks/trashwordbooks:
+    get:
+      tags:
+      - wordbooks
+      summary: Find removed words
+      parameters:
+      - name: userId
+        in: body
+        description: user Id
+        required: true
+        type: integer
+        example: 1
+      responses: 
+        200:
+          description: 'OK'
+          schema:
+            $ref: '#/definitions/wordbook'
+        500:
+          description: 'Server Error'
+
+# [put] v1/wordbooks/trashwordbooks/wordbookId
+  /v1/wordbooks/trashwordbooks/{wordbookId}:
+    put:
+      tags:
+      - wordbooks
+      summary: Word Recovery from trashwordbook
+      parameters:
+      - name: wordbookId
+        in: path
+        description: wordbook Id
+        required: true
+        type: string
+      - name: userId
+        in: body
+        description: user Id
+        required: true
+        type: integer
+      responses: 
+        200:
+          description: 'OK'
+          schema:
+            $ref: '#/definitions/wordbook'
+        500:
+          description: 'Server Error'
+
+# [DELETE] v1/wordbooks/trashwordbooks/wordId
+    delete:
+      tags: 
+      - wordbooks
+      summary: Delete a word from the trashwordbook
+      parameters:
+      - name: userId
+        in: body
+        description: user Id
+        required: true
+      - name: wordId
+        in: path
+        description: word Id
+        required: true
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+# [GET] v1/wordbooks/wordbookId
+  /v1/wordbooks/{wordbookId}:
+    get:
+      tags:
+      - wordbooks
+      summary: Find Wordbook By Id
+      parameters:
+      - name: userId
+        in: body
+        description: user Id
+        required: true
+        type: integer
+      - name: wordbookId
+        in: path
+        description: wordbook Id
+        required: true
+        type: string
+      responses: 
+        200:
+          description: 'OK'
+          schema: 
+            $ref: "#/definitions/wordbook"
+        500:
+          description: 'Server Error'
+
+#[PUT] v1/wordbooks/wordbookId
+    put:
+      tags:
+      - wordbooks
+      summary: Update wordbook title
+      parameters:
+      - name: userId
+        in: body
+        description: user Id
+        required: true
+        type: integer
+      - name: title
+        in: body
+        description: Title to change
+        required: true
+        type: string
+      - name: wordbookId
+        in: path
+        description: wordbook Id
+        required: true
+        type: string
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+#[DELETE] v1/wordbooks/wordbookId
+    delete:
+      tags:
+      - wordbooks
+      summary: Delete wordbook
+      parameters:
+      - name: userId
+        in: body
+        description: user Id
+        required: true
+      - name: wordbookId
+        in: path
+        description: wordbook Id
+        required: true
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+  
+# [DELETE] v1/wordbooks/wordbookId/words/wordId
+  v1/wordbooks/{wordbookId}/words/{wordId}:
+    delete:
+      tags:
+      - wordbooks
+      summary: Delete a word from the wordbook (move it to the trashwordbook)
+      parameters:
+      - name: userId
+        in: body
+        description: user Id
+        required: true
+      - name: wordbookId
+        in: path
+        description: wordbook Id
+        required: true
+      - name: wordId
+        in: path
+        description: word Id
+        required: true
+      responses:
+        200:
+          description: 'OK'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+
 # definitions
 definitions:
   wordbook:
