@@ -34,7 +34,7 @@ class Application {
 
   private async connectToDatabases(): Promise<void> {
     new MongoDBConnection();
-    new MysqlDBConnection();
+    // new MysqlDBConnection();
   }
 
   private initializeSettings(): void {
