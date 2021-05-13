@@ -1,0 +1,11 @@
+node_modules
+npm-debug.log
+dist
+
+src/logs
+.eslintrc.js
+.gitignore
+.prettierrc.js
+LICENSE
+nodemon.json
+README.md
