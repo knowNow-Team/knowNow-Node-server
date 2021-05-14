@@ -45,6 +45,33 @@ paths:
         500:
           description: 'Server Error'
 
+# [GET] v1/wordbooks/words
+  /v1/wordbooks/words:
+    get:
+      tags:
+      - wordbooks
+      summary: Find a word in the duplicate selection wordbooks
+      parameters:
+      - name: userId
+        in: body
+        description: user Id
+        required: true
+        type: integer
+        example: 1
+      - name: wordbookIds
+        in: query
+        description: ID of the wordbooks you want to select
+        required: true
+        type: string
+        example: aaaaaaaa,bbbbbbbb
+      responses: 
+        200:
+          description: 'OK'
+          schema:
+            $ref: '#/definitions/wordbook'
+        500:
+          description: 'Server Error'
+
 # [GET] v1/wordbooks/trashwordbooks
   /v1/wordbooks/trashwordbooks:
     get:
