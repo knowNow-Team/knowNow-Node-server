@@ -1,5 +1,5 @@
 import { model, Schema, Document, Model } from 'mongoose';
-import { ITest, ETestStatus } from '../interfaces/tests.interface';
+import { ITest, ETestFilter } from '../interfaces/tests.interface';
 
 export default class TestModel {
   private model: Model<ITest & Document>;
@@ -9,7 +9,7 @@ export default class TestModel {
       {
         testerId: { type: Number, required: true },
         difficulty: { type: String, required: true },
-        status: { type: [String], required: true, enum: Object.values(ETestStatus) },
+        filter: { type: [String], required: true, enum: Object.values(ETestFilter) },
         score: { type: String, required: true },
         wordTotalCount: { type: Number, required: true },
         correctAnswerCount: { type: Number, required: true },
