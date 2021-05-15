@@ -1,6 +1,10 @@
 tags:
 - name: wordbooks
   description: wordbooks API
+- name: words
+  description: words API
+- name: tests
+  description: tests API
 
 paths:
 # [GET] v1/wordbooks
@@ -399,8 +403,6 @@ definitions:
       updatedAt:
         type: string
         format: date-time
-
-      
 
 schemes:
   - https
