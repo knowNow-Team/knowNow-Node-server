@@ -26,6 +26,36 @@ paths:
             $ref: '#/definitions/word'
         500:
           description: 'Server Error'
+    # put:
+    #   tags:
+    #   - words
+    #   summary: Update word by Id
+    #   parameters:
+    #   - name: wordId
+    #     in: path
+    #     description: word Id
+    #     required: true
+    #     type: string
+    #   - name: meanings
+    #     in: body
+    #     type: array
+    #   - name: wordClasses
+    #     in: body
+    #     type: string
+    #     enum: [nouns, pronouns, verbs, adverbs, adjective, articles, prepositions, conjunctions, interjections]
+    #   - name: pronounceVoicePath
+    #     in: body
+    #     type: string
+    #   - name: phonics
+    #     in: body
+    #     type: string
+    #   responses: 
+    #     200:
+    #       description: 'OK'
+    #       schema:
+    #         $ref: '#/definitions/word'
+    #     500:
+    #       description: 'Server Error'
 
 # [post] v1/words/list
   v1/words/list:
