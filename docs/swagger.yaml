@@ -26,7 +26,7 @@ paths:
             $ref: '#/definitions/word'
         500:
           description: 'Server Error'
-
+          
 # [post] v1/words/list
   v1/words/list:
     post:
