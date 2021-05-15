@@ -60,7 +60,7 @@ class WordController {
 
   public updateWord = async (req: Request, res: Response, next: NextFunction) => {
     const wordId: string = req.params.wordId;
-    const wordData: IWord = req.body; // 추후 토큰으로 받으면 유효성 검사해서 업데이트 할 것
+    const wordData: IWord = req.body;
 
     try {
       if (util.isEmpty(wordData)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);

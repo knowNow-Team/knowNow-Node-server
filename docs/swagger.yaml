@@ -7,6 +7,48 @@ tags:
   description: tests API
 
 paths:
+# [GET] v1/words/wordId
+  /v1/words/{wordId}:
+    get:
+      tags:
+      - words
+      summary: Find words by Id
+      parameters:
+      - name: wordId
+        in: path
+        description: word Id
+        required: true
+        type: string
+      responses: 
+        200:
+          description: 'OK'
+          schema:
+            $ref: '#/definitions/word'
+        500:
+          description: 'Server Error'
+
+# [post] v1/words/list
+  v1/words/list:
+    post:
+      tags:
+      - words
+      summary: Add word
+      parameters:
+      - name: wordNames
+        in: body
+        type: array
+        example: [apple, banana]
+        required: true
+      responses:
+        201:
+          description: 'Created'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
 # [GET] v1/wordbooks
   /v1/wordbooks:
     get:
