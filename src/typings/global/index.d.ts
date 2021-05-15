@@ -21,11 +21,11 @@ declare global {
       _logger: winston.Logger;
     }
   }
-  // namespace Express {
-  //   export interface Request {
-  //     decoded?: DecodedInfo;
-  //   }
-  // }
+  namespace Express {
+    export interface Request {
+      userId: number;
+    }
+  }
 }
 
 export {};
