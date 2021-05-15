@@ -1,31 +1,30 @@
-// import { NextFunction, Response } from 'express';
-// import jwt from 'jsonwebtoken';
-// import HttpException from '../exceptions/HttpException';
-// import { DataStoredInToken, RequestWithUser } from '../interfaces/auths.interface';
-// import userModel from '../models/users.model';
+import statusCode from '@utils/statusCode';
+import { NextFunction, Response, Request } from 'express';
+import jwt from 'jsonwebtoken';
+import HttpException from '../exceptions/HttpException';
+import { DataStoredInToken } from '../interfaces/auths.interface';
 
-// const authMiddleware = async (req: RequestWithUser, res: Response, next: NextFunction) => {
-//   try {
-//     const cookies = req.cookies;
+const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const Authorization = req.cookies.Authorization || req.header('Authorization') || null;
 
-//     if (cookies && cookies.Authorization) {
-//       const secret = process.env.JWT_SECRET;
-//       const verificationResponse = (await jwt.verify(cookies.Authorization, secret)) as DataStoredInToken;
-//       const userId = verificationResponse._id;
-//       const findUser = await userModel.findById(userId);
+    if (!Authorization) {
+      return next(new HttpException(statusCode.NOT_FOUND, 'Authentication token missing'));
+    }
 
-//       if (findUser) {
-//         req.user = findUser;
-//         next();
-//       } else {
-//         next(new HttpException(401, 'Wrong authentication token'));
-//       }
-//     } else {
-//       next(new HttpException(404, 'Authentication token missing'));
-//     }
-//   } catch (error) {
-//     next(new HttpException(401, 'Wrong authentication token'));
-//   }
-// };
+    const secret = process.env.JWT_SECRET;
+    const verificationResponse = jwt.verify(Authorization, secret) as DataStoredInToken;
+    const userId = verificationResponse.id;
 
-// export default authMiddleware;
+    if (!userId) {
+      return next(new HttpException(statusCode.UNAUTHORIZED, 'Wrong authentication token'));
+    }
+
+    req.userId = userId;
+    next();
+  } catch (error) {
+    next(new HttpException(statusCode.UNAUTHORIZED, 'Wrong authentication token'));
+  }
+};
+
+export default authMiddleware;
