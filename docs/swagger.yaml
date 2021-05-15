@@ -356,6 +356,52 @@ definitions:
         type: string
         description: word pronounceVoicePath
 
+  test:
+    type: object
+    required:
+    - testerId
+    - difficulty
+    - filter
+    - score
+    - wordTotalCount
+    - correctAnswerCount
+    - wordbooks
+    - words
+    properties:
+      _id: 
+        type: string
+        format: ObjectId
+      testerId: 
+        type: integer
+      filter:
+        type: string
+        enum: [doNotKnow, memorized, confused]
+      score:
+        type: string
+      wordTotalCount:
+        type: integer
+      correctAnswerCount: 
+        type: integer
+      wordbooks:
+        type: array
+      words: 
+        type: object
+        properties:
+          wordId:
+            $ref: '#/definitions/word'
+          isCorrect:
+            type: boolean
+          answer:
+            type: string
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+
+      
+
 schemes:
   - https
   - http
