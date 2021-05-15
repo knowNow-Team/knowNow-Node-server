@@ -1,5 +1,5 @@
 import { IsArray, IsBoolean, IsEnum, IsNumber, IsString, Max, Min, ValidateNested } from 'class-validator';
-import { ETestDifficulty, ETestStatus } from '../interfaces/tests.interface';
+import { ETestDifficulty, ETestFilter } from '../interfaces/tests.interface';
 
 export class TestWordListDto {
   @IsString()
@@ -19,8 +19,8 @@ export class TestDto {
   @IsEnum(ETestDifficulty, { each: true })
   public difficulty!: ETestDifficulty;
 
-  @IsEnum(ETestStatus, { each: true })
-  public status!: ETestStatus[];
+  @IsEnum(ETestFilter, { each: true })
+  public status!: ETestFilter[];
 
   @IsArray()
   @ValidateNested({ each: true })
