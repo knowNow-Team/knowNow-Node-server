@@ -20,4 +20,5 @@ class WordRoute implements IRoute {
     this.router.put(`${this.path}/:wordId`, this.wordsController.updateWord);
   }
 }
+
 export default WordRoute;
