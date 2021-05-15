@@ -17,10 +17,8 @@ export default class TestModel {
         words: [
           {
             wordId: {
-              // type: Schema.Types.ObjectId,
-              type: String,
-              required: true,
-              // ref: 'Words',
+              type: Schema.Types.ObjectId,
+              ref: 'Words',
             },
             isCorrect: {
               type: Boolean,
