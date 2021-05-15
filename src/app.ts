@@ -48,7 +48,7 @@ class Application {
   private initializeMiddlewares(): void {
     if (this.env === 'production') {
       this.app.use(morgan('combined', { stream }));
-      this.app.use(cors({ origin: 'apis.word.mjuknownow.com', credentials: true }));
+      this.app.use(cors({ origin: 'http://www.apis.word.mjuknownow.com', credentials: true }));
     } else if (this.env === 'development') {
       this.app.use(morgan('dev', { stream }));
       this.app.use(cors({ origin: true, credentials: true }));
