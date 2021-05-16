@@ -83,7 +83,7 @@ class Application {
     };
 
     const specs = swaggerJSDoc(options);
-    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
+    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }));
   }
 
   public start(): void {
