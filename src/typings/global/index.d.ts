@@ -10,12 +10,6 @@ declare global {
       MONGO_PWD: string;
       MONGO_IP: string;
       MONGO_DB: string;
-
-      // MYSQL_DB
-      MYSQL_HOST: string;
-      MYSQL_USER: string;
-      MYSQL_PWD: string;
-      MYSQL_DB: string;
     }
     export interface Global {
       _logger: winston.Logger;
