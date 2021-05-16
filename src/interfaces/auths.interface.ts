@@ -1,5 +1,5 @@
 export interface DataStoredInToken {
-  id: number;
+  userId: number;
 }
 
 export interface TokenData {

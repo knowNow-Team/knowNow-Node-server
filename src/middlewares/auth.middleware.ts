@@ -14,7 +14,7 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
     const secret = process.env.JWT_SECRET;
     const verificationResponse = jwt.verify(Authorization, secret) as DataStoredInToken;
-    const userId = verificationResponse.id;
+    const userId = verificationResponse.userId;
 
     if (!userId) {
       return next(new HttpException(statusCode.UNAUTHORIZED, 'Wrong authentication token'));
