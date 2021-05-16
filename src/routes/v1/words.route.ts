@@ -16,13 +16,8 @@ class WordRoute implements IRoute {
 
   private initializeRoutes() {
     this.router.get(`${this.path}/:wordId`, authMiddleware, this.wordsController.getWordById);
-    this.router.post(
-      `${this.path}`,
-      authMiddleware,
-      validationMiddleware(WordDto, 'body', true),
-      this.wordsController.createWord,
-    );
     this.router.post(`${this.path}/scrap`, authMiddleware, this.wordsController.getWordsByName);
+    this.router.post(`${this.path}/list`, authMiddleware, this.wordsController.getWordsByName);
     this.router.put(`${this.path}/:wordId`, authMiddleware, this.wordsController.updateWord);
   }
 }
