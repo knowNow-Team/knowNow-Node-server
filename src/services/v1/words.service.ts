@@ -23,6 +23,11 @@ class WordService {
     return findWord || null;
   }
 
+  public async createWord(wordData: WordDto): Promise<IWord> {
+    const createWord = await this.WordModel.create(wordData);
+    return createWord;
+  }
+
   public async updateWord(wordId: string, wordData: IWord): Promise<IWord> {
     const updateWordById = await this.WordModel.findByIdAndUpdate(wordId, { ...wordData });
     if (!updateWordById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORD));
