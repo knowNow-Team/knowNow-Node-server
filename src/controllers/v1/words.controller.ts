@@ -44,20 +44,6 @@ class WordController {
     }
   };
 
-  public createWord = async (req: Request, res: Response, next: NextFunction) => {
-    const wordInfo: WordDto = req.body;
-
-    try {
-      if (util.isEmpty(wordInfo)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
-
-      const createdWordData: IWord = await this.WordService.createWord(wordInfo);
-
-      return res.status(statusCode.CREATED).json({ message: resMessage.X_CREATE_SUCCESS, data: createdWordData });
-    } catch (err) {
-      next(err);
-    }
-  };
-
   public updateWord = async (req: Request, res: Response, next: NextFunction) => {
     const wordId: string = req.params.wordId;
     const wordData: IWord = req.body;
