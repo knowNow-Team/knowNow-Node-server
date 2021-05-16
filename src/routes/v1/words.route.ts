@@ -1,7 +1,5 @@
 import WordController from '@controllers/v1/words.controller';
-import { WordDto } from '@dtos/words.dto';
 import IRoute from '@interfaces/routes.interface';
-import validationMiddleware from '@middlewares/validation.middleware';
 import { Router } from 'express';
 import authMiddleware from '../../middlewares/auth.middleware';
 

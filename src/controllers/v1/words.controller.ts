@@ -3,7 +3,6 @@ import { resMessage, statusCode, util } from '../../utils';
 import HttpException from '../../exceptions/HttpException';
 import { IWord } from '../../interfaces/words.interface';
 import WordService from '../../services/v1/words.service';
-import { WordDto } from '../../dtos/words.dto';
 
 const WORD = '단어';
 
