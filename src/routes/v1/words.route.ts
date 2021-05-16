@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import IRoute from '@interfaces/routes.interface';
 import validationMiddleware from '@middlewares/validation.middleware';
+import authMiddleware from '../../middlewares/auth.middleware';
 import WordController from '@controllers/v1/words.controller';
 import { WordDto } from '@dtos/words.dto';
 
@@ -14,10 +15,15 @@ class WordRoute implements IRoute {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}/:wordId`, this.wordsController.getWordById);
-    this.router.post(`${this.path}`, validationMiddleware(WordDto, 'body', true), this.wordsController.createWord);
-    this.router.post(`${this.path}/list`, this.wordsController.getWordsByName);
-    this.router.put(`${this.path}/:wordId`, this.wordsController.updateWord);
+    this.router.get(`${this.path}/:wordId`, authMiddleware, this.wordsController.getWordById);
+    this.router.post(
+      `${this.path}`,
+      authMiddleware,
+      validationMiddleware(WordDto, 'body', true),
+      this.wordsController.createWord,
+    );
+    this.router.post(`${this.path}/list`, authMiddleware, this.wordsController.getWordsByName);
+    this.router.put(`${this.path}/:wordId`, authMiddleware, this.wordsController.updateWord);
   }
 }
 

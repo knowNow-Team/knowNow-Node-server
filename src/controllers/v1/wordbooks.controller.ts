@@ -12,7 +12,7 @@ class WordbookController {
   public WordbookService = new WordbookService();
 
   public getWordbooks = async (req: Request, res: Response, next: NextFunction) => {
-    const userId: number = req.body.userId; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    const userId: number = req.userId;
     const wordbookIds = req.query.wordbookIds as string[];
 
     try {
@@ -24,7 +24,7 @@ class WordbookController {
   };
 
   public getWordbookWords = async (req: Request, res: Response, next: NextFunction) => {
-    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    const userId: number = req.userId;
     const wordbookIds: string = req.query.wordbookIds as string;
     const wordbooksIdArr: string[] = wordbookIds.split(',') as string[];
     try {
@@ -37,7 +37,7 @@ class WordbookController {
 
   public getWordbookById = async (req: Request, res: Response, next: NextFunction) => {
     const wordbookId: string = req.params.wordbookId;
-    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    const userId: number = req.userId;
     try {
       const findOneWordbookData: IWordbook = await this.WordbookService.findWordbookById(wordbookId, userId);
       return res
@@ -49,7 +49,7 @@ class WordbookController {
   };
 
   public getTrashWordbooks = async (req: Request, res: Response, next: NextFunction) => {
-    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    const userId: number = req.userId;
     try {
       const getTrashWordbooks: IWordbook[] = await this.WordbookService.findTrashWordbooksData(userId);
       return res.status(statusCode.OK).json({ message: resMessage.X_READ_SUCCESS(WORDBOOK), data: getTrashWordbooks });
@@ -60,7 +60,9 @@ class WordbookController {
 
   public createWordsInWordbook = async (req: Request, res: Response, next: NextFunction) => {
     const wordbookId: string = req.params.wordbookId;
-    const { userId, wordIds }: { userId: number; wordIds: string[] } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    const wordIds: string[] = req.body.wordNames; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    const userId: number = req.userId;
+
     try {
       const wordbookData = await this.WordbookService.createWordsInWordbook(wordbookId, userId, wordIds);
 
@@ -83,7 +85,9 @@ class WordbookController {
 
   public updateWordbook = async (req: Request, res: Response, next: NextFunction) => {
     const wordbookId: string = req.params.wordbookId;
-    const { userId, title }: { userId: number; title: string } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    const title: string = req.body.title;
+    const userId: number = req.userId;
+
     try {
       if (util.isEmpty(title)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
 
@@ -99,7 +103,9 @@ class WordbookController {
   public updateFilter = async (req: Request, res: Response, next: NextFunction) => {
     const wordId: string = req.params.wordId;
     const wordbookId: string = req.params.wordbookId;
-    const { userId, filter }: { userId: number; filter: EFilter } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    const filter: EFilter = req.body.filter;
+    const userId: number = req.userId;
+
     try {
       const updateFilterData = await this.WordbookService.updateFilter(wordId, userId, filter, wordbookId);
       return res.status(statusCode.OK).json({ message: resMessage.X_UPDATE_SUCCESS(WORD), data: updateFilterData });
@@ -110,7 +116,8 @@ class WordbookController {
 
   public restoreWord = async (req: Request, res: Response, next: NextFunction) => {
     const wordId: string = req.params.wordId;
-    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    const userId: number = req.userId;
+
     try {
       const restoreWordData = await this.WordbookService.restoreWord(wordId, userId);
       return res.status(statusCode.OK).json({ message: resMessage.X_UPDATE_SUCCESS(WORD), data: restoreWordData });
@@ -121,7 +128,8 @@ class WordbookController {
 
   public removeWordFromTrash = async (req: Request, res: Response, next: NextFunction) => {
     const wordId: string = req.params.wordId;
-    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    const userId: number = req.userId;
+
     try {
       const removeWordData = await this.WordbookService.removeWordData(wordId, userId);
       return res.status(statusCode.OK).json({ message: resMessage.X_DELETE_SUCCESS(WORD), data: removeWordData });
@@ -132,7 +140,8 @@ class WordbookController {
 
   public deleteWordbook = async (req: Request, res: Response, next: NextFunction) => {
     const wordbookId: string = req.params.wordbookId;
-    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    const userId: number = req.userId;
+
     try {
       const deleteWordbookData = await this.WordbookService.deleteWordbookData(wordbookId, userId);
       return res
@@ -146,7 +155,8 @@ class WordbookController {
   public deleteWordFromWordbook = async (req: Request, res: Response, next: NextFunction) => {
     const wordId: string = req.params.wordId;
     const wordbookId: string = req.params.wordbookId;
-    const { userId }: { userId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    const userId: number = req.userId;
+
     try {
       const updateWordById = await this.WordbookService.deleteWordData(wordbookId, wordId, userId);
       return res.status(statusCode.OK).json({ message: resMessage.X_DELETE_SUCCESS(WORD), data: updateWordById });

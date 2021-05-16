@@ -11,11 +11,11 @@ class TestController {
   public TestService = new TestService();
 
   public getTests = async (req: Request, res: Response, next: NextFunction) => {
-    const { testerId }: { testerId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    const testerId: number = req.userId;
     try {
       const findAllTestsData: ITest[] = await this.TestService.findAllTest(testerId);
 
-      return res.status(statusCode.OK).json({ message: resMessage.X_READ_ALL_SUCCESS(TEST), data: findAllTestsData });
+      res.status(statusCode.OK).json({ message: resMessage.X_READ_ALL_SUCCESS(TEST), data: findAllTestsData });
     } catch (error) {
       next(error);
     }
@@ -23,7 +23,7 @@ class TestController {
 
   public getTestById = async (req: Request, res: Response, next: NextFunction) => {
     const testId: string = req.params.id;
-    const { testerId }: { testerId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    const testerId: number = req.userId;
 
     try {
       const findOneTestData: ITest = await this.TestService.findTestById(testId, testerId);
@@ -50,7 +50,7 @@ class TestController {
 
   public updateTest = async (req: Request, res: Response, next: NextFunction) => {
     const testId: string = req.params.id;
-    const testData: ITest = req.body; // 추후 토큰으로 받으면 유효성 검사해서 업데이트 할 것
+    const testData: ITest = req.body;
 
     try {
       if (util.isEmpty(testData)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
@@ -65,7 +65,6 @@ class TestController {
 
   public deleteTest = async (req: Request, res: Response, next: NextFunction) => {
     const testId: string = req.params.id;
-    const { testerId }: { testerId: number } = req.body; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
 
     try {
       const deleteTestData: ITest = await this.TestService.deleteTestData(testId);
