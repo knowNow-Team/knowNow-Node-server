@@ -1,5 +1,5 @@
 import statusCode from '@utils/statusCode';
-import { NextFunction, Response, Request } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import HttpException from '../exceptions/HttpException';
 import { DataStoredInToken } from '../interfaces/auths.interface';
