@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:14-alpine
 
 # 앱 소스 추가
 COPY . ./app
@@ -12,6 +12,7 @@ WORKDIR /app
 COPY package*.json ./
 COPY tsconfig.json ./
 
+# 추후 --production 옵션으로 실행할 수 있게 변경하기
 RUN npm ci
 
 EXPOSE 3000
