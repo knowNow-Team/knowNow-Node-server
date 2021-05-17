@@ -55,6 +55,8 @@ paths:
       tags:
       - wordbooks
       summary: Find All Wordbooks
+      security:
+      - Bearer: []
       parameters:
       responses: 
         200:
@@ -67,6 +69,8 @@ paths:
       tags:
       - wordbooks
       summary: Add Wordbook
+      security:
+      - Bearer: []
       parameters:
       - name: title
         in: body
@@ -92,6 +96,8 @@ paths:
       tags:
       - wordbooks
       summary: Find a word in the duplicate selection wordbooks
+      security:
+      - Bearer: []
       parameters:
       - name: wordbookIds
         in: query
@@ -113,6 +119,8 @@ paths:
       tags:
       - wordbooks
       summary: Find removed words
+      security:
+      - Bearer: []
       parameters:
       responses: 
         200:
@@ -128,6 +136,8 @@ paths:
       tags:
       - wordbooks
       summary: Word Recovery from trashwordbook
+      security:
+      - Bearer: []
       parameters:
       - name: wordbookId
         in: path
@@ -147,6 +157,8 @@ paths:
       tags: 
       - wordbooks
       summary: Delete a word from the trashwordbook
+      security:
+      - Bearer: []
       parameters:
       - name: wordId
         in: path
@@ -166,6 +178,8 @@ paths:
       tags:
       - wordbooks
       summary: Find Wordbook By Id
+      security:
+      - Bearer: []
       parameters:
       - name: wordbookId
         in: path
@@ -185,6 +199,8 @@ paths:
       tags:
       - wordbooks
       summary: Update wordbook title
+      security:
+      - Bearer: []
       parameters:
       - name: title
         in: body
@@ -212,6 +228,8 @@ paths:
       tags:
       - wordbooks
       summary: Update word filter
+      security:
+      - Bearer: []
       parameters:
       - name: filter
         in: body
@@ -245,6 +263,8 @@ paths:
       tags:
       - wordbooks
       summary: Delete wordbook
+      security:
+      - Bearer: []
       parameters:
       - name: wordbookId
         in: path
@@ -264,6 +284,8 @@ paths:
       tags:
       - wordbooks
       summary: Delete a word from the wordbook (move it to the trashwordbook)
+      security:
+      - Bearer: []
       parameters:
       - name: wordbookId
         in: path
@@ -395,6 +417,13 @@ definitions:
       updatedAt:
         type: string
         format: date-time
+
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    required: true
 
 schemes:
   - https
