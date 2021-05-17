@@ -1,17 +1,17 @@
-import express from 'express';
-import cookieParser from 'cookie-parser';
-import morgan from 'morgan';
-import helmet from 'helmet';
 import compression from 'compression';
-import hpp from 'hpp';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import swaggerUi from 'swagger-ui-express';
-import swaggerJSDoc from 'swagger-jsdoc';
+import express from 'express';
+import helmet from 'helmet';
+import hpp from 'hpp';
+import morgan from 'morgan';
 import { normalize } from 'path';
-import Routes from './interfaces/routes.interface';
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
 import MongoDBConnection from './configs/mongo.config';
-import { logger, stream } from './utils/logger';
+import Routes from './interfaces/routes.interface';
 import errorMiddleware from './middlewares/error.middleware';
+import { logger, stream } from './utils/logger';
 
 class Application {
   public app: express.Application;
