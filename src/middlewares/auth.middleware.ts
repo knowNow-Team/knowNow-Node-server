@@ -23,7 +23,7 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     req.userId = userId;
     next();
   } catch (error) {
-    next(new HttpException(statusCode.UNAUTHORIZED, 'Wrong authentication token'));
+    next(new HttpException(statusCode.UNAUTHORIZED, error.message));
   }
 };
 
