@@ -15,6 +15,7 @@ class TestService {
   }
 
   public async findTestById(testId: string): Promise<ITest> {
+    const findTest = await this.TestModel.findOne({ _id: testId }).populate('words.wordId');
     if (!findTest) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(TEST));
 
     return findTest;
