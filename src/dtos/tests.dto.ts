@@ -20,7 +20,7 @@ export class TestDto {
   public difficulty!: ETestDifficulty;
 
   @IsEnum(ETestFilter, { each: true })
-  public status!: ETestFilter[];
+  public filter!: ETestFilter[];
 
   @IsArray()
   @ValidateNested({ each: true })
