@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import TestsController from '../../controllers/v1/tests.controller';
 import { TestDto } from '../../dtos/tests.dto';
-import validationMiddleware from '../../middlewares/validation.middleware';
 import IRoute from '../../interfaces/routes.interface';
 import authMiddleware from '../../middlewares/auth.middleware';
+import validationMiddleware from '../../middlewares/validation.middleware';
 
 class TestRoute implements IRoute {
   public path = '/v1/tests';
