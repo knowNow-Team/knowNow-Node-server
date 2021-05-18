@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM nikolaik/python-nodejs:python3.9-nodejs14-alpine	
 
 # 앱 소스 추가
 COPY . ./app
@@ -14,6 +14,8 @@ COPY tsconfig.json ./
 
 # 추후 --production 옵션으로 실행할 수 있게 변경하기
 RUN npm ci
+RUN pip install requests
+RUN pip install bs4
 
 EXPOSE 3000
 
