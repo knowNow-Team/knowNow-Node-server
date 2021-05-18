@@ -1,5 +1,5 @@
-import { model, Schema, Document, Model } from 'mongoose';
-import { ITest, ETestFilter } from '../interfaces/tests.interface';
+import { Document, model, Model, Schema } from 'mongoose';
+import { ETestFilter, ITest } from '../interfaces/tests.interface';
 
 export default class TestModel {
   private model: Model<ITest & Document>;
@@ -16,6 +16,7 @@ export default class TestModel {
         wordbooks: { type: [String], required: true },
         words: [
           {
+            _id: false,
             wordId: {
               type: Schema.Types.ObjectId,
               ref: 'Words',
