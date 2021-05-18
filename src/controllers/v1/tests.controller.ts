@@ -23,10 +23,9 @@ class TestController {
 
   public getTestById = async (req: Request, res: Response, next: NextFunction) => {
     const testId: string = req.params.id;
-    const testerId: number = req.userId;
 
     try {
-      const findOneTestData: ITest = await this.TestService.findTestById(testId, testerId);
+      const findOneTestData: ITest = await this.TestService.findTestById(testId);
 
       return res.status(statusCode.OK).json({ message: resMessage.X_READ_SUCCESS(TEST), data: findOneTestData });
     } catch (error) {

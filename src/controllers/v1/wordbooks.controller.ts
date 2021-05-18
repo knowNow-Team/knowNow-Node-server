@@ -37,9 +37,9 @@ class WordbookController {
 
   public getWordbookById = async (req: Request, res: Response, next: NextFunction) => {
     const wordbookId: string = req.params.wordbookId;
-    const userId: number = req.userId;
+
     try {
-      const findOneWordbookData: IWordbook = await this.WordbookService.findWordbookById(wordbookId, userId);
+      const findOneWordbookData: IWordbook = await this.WordbookService.findWordbookById(wordbookId);
       return res
         .status(statusCode.OK)
         .json({ message: resMessage.X_READ_SUCCESS(WORDBOOK), data: findOneWordbookData });
