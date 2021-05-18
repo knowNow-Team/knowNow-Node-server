@@ -14,8 +14,7 @@ class TestService {
     return tests;
   }
 
-  public async findTestById(testId: string, testerId: number): Promise<ITest> {
-    const findTest = await this.TestModel.findOne({ _id: testId, testerId });
+  public async findTestById(testId: string): Promise<ITest> {
     if (!findTest) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(TEST));
 
     return findTest;
