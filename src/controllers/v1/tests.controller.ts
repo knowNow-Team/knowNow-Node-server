@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { TestDto } from '../../dtos/tests.dto';
+import HttpException from '../../exceptions/HttpException';
 import { ITest } from '../../interfaces/tests.interface';
 import TestService from '../../services/v1/tests.service';
 import { resMessage, statusCode, util } from '../../utils';
-import HttpException from '../../exceptions/HttpException';
 
 const TEST = '시험';
 

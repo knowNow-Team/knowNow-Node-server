@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import HttpException from '../../exceptions/HttpException';
 import { WordbookDto } from '../../dtos/wordbooks.dto';
-import { IWordbook, EFilter } from '../../interfaces/wordbooks.interface';
+import HttpException from '../../exceptions/HttpException';
+import { EFilter, IWordbook } from '../../interfaces/wordbooks.interface';
 import WordbookService from '../../services/v1/wordbooks.service';
 import { resMessage, statusCode, util } from '../../utils';
 
