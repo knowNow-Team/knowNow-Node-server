@@ -13,7 +13,9 @@ COPY package*.json ./
 COPY tsconfig.json ./
 
 # 추후 --production 옵션으로 실행할 수 있게 변경하기
-RUN npm ci
+RUN npm ci --production && npm i typescript@4.2.3
+
+# 크롤링에 필요한 모듈 설치
 RUN pip install requests
 RUN pip install bs4
 
