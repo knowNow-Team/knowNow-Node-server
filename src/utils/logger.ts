@@ -19,14 +19,18 @@ const logFormat = printf(({ timestamp, level, message }) => `${timestamp} ${leve
  * Log Level
  * error: 0, warn: 1, info: 2, http: 3, verbose: 4, debug: 5, silly: 6
  */
-const logger = winston.createLogger({
+
+const loggerOption: winston.LoggerOptions = {
   format: combine(
     timestamp({
       format: 'YYYY-MM-DD HH:mm:ss',
     }),
     logFormat,
   ),
-  transports: [
+};
+
+if (process.env.NODE_ENV === 'production') {
+  loggerOption.transports = [
     // info log setting
     new winstonDaily({
       level: 'info',
@@ -48,8 +52,10 @@ const logger = winston.createLogger({
       json: false,
       zippedArchive: true,
     }),
-  ],
-});
+  ];
+}
+
+const logger = winston.createLogger(loggerOption);
 
 logger.add(
   new winston.transports.Console({
