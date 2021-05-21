@@ -35,20 +35,6 @@ class WordbookController {
     }
   };
 
-  public getWordbookById = async (req: Request, res: Response, next: NextFunction) => {
-    const wordbookId: string = req.params.wordbookId;
-    const userId: number = req.userId;
-
-    try {
-      const findOneWordbookData = await this.WordbookService.findWordbookById(wordbookId, userId);
-      return res
-        .status(statusCode.OK)
-        .json({ message: resMessage.X_READ_SUCCESS(WORDBOOK), data: findOneWordbookData });
-    } catch (err) {
-      next(err);
-    }
-  };
-
   public getOptionWords = async (req: Request, res: Response, next: NextFunction) => {
     const order: string = req.query.order as string;
     const wordbookIds: string = req.query.wordbookIds as string;
