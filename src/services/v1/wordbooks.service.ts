@@ -52,6 +52,9 @@ class WordbookService {
         updatedAt: { $first: '$updatedAt' },
         filters: { $push: { filter: '$_id.wordFilter', count: '$count' } },
         allCount: { $sum: '$count' },
+      })
+      .sort({
+        createdAt: 1,
       });
 
     return wordbookInfoWithWordCounts;
