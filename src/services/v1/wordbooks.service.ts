@@ -60,7 +60,9 @@ class WordbookService {
       owner: userId,
       _id: { $in: wordbooksIdArr },
       words: { $elemMatch: { isRemoved: false } },
-    }).select('words');
+    })
+      .populate('words.wordId')
+      .select('words');
 
     return wordbooksData;
   }
