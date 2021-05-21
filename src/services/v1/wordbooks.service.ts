@@ -58,13 +58,37 @@ class WordbookService {
   }
 
   public async findWordbookWordData(userId: number, wordbooksIdArr: string[]): Promise<IWordbook[]> {
-    const wordbooksData = await this.WordbookModel.find({
-      owner: userId,
-      _id: { $in: wordbooksIdArr },
-      words: { $elemMatch: { isRemoved: false } },
-    })
-      .populate('words.wordId')
-      .select('words');
+    const wordbooksIdArrData = wordbooksIdArr.map((e) => {
+      return ObjectId(e);
+    });
+    const wordbooksData = await this.WordbookModel.aggregate([
+      {
+        $match: {
+          owner: userId,
+          _id: { $in: wordbooksIdArrData },
+        },
+      },
+      {
+        $project: {
+          title: 1,
+          owner: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          words: 1,
+        },
+      },
+      {
+        $unwind: { path: '$words', preserveNullAndEmptyArrays: true },
+      },
+      {
+        $lookup: {
+          from: 'words',
+          localField: 'words.wordId',
+          foreignField: '_id',
+          as: 'words-doc',
+        },
+      },
+    ]);
 
     return wordbooksData;
   }
