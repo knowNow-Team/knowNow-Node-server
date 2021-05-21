@@ -39,9 +39,9 @@ class TestController {
     try {
       if (util.isEmpty(testData)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
 
-      const createTestData: ITest = await this.TestService.createTest(testData);
+      await this.TestService.createTest(testData);
 
-      return res.status(statusCode.CREATED).json({ message: resMessage.X_CREATE_SUCCESS(TEST), data: createTestData });
+      return res.status(statusCode.CREATED).json({ message: resMessage.X_CREATE_SUCCESS(TEST) });
     } catch (error) {
       next(error);
     }
