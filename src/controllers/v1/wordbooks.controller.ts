@@ -49,6 +49,27 @@ class WordbookController {
     }
   };
 
+  public getOptionWords = async (req: Request, res: Response, next: NextFunction) => {
+    const order: string = req.query.order as string;
+    const wordbookIds: string = req.query.wordbookIds as string;
+    const wordbooksIdArr: string[] = wordbookIds.split(',') as string[];
+    const filter: EFilter = req.query.filter as EFilter; // ex. "confused, donotknow"
+    const filterArr: EFilter[] = filter.split(',') as EFilter[]; // ex. ["confused", "donotknow"]
+    const userId: number = req.userId;
+    try {
+      const getWordsByOption = await this.WordbookService.findOptionWordbookData(
+        userId,
+        order,
+        filterArr,
+        wordbooksIdArr,
+      );
+
+      return res.status(statusCode.OK).json({ message: resMessage.X_READ_SUCCESS(WORD), data: getWordsByOption });
+    } catch (err) {
+      next(err);
+    }
+  };
+
   public getTrashWordbooks = async (req: Request, res: Response, next: NextFunction) => {
     const userId: number = req.userId;
     try {

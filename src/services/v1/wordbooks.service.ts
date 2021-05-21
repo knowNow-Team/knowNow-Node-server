@@ -4,7 +4,9 @@ import HttpException from '../../exceptions/HttpException';
 import { EFilter, IMatchOption, IWordbook, IWordbookWithCount } from '../../interfaces/wordbooks.interface';
 import WordbookModel from '../../models/wordbooks.model';
 import { resMessage, statusCode } from '../../utils';
+import Mongoose from 'mongoose';
 
+const ObjectId = Mongoose.Types.ObjectId;
 const WORDBOOK = '단어장';
 const WORD = '단어';
 
@@ -65,6 +67,53 @@ class WordbookService {
       .select('words');
 
     return wordbooksData;
+  }
+
+  public async findOptionWordbookData(
+    userId: number,
+    order: string,
+    filterArr: EFilter[],
+    wordbooksIdArr: string[],
+  ): Promise<IWordbook[]> {
+    const wordbooksIdArrData = wordbooksIdArr.map((e) => {
+      return ObjectId(e);
+    });
+    const optionWordbooksData = await this.WordbookModel.aggregate([
+      {
+        $match: {
+          owner: userId,
+          _id: { $in: wordbooksIdArrData },
+        },
+      },
+      {
+        $project: {
+          words: {
+            $filter: {
+              input: '$words',
+              as: 'word',
+              cond: { $and: [{ $eq: ['$$word.isRemoved', false] }, { $in: ['$$word.filter', filterArr] }] },
+            },
+          },
+          title: 1,
+          owner: 1,
+          createdAt: 1,
+          updatedAt: 1,
+        },
+      },
+      {
+        $unwind: { path: '$words', preserveNullAndEmptyArrays: true },
+      },
+      {
+        $lookup: {
+          from: 'words',
+          localField: 'words.wordId',
+          foreignField: '_id',
+          as: 'words-doc',
+        },
+      },
+    ]);
+
+    return optionWordbooksData;
   }
 
   public async findTrashWordbooksData(userId: number): Promise<IWordbook[]> {

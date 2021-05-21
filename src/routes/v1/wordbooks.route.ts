@@ -14,6 +14,7 @@ class WordbookRoute implements IRoute {
   private initializeRoutes() {
     this.router.get(`${this.path}`, authMiddleware, this.wordbookController.getWordbooks);
     this.router.get(`${this.path}/words`, authMiddleware, this.wordbookController.getWordbookWords);
+    this.router.get(`${this.path}/optionwords`, authMiddleware, this.wordbookController.getOptionWords);
     this.router.get(`${this.path}/trashwordbooks`, authMiddleware, this.wordbookController.getTrashWordbooks);
     this.router.get(`${this.path}/:wordbookId`, authMiddleware, this.wordbookController.getWordbookById);
     this.router.post(`${this.path}`, authMiddleware, this.wordbookController.createWordbook);
