@@ -39,8 +39,8 @@ class WordbookController {
     const order: string = req.query.order as string;
     const wordbookIds: string = req.query.wordbookIds as string;
     const wordbooksIdArr: string[] = wordbookIds.split(',') as string[];
-    const filter: EFilter = req.query.filter as EFilter; // ex. "confused, donotknow"
-    const filterArr: EFilter[] = filter.split(',') as EFilter[]; // ex. ["confused", "donotknow"]
+    const filter: EFilter = req.query.filter as EFilter;
+    const filterArr: EFilter[] = filter.split(',') as EFilter[];
     const userId: number = req.userId;
     try {
       const getWordsByOption = await this.WordbookService.findOptionWordbookData(
