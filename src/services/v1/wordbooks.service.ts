@@ -68,10 +68,32 @@ class WordbookService {
   }
 
   public async findTrashWordbooksData(userId: number): Promise<IWordbook[]> {
-    const getTrashWordbooks: IWordbook[] = await this.WordbookModel.find({
-      owner: userId,
-      words: { $elemMatch: { isRemoved: true } },
-    }).select('words');
+    const getTrashWordbooks = await this.WordbookModel.aggregate([
+      {
+        $unwind: '$words',
+      },
+      {
+        $match: { 'words.isRemoved': true, 'owner': userId },
+      },
+      {
+        $project: {
+          _id: 0,
+          words: 1,
+        },
+      },
+      {
+        $lookup: {
+          from: 'words',
+          localField: 'words.wordId',
+          foreignField: '_id',
+          as: 'doc',
+        },
+      },
+      {
+        $unwind: '$doc',
+      },
+    ]);
+
     if (!getTrashWordbooks) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORD));
 
     return getTrashWordbooks;
