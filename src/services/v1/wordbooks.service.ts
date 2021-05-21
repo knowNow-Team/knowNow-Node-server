@@ -162,9 +162,6 @@ class WordbookService {
           as: 'words-doc',
         },
       },
-      {
-        $unwind: '$doc',
-      },
     ]);
 
     if (!getTrashWordbooks) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORD));
