@@ -159,7 +159,7 @@ class WordbookService {
           from: 'words',
           localField: 'words.wordId',
           foreignField: '_id',
-          as: 'doc',
+          as: 'words-doc',
         },
       },
       {
