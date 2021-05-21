@@ -65,12 +65,6 @@ class WordbookService {
     return wordbooksData;
   }
 
-  public async findWordbookById(wordbookId: string): Promise<IWordbook> {
-    const findWordbook = await this.WordbookModel.findOne({ _id: wordbookId }).populate('words.wordId');
-    if (!findWordbook) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
-    return findWordbook;
-  }
-
   public async findTrashWordbooksData(userId: number): Promise<IWordbook[]> {
     const getTrashWordbooks: IWordbook[] = await this.WordbookModel.find({
       owner: userId,
