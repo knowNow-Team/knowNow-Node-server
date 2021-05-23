@@ -66,9 +66,13 @@ class WordbookService {
     });
     const wordbooksData = await this.WordbookModel.aggregate([
       {
+        $unwind: '$words',
+      },
+      {
         $match: {
-          owner: userId,
-          _id: { $in: wordbooksIdArrData },
+          'owner': userId,
+          '_id': { $in: wordbooksIdArrData },
+          'words.isRemoved': false,
         },
       },
       {
