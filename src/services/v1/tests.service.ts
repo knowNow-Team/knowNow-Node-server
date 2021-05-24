@@ -3,6 +3,7 @@ import HttpException from '../../exceptions/HttpException';
 import { ITest } from '../../interfaces/tests.interface';
 import TestModel from '../../models/tests.model';
 import { resMessage, statusCode } from '../../utils';
+import { getUserData, updateUserData } from '../../utils/apis';
 
 const TEST = '시험';
 
@@ -38,6 +39,19 @@ class TestService {
     if (!deleteTestById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(TEST));
 
     return deleteTestById;
+  }
+
+  public async updateUserTestInfo(userToken: string, userId: number, testData: ITest): Promise<void> {
+    const userData = await getUserData(userToken, userId);
+    const userTestInfo = {
+      wordCount: userData.wordCount,
+      examCount: userData.examCount + 1,
+      correctPercentage: parseFloat(
+        ((userData.correctPercentage * userData.examCount + testData.score) / (userData.examCount + 1)).toFixed(2),
+      ),
+    };
+
+    await updateUserData(userToken, userId, userTestInfo);
   }
 }
 
