@@ -35,11 +35,19 @@ class TestController {
 
   public createTest = async (req: Request, res: Response, next: NextFunction) => {
     const testData: TestDto = req.body;
+    const userId: number = req.userId;
+    const userToken: string = req.header('Authorization') as string;
 
     try {
       if (util.isEmpty(testData)) throw new HttpException(statusCode.BAD_REQUEST, resMessage.NULL_VALUE);
 
-      await this.TestService.createTest(testData);
+      const createdTestData = await this.TestService.createTest(testData);
+
+      if (!createdTestData) {
+        throw new HttpException(statusCode.INTERNAL_SERVER_ERROR, resMessage.X_CREATE_FAIL(TEST));
+      }
+
+      await this.TestService.updateUserTestInfo(userToken, userId, createdTestData);
 
       return res.status(statusCode.CREATED).json({ message: resMessage.X_CREATE_SUCCESS(TEST) });
     } catch (error) {
