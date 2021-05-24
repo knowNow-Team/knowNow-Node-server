@@ -10,7 +10,7 @@ export default class TestModel {
         testerId: { type: Number, required: true },
         difficulty: { type: String, required: true },
         filter: { type: [String], required: true, enum: Object.values(ETestFilter) },
-        score: { type: String, required: true },
+        score: { type: Number, required: true },
         wordTotalCount: { type: Number, required: true },
         correctAnswerCount: { type: Number, required: true },
         wordbooks: { type: [String], required: true },
