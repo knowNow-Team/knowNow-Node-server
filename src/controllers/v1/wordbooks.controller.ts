@@ -68,11 +68,14 @@ class WordbookController {
 
   public createWordsInWordbook = async (req: Request, res: Response, next: NextFunction) => {
     const wordbookId: string = req.params.wordbookId;
-    const wordIds: string[] = req.body.wordNames; // 추후 토큰으로 받으면 유효성 검사해서 불러올 것.
+    const wordIds: string[] = req.body.wordNames;
     const userId: number = req.userId;
+    const userToken: string = req.header('Authorization') as string;
 
     try {
       const wordbookData = await this.WordbookService.createWordsInWordbook(wordbookId, userId, wordIds);
+
+      await this.WordbookService.updateUserWordCount(userToken, userId, wordIds.length);
 
       return res.status(statusCode.OK).json({ message: resMessage.X_UPDATE_SUCCESS(WORDBOOK), data: wordbookData });
     } catch (err) {
