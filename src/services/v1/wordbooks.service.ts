@@ -4,6 +4,7 @@ import HttpException from '../../exceptions/HttpException';
 import { EFilter, IMatchOption, IWordbook, IWordbookWithCount } from '../../interfaces/wordbooks.interface';
 import WordbookModel from '../../models/wordbooks.model';
 import { resMessage, statusCode } from '../../utils';
+import { getUserData, updateUserData } from '../../utils/apis';
 
 const ObjectId = Mongoose.Types.ObjectId;
 const WORDBOOK = '단어장';
@@ -271,6 +272,17 @@ class WordbookService {
     if (!deleteWordbookById) throw new HttpException(statusCode.NOT_FOUND, resMessage.NO_X(WORDBOOK));
 
     return deleteWordbookById;
+  }
+
+  public async updateUserWordCount(userToken: string, userId: number, wordCount: number): Promise<void> {
+    const userData = await getUserData(userToken, userId);
+    const userWordCountInfo = {
+      examCount: userData.examCount,
+      correctPercentage: userData.correctPercentage,
+      wordCount: userData.wordCount + wordCount,
+    };
+
+    await updateUserData(userToken, userId, userWordCountInfo);
   }
 }
 
