@@ -23,7 +23,7 @@ export const getUserData = async (userToken: string, userId: number) => {
 
 export const updateUserData = async (userToken: string, userId: number, userInfo: IUserScoreInfo) => {
   try {
-    const updatedUserData = await axios.put(`${BASE_URL}/${userId}`, userInfo, {
+    const updatedUserData = await axios.put(`${BASE_URL}/${userId}/scores`, userInfo, {
       headers: { 'jwt-access-token': userToken },
     });
 
