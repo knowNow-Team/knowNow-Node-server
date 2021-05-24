@@ -23,18 +23,25 @@ class WordbookService {
 
     const wordbookInfoWithWordCounts = await this.WordbookModel.aggregate()
       .match(matchOption)
-      .unwind({ path: '$words' })
-      .lookup({
-        from: 'words',
-        localField: 'words.wordId',
-        foreignField: '_id',
-        as: 'words.word',
+      .project({
+        words: { $filter: { input: '$words', as: 'word', cond: { $eq: ['$$word.isRemoved', false] } } },
+        title: 1,
+        owner: 1,
+        createdAt: 1,
+        updatedAt: 1,
       })
-      .unwind('$words.word')
+      .unwind({ path: '$words', preserveNullAndEmptyArrays: true })
       .group({
-        _id: '$_id',
-        root: { $mergeObjects: '$$ROOT' },
-        words: { $push: '$words' },
+        _id: { id: '$_id', wordFilter: '$words.filter' },
+        title: { $first: '$title' },
+        owner: { $first: '$owner' },
+        createdAt: { $first: '$createdAt' },
+        updatedAt: { $first: '$updatedAt' },
+        count: {
+          $sum: {
+            $cond: [{ $gt: ['$words.filter', null] }, 1, 0],
+          },
+        },
       })
       .group({
         _id: '$_id.id',
