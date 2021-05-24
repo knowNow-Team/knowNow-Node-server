@@ -1,10 +1,9 @@
-import { Types } from 'mongoose';
+import Mongoose, { Types } from 'mongoose';
 import { WordbookDto } from '../../dtos/wordbooks.dto';
 import HttpException from '../../exceptions/HttpException';
 import { EFilter, IMatchOption, IWordbook, IWordbookWithCount } from '../../interfaces/wordbooks.interface';
 import WordbookModel from '../../models/wordbooks.model';
 import { resMessage, statusCode } from '../../utils';
-import Mongoose from 'mongoose';
 
 const ObjectId = Mongoose.Types.ObjectId;
 const WORDBOOK = '단어장';
@@ -24,25 +23,18 @@ class WordbookService {
 
     const wordbookInfoWithWordCounts = await this.WordbookModel.aggregate()
       .match(matchOption)
-      .project({
-        words: { $filter: { input: '$words', as: 'word', cond: { $eq: ['$$word.isRemoved', false] } } },
-        title: 1,
-        owner: 1,
-        createdAt: 1,
-        updatedAt: 1,
+      .unwind({ path: '$words' })
+      .lookup({
+        from: 'words',
+        localField: 'words.wordId',
+        foreignField: '_id',
+        as: 'words.word',
       })
-      .unwind({ path: '$words', preserveNullAndEmptyArrays: true })
+      .unwind('$words.word')
       .group({
-        _id: { id: '$_id', wordFilter: '$words.filter' },
-        title: { $first: '$title' },
-        owner: { $first: '$owner' },
-        createdAt: { $first: '$createdAt' },
-        updatedAt: { $first: '$updatedAt' },
-        count: {
-          $sum: {
-            $cond: [{ $gt: ['$words.filter', null] }, 1, 0],
-          },
-        },
+        _id: '$_id',
+        root: { $mergeObjects: '$$ROOT' },
+        words: { $push: '$words' },
       })
       .group({
         _id: '$_id.id',
