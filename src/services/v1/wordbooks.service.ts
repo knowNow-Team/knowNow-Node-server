@@ -109,40 +109,130 @@ class WordbookService {
     const wordbooksIdArrData = wordbooksIdArr.map((e) => {
       return ObjectId(e);
     });
-    const optionWordbooksData = await this.WordbookModel.aggregate([
-      {
-        $match: {
-          owner: userId,
-          _id: { $in: wordbooksIdArrData },
-        },
-      },
-      {
-        $project: {
-          words: {
-            $filter: {
-              input: '$words',
-              as: 'word',
-              cond: { $and: [{ $eq: ['$$word.isRemoved', false] }, { $in: ['$$word.filter', filterArr] }] },
-            },
+
+    let optionWordbooksData = await this.WordbookModel.find({ owner: userId });
+
+    if (order === 'ASC') {
+      optionWordbooksData = await this.WordbookModel.aggregate([
+        {
+          $match: {
+            owner: userId,
+            _id: { $in: wordbooksIdArrData },
           },
-          title: 1,
-          owner: 1,
-          createdAt: 1,
-          updatedAt: 1,
         },
-      },
-      {
-        $unwind: { path: '$words', preserveNullAndEmptyArrays: true },
-      },
-      {
-        $lookup: {
-          from: 'words',
-          localField: 'words.wordId',
-          foreignField: '_id',
-          as: 'words-doc',
+        {
+          $project: {
+            words: {
+              $filter: {
+                input: '$words',
+                as: 'word',
+                cond: { $and: [{ $eq: ['$$word.isRemoved', false] }, { $in: ['$$word.filter', filterArr] }] },
+              },
+            },
+            title: 1,
+            owner: 1,
+            createdAt: 1,
+            updatedAt: 1,
+          },
         },
-      },
-    ]);
+        {
+          $unwind: { path: '$words', preserveNullAndEmptyArrays: true },
+        },
+        {
+          $lookup: {
+            from: 'words',
+            localField: 'words.wordId',
+            foreignField: '_id',
+            as: 'words-doc',
+          },
+        },
+        {
+          $sort: {
+            'words.word': 1,
+          },
+        },
+      ]);
+    } else if (order === 'DESC') {
+      optionWordbooksData = await this.WordbookModel.aggregate([
+        {
+          $match: {
+            owner: userId,
+            _id: { $in: wordbooksIdArrData },
+          },
+        },
+        {
+          $project: {
+            words: {
+              $filter: {
+                input: '$words',
+                as: 'word',
+                cond: { $and: [{ $eq: ['$$word.isRemoved', false] }, { $in: ['$$word.filter', filterArr] }] },
+              },
+            },
+            title: 1,
+            owner: 1,
+            createdAt: 1,
+            updatedAt: 1,
+          },
+        },
+        {
+          $unwind: { path: '$words', preserveNullAndEmptyArrays: true },
+        },
+        {
+          $lookup: {
+            from: 'words',
+            localField: 'words.wordId',
+            foreignField: '_id',
+            as: 'words-doc',
+          },
+        },
+        {
+          $sort: {
+            'words.word': -1,
+          },
+        },
+      ]);
+    } else if (order === 'NEWEST') {
+      optionWordbooksData = await this.WordbookModel.aggregate([
+        {
+          $match: {
+            owner: userId,
+            _id: { $in: wordbooksIdArrData },
+          },
+        },
+        {
+          $project: {
+            words: {
+              $filter: {
+                input: '$words',
+                as: 'word',
+                cond: { $and: [{ $eq: ['$$word.isRemoved', false] }, { $in: ['$$word.filter', filterArr] }] },
+              },
+            },
+            title: 1,
+            owner: 1,
+            createdAt: 1,
+            updatedAt: 1,
+          },
+        },
+        {
+          $unwind: { path: '$words', preserveNullAndEmptyArrays: true },
+        },
+        {
+          $lookup: {
+            from: 'words',
+            localField: 'words.wordId',
+            foreignField: '_id',
+            as: 'words-doc',
+          },
+        },
+        {
+          $sort: {
+            'words.addedAt': -1,
+          },
+        },
+      ]);
+    }
 
     return optionWordbooksData;
   }
