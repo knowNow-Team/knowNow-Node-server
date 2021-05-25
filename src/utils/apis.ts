@@ -35,3 +35,24 @@ export const updateUserData = async (userToken: string, userId: number, userInfo
     throw new Error(error);
   }
 };
+
+export const updateUserExp = async (userToken: string, userId: number, exp: number) => {
+  try {
+    const updatedUserExp = await axios.put(
+      `${BASE_URL}/${userId}/exp`,
+      {
+        exp,
+      },
+      {
+        headers: { 'jwt-access-token': userToken },
+      },
+    );
+
+    if (!updatedUserExp) {
+      throw new HttpException(statusCode.BAD_REQUEST, resMessage.X_UPDATE_FAIL('유저'));
+    }
+    return updatedUserExp;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
