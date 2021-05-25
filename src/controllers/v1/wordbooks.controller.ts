@@ -75,7 +75,7 @@ class WordbookController {
     try {
       const wordbookData = await this.WordbookService.createWordsInWordbook(wordbookId, userId, wordIds);
 
-      await this.WordbookService.updateUserWordCount(userToken, userId, wordIds.length);
+      this.WordbookService.updateUserScore(userToken, userId, wordIds.length);
 
       return res.status(statusCode.OK).json({ message: resMessage.X_UPDATE_SUCCESS(WORDBOOK), data: wordbookData });
     } catch (err) {
