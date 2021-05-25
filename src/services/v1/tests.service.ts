@@ -3,7 +3,7 @@ import HttpException from '../../exceptions/HttpException';
 import { ITest } from '../../interfaces/tests.interface';
 import TestModel from '../../models/tests.model';
 import { resMessage, statusCode } from '../../utils';
-import { getUserData, updateUserData } from '../../utils/apis';
+import { getUserData, updateUserData, updateUserExp } from '../../utils/apis';
 
 const TEST = '시험';
 
@@ -51,6 +51,9 @@ class TestService {
       ),
     };
 
+    const exp = testData.score > 69 ? 10 : testData.score > 29 ? 7 : 3;
+
+    await updateUserExp(userToken, userId, exp);
     await updateUserData(userToken, userId, userTestInfo);
   }
 }
