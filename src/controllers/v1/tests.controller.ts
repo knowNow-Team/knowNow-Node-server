@@ -47,7 +47,7 @@ class TestController {
         throw new HttpException(statusCode.INTERNAL_SERVER_ERROR, resMessage.X_CREATE_FAIL(TEST));
       }
 
-      await this.TestService.updateUserTestInfo(userToken, userId, createdTestData);
+      this.TestService.updateUserTestInfo(userToken, userId, createdTestData);
 
       return res.status(statusCode.CREATED).json({ message: resMessage.X_CREATE_SUCCESS(TEST) });
     } catch (error) {
