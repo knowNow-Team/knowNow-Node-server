@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import { resMessage, statusCode, util } from '../../utils';
 import HttpException from '../../exceptions/HttpException';
 import { IWord } from '../../interfaces/words.interface';
 import WordService from '../../services/v1/words.service';
+import { resMessage, statusCode, util } from '../../utils';
 
 const WORD = '단어';
 
@@ -31,6 +31,10 @@ class WordController {
             return wordInfo;
           }
           const scrappedWordInfo = await this.WordService.scrapWord(wordName);
+
+          if (scrappedWordInfo === '{}') {
+            return;
+          }
           const createdWordInfo = await this.WordService.createWord(JSON.parse(scrappedWordInfo));
 
           return createdWordInfo;
