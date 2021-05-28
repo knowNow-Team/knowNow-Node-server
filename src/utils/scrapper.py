@@ -1,6 +1,7 @@
-import sys
-import requests
 import json
+import sys
+
+import requests
 from bs4 import BeautifulSoup
 
 
@@ -71,7 +72,7 @@ def main(args=None):
     try:
         search_naver_dic(query)
     except Exception as err:
-        print("Please check your internet connection.", err)
+        print("{}", end="")
 
 
 if __name__ == "__main__":
