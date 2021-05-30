@@ -14,6 +14,6 @@ export enum EWordClass {
   adjective = '형용사',
   articles = '관사',
   prepositions = '전치사',
-  conjunctions = '접촉사',
+  conjunctions = '접속사',
   interjections = '감탄사',
 }
