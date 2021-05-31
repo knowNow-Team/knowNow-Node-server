@@ -54,6 +54,8 @@ def printResult(
     for word in meanList:
         if word.upper() == word.lower():
             result["meanings"].append(word)
+    if not result.meanings:
+        raise Exception
     # 품사(중복 제외) 저장
     for partOfSpeech in partOfSpeechList:
         if partOfSpeech in notIgnoreList and partOfSpeech[1:-1] not in result["wordClasses"]:

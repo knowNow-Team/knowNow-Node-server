@@ -32,15 +32,13 @@ class WordController {
           }
           const scrappedWordInfo = await this.WordService.scrapWord(wordName);
 
-          if (scrappedWordInfo === '{}') {
-            return;
-          }
+          if (scrappedWordInfo === '{}') return;
+
           const createdWordInfo = await this.WordService.createWord(JSON.parse(scrappedWordInfo));
 
           return createdWordInfo;
         }),
       );
-
       return res.status(statusCode.OK).json({ message: resMessage.X_READ_ALL_SUCCESS(WORD), data: wordInfos });
     } catch (err) {
       next(err);
