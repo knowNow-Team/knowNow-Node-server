@@ -110,7 +110,40 @@ class WordbookService {
       return ObjectId(e);
     });
 
-    let optionWordbooksData = await this.WordbookModel.find({ owner: userId });
+    let optionWordbooksData = await this.WordbookModel.aggregate([
+      {
+        $match: {
+          owner: userId,
+          _id: { $in: wordbooksIdArrData },
+        },
+      },
+      {
+        $project: {
+          words: {
+            $filter: {
+              input: '$words',
+              as: 'word',
+              cond: { $and: [{ $eq: ['$$word.isRemoved', false] }, { $in: ['$$word.filter', filterArr] }] },
+            },
+          },
+          title: 1,
+          owner: 1,
+          createdAt: 1,
+          updatedAt: 1,
+        },
+      },
+      {
+        $unwind: { path: '$words', preserveNullAndEmptyArrays: true },
+      },
+      {
+        $lookup: {
+          from: 'words',
+          localField: 'words.wordId',
+          foreignField: '_id',
+          as: 'words-doc',
+        },
+      },
+    ]);
 
     if (order === 'ASC') {
       optionWordbooksData = await this.WordbookModel.aggregate([
