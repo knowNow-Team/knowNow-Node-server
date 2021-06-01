@@ -181,7 +181,7 @@ class WordbookService {
         },
         {
           $sort: {
-            'words.word': 1,
+            'words-doc.word': 1,
           },
         },
       ]);
@@ -221,7 +221,7 @@ class WordbookService {
         },
         {
           $sort: {
-            'words.word': -1,
+            'words-doc.word': -1,
           },
         },
       ]);
