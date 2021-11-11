@@ -19,3 +19,21 @@ https://youtube.com/watch?v=SCJ3Xw6QmJk&feature=share
 
 `프로젝트 기간 2021.03 ~ 2021.05`
 [`knowNow-notion`](https://www.notion.so/knowNow-7b40919b365e4356bf1960409f26215a)
+
+
+## 👩‍💻 Team
+
+### 클라이언트
+
+- **[김재원](https://github.com/ashwon12)** 
+- **[이민환](https://github.com/minhvvan)** 
+
+
+### 서버
+- **[주성민](https://github.com/god9599)** 
+- **[강영우](https://github.com/rdd9223)** 
+- **[이상혁](https://github.com/ksshlee)** 
+
+
+### 아키텍처
+![아키텍처](https://user-images.githubusercontent.com/55980680/123812194-da5a3500-d92e-11eb-805a-759b262a7fd0.png)
