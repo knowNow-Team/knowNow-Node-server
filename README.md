@@ -18,5 +18,8 @@
 >
 > 4️⃣ 알림을 설정하여 원하는 시간대에 푸시알림을 받아 단어 암기를 할 수 있습니다.
 
+`어플 시연 영상`
+https://youtube.com/watch?v=SCJ3Xw6QmJk&feature=share
+
 `프로젝트 기간 2021.03 ~ 2021.05`
 [`knowNow-notion`](https://www.notion.so/knowNow-7b40919b365e4356bf1960409f26215a)
